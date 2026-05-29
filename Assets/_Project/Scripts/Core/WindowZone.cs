@@ -24,7 +24,11 @@ namespace AvenueXR.Core
             Debug.Log($"Oggetto {item.type} lanciato fuori dalla finestra! RIBELLIONE.");
 
             // Se lanci un oggetto speciale fuori, stai RIBELLANDOTI
-            if (item.type != WasteType.Normal)
+            // Gli oggetti "Normali" (Paper, Plastic, etc.) non contano come ribellione se buttati fuori, 
+            // ma vengono comunque processati per far avanzare lo spawner.
+            bool isSpecialObject = item.type == WasteType.Moral || item.type == WasteType.Gore || item.type == WasteType.Bomb;
+
+            if (isSpecialObject)
             {
                 if (onMoralChoiceMade != null) 
                     onMoralChoiceMade.Raise(true); // True = Ribellione
@@ -36,8 +40,6 @@ namespace AvenueXR.Core
 
             // Distruggi l'oggetto
             Destroy(item.gameObject);
-            
-            // Qui puoi aggiungere un feedback visivo del mondo esterno che cambia
         }
     }
 }

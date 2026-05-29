@@ -15,9 +15,10 @@ namespace AvenueXR.Core
         [Header("Butter Events")]
         public DayDataEvent onDayStart;
         public GameEvent onDayEnd;
-        public StringEvent onBossSpeech;
+        public StringEvent onBossSpeech; // Canale Schermo (Quick feedback)
+        public StringEvent onNPCSpeech;  // Canale Cristiano (Quick feedback)
         public BoolEvent onMoralChoiceMade;
-        public DialogueDataEvent onDialogueStart;
+        public DialogueDataEvent onDialogueStart; // Per sequenze lunghe
 
         void Start()
         {
@@ -44,7 +45,10 @@ namespace AvenueXR.Core
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
             if (onDayStart != null) onDayStart.Raise(_currentDay);
-            if (onDialogueStart != null && _currentDay.dialogueData_Boss != null) onDialogueStart.Raise(_currentDay.dialogueData_Boss);
+            
+            // Se c'è un dialogo iniziale per questo giorno, facciamolo partire
+            if (onDialogueStart != null && _currentDay.introDialogue != null) 
+                onDialogueStart.Raise(_currentDay.introDialogue);
         }
 
         private void HandleMoralChoice(bool isGood)

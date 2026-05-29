@@ -67,9 +67,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.WasteBin
   acceptedType: 0
-  isGenericBin: 0
-  onWasteSorted: {fileID: 11400000, guid: 3744179577855b74cb69a1d3f63208c0, type: 2}
+  isRejectBin: 0
+  onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
   onMoralChoiceMade: {fileID: 11400000, guid: 1ed8dfda064677f47845ef3839dc3a2f, type: 2}
+  onBossSpeech: {fileID: 11400000, guid: 1f0474966d91ea842965cc4bd2f513b3, type: 2}
 --- !u!1 &2805125973921493766
 GameObject:
   m_ObjectHideFlags: 0

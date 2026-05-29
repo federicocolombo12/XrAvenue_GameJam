@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5821665739973919939, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
+      propertyPath: isRejectBin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821665739973919939, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
+      propertyPath: onBossSpeech
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f0474966d91ea842965cc4bd2f513b3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2805125973921493766, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
