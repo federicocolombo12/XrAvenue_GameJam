@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
               "ToolTip": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
               "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-29T13:56:41.399Z",
               "EditorCaption": ""
@@ -58,7 +58,8 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
               "ViewState": "AgIAACYBAAAAAAAAAAAUwDkBAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T13:30:51.868Z"
+              "WhenOpened": "2026-05-29T13:30:51.868Z",
+              "EditorCaption": ""
             }
           ]
         }

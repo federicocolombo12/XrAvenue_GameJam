@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelate.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelate.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelaterenderpass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelaterenderpass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelaterendererfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelaterendererfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,6 +35,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Pixelate.shader",
+              "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
+              "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
+              "ToolTip": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
+              "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAswDIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
+              "WhenOpened": "2026-05-29T14:08:37.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PixelateRenderPass.cs",
+              "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
+              "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
+              "ToolTip": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
+              "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA4wDcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T13:57:40.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "PixelateRendererFeature.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
@@ -39,7 +73,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Pixelate.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\Pixelate.cs",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.cs",
@@ -50,7 +84,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "FeatureHelpers.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
