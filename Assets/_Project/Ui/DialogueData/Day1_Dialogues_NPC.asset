@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: Day1_Dialogues_NPC
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
-  - speaker: 0
-    text: Ehi, sei fortunato, benvenuto nel tuo nuovo posto di lavoro.
-  - speaker: 0
-    text: "Sono qui per parlarti di cosa dovrai fare, ascoltami e andr\xE0 tutto
-      bene"
+  - speaker: 1
+    text: Porcamadonna sono dario e mi piace sborrare nelle mutandine
+  - speaker: 1
+    text: "e questo non \xE8 da paraculo (MONO)"
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
