@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#444" />
+    </marker>
+  </defs>
+  
+  <!-- Sfondo e Titolo -->
+  <rect width="1000" height="1200" fill="#f4f4f4" />
+  <text x="500" y="50" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="#333">STRUTTURA GIORNATE: IL RITMICO DECLINO</text>
+
+  <!-- DAY 1 -->
+  <rect x="400" y="100" width="200" height="60" rx="10" fill="#d1d1d1" stroke="#333" />
+  <text x="500" y="135" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">DAY 1: TUTORIAL</text>
+  
+  <line x1="500" y1="160" x2="500" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" />
+
+  <!-- DAY 2 -->
+  <rect x="350" y="210" width="300" height="80" rx="10" fill="#fff" stroke="#333" />
+  <text x="500" y="245" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">DAY 2: IL PRIMO DUBBIO</text>
+  <text x="500" y="270" text-anchor="middle" font-family="Arial" font-size="12">4 Normali + 1 Morale (Bloody Bag)</text>
+
+  <!-- Bivio Day 2 -->
+  <path d="M500 290 L500 330 L250 330 L250 370" fill="none" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)" />
+  <path d="M500 290 L500 330 L750 330 L750 370" fill="none" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowhead)" />
+  <text x="250" y="320" text-anchor="middle" font-family="Arial" font-size="12" fill="#27ae60">OBBEDISCI</text>
+  <text x="750" y="320" text-anchor="middle" font-family="Arial" font-size="12" fill="#e74c3c">RIBELLATI</text>
+
+  <!-- PATH A: UBBIDIENTE -->
+  <rect x="100" y="380" width="300" height="80" rx="10" fill="#e8f5e9" stroke="#2e7d32" />
+  <text x="250" y="415" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">DAY 3A: LA DERIVA</text>
+  <text x="250" y="440" text-anchor="middle" font-family="Arial" font-size="12">6 Normali + 2 Gore (Pezzi Umani)</text>
+
+  <!-- PATH B: RIBELLE -->
+  <rect x="600" y="380" width="300" height="80" rx="10" fill="#fdecea" stroke="#c62828" />
+  <text x="750" y="415" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">DAY 3B: LA COSPIRAZIONE</text>
+  <text x="750" y="440" text-anchor="middle" font-family="Arial" font-size="12">6 Normali + 1 BOMBA (dal Cristiano)</text>
+
+  <!-- Finali -->
+  <rect x="100" y="600" width="300" height="80" rx="10" fill="#a5d6a7" stroke="#2e7d32" />
+  <text x="250" y="635" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">FINALE A: IL BIMBO</text>
+  <text x="250" y="660" text-anchor="middle" font-family="Arial" font-size="12">Il mondo muore, tu hai salvato un'anima.</text>
+
+  <rect x="600" y="600" width="300" height="80" rx="10" fill="#ef9a9a" stroke="#c62828" />
+  <text x="750" y="635" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold">FINALE B: IL SACRIFICIO</text>
+  <text x="750" y="660" text-anchor="middle" font-family="Arial" font-size="12">Esplosione o Ispezione. Fine del sistema.</text>
+</svg>
