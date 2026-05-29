@@ -39,6 +39,9 @@ crashlytics-build.properties
 *.vrc
 
 # Generated Solution and Project files for Visual Studio
+.vs/
+[Vv]isual[Ss]tudio[Cc]ode/
+.vscode/
 /*.csproj
 /*.unityproj
 /*.sln
