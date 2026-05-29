@@ -85,7 +85,7 @@ namespace AvenueXR.Core
 
             _isProcessing = false;
             
-            Debug.Log("DialogueManager: Sequenza terminata.");
+            Debug.Log("[DialogueManager] Sequenza terminata. Lancio onDialogueFinished.");
             if (onDialogueFinished != null) onDialogueFinished.Raise();
         }
     }

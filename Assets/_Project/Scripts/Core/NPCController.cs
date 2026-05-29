@@ -22,15 +22,18 @@ namespace AvenueXR.Core
             _isDelivering = true;
 
             // 1. Cammina verso la scrivania
+            Debug.Log($"[NPCController] Inizio movimento verso {deskPosition.name}");
             yield return StartCoroutine(MoveTo(deskPosition.position));
 
             // 2. Arrivato! Notifica il manager per far apparire l'oggetto
+            Debug.Log("[NPCController] Arrivato alla scrivania. Chiamo onArrival.");
             onArrival?.Invoke();
             
             // 3. Aspetta un attimo (animazione di posa oggetto)
             yield return new WaitForSeconds(0.5f);
 
             // 4. Torna indietro
+            Debug.Log("[NPCController] Ritorno alla posizione iniziale.");
             yield return StartCoroutine(MoveTo(startPosition.position));
 
             _isDelivering = false;

@@ -20,11 +20,23 @@ namespace AvenueXR.Core
 
         public void Spawn(WasteType type)
         {
+            Debug.Log($"[WasteObjectSpawner] Tentativo di spawn per il tipo: {type}");
             GameObject prefab = GetPrefabForType(type);
 
             if (prefab != null)
             {
+                if (spawnPoint == null)
+                {
+                    Debug.LogError("[WasteObjectSpawner] SpawnPoint non assegnato nell'Inspector!");
+                    return;
+                }
+
                 Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+                Debug.Log($"[WasteObjectSpawner] Spawn riuscito: {prefab.name} a {spawnPoint.position}");
+            }
+            else
+            {
+                Debug.LogWarning($"[WasteObjectSpawner] Nessun prefab assegnato per il tipo: {type}");
             }
         }
 

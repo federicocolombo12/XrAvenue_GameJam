@@ -16,21 +16,9 @@ MonoBehaviour:
   introDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
   deliveries:
   - stepLabel: 
-    type: 0
+    type: 7
     npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
-  - stepLabel: 
-    type: 0
-    npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
-  - stepLabel: 
-    type: 0
-    npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
-  - stepLabel: 
-    type: 0
-    npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
+    bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0
