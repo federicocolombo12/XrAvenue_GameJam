@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace AvenueXR.Core
 {
@@ -8,7 +7,10 @@ namespace AvenueXR.Core
     {
         [Header("Info Giorno")]
         public string dayLabel;
-        [TextArea] public string introBossMessage;
+        
+        [Header("Sistema Dialoghi (Esterno)")]
+        [Tooltip("Trascina qui l'asset dei dialoghi creato dall'altro sistema")]
+        public ScriptableObject dialogueData;
 
         [Header("Configurazione Rifiuti")]
         public int normalWasteCount = 5;
@@ -21,6 +23,6 @@ namespace AvenueXR.Core
         public DayData nextDayRebel;
 
         [Header("Feedback Visivo")]
-        public float worldPollutionLevel; // Da 0 a 1, per cambiare il look della finestra
+        public float worldPollutionLevel; 
     }
 }

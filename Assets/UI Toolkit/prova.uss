@@ -1,0 +1,94 @@
+:root {
+    --color-bg: #060807;
+    --color-frame: #0c1411;
+    --color-frame-border: #1e2f27;
+    --color-glow: #0f3c2f;
+    --color-text: #a6f2c2;
+    --color-muted: #6db08b;
+    --color-alert: #f2a65a;
+}
+
+.monitor-root {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 28px;
+    background-color: var(--color-bg);
+}
+
+.monitor-frame {
+    width: 560px;
+    max-width: 92%;
+    min-height: 320px;
+    padding: 22px;
+    border-radius: 10px;
+    background-color: var(--color-frame);
+    border-width: 2px;
+    border-color: var(--color-frame-border);
+    box-shadow: 0 0 24px rgba(15, 60, 47, 0.45);
+}
+
+.monitor-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.monitor-speaker {
+    color: var(--color-text);
+    font-size: 16px;
+}
+
+.monitor-status {
+    color: var(--color-alert);
+    font-size: 12px;
+    unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.monitor-body {
+    padding: 12px;
+    border-radius: 6px;
+    background-color: rgba(166, 242, 194, 0.04);
+    border-width: 1px;
+    border-color: rgba(166, 242, 194, 0.18);
+}
+
+.monitor-text {
+    color: var(--color-text);
+    font-size: 14px;
+    white-space: normal;
+    line-height: 1.35;
+}
+
+.monitor-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.monitor-footer-text {
+    color: var(--color-muted);
+    font-size: 11px;
+}
+
+.monitor-timer {
+    color: var(--color-text);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.horror-title {
+    unity-font-style: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.horror-text {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: "VT323", "Special Elite", "monospace";
+}

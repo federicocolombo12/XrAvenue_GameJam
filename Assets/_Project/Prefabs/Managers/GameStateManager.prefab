@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1869186776793326440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3298262907218257389}
+  - component: {fileID: 8698909144834078395}
+  m_Layer: 0
+  m_Name: GameStateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3298262907218257389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869186776793326440}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8698909144834078395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869186776793326440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cffae643fbc89b4cba1fffb13b5ac91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.GameStateManager
+  firstDay: {fileID: 11400000, guid: 9da0c66ead16f624da2851de9d425131, type: 2}
+  isRebelVariable: {fileID: 11400000, guid: fa3f2e7546faafd4c898d2793c5c26ca, type: 2}
+  onDayStart: {fileID: 11400000, guid: ff02b8b0a0486fd4e9011bbd0e9c5147, type: 2}
+  onDayEnd: {fileID: 11400000, guid: 76aecb4829e9f0e498bcfaf44a8cd60d, type: 2}
+  onBossSpeech: {fileID: 11400000, guid: 1f0474966d91ea842965cc4bd2f513b3, type: 2}
+  onMoralChoiceMade: {fileID: 11400000, guid: 1ed8dfda064677f47845ef3839dc3a2f, type: 2}

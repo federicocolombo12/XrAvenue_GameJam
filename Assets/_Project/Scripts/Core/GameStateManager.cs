@@ -43,7 +43,6 @@ namespace AvenueXR.Core
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
             if (onDayStart != null) onDayStart.Raise(_currentDay);
-            if (onBossSpeech != null) onBossSpeech.Raise(_currentDay.introBossMessage);
         }
 
         private void HandleMoralChoice(bool isGood)
