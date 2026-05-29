@@ -4639,10 +4639,10 @@ MonoBehaviour:
   onDayEnd: {fileID: 11400000, guid: 76aecb4829e9f0e498bcfaf44a8cd60d, type: 2}
   spawnPoint: {fileID: 2090644810}
   delayBetweenSpawns: 1
-  normalWastePrefab: {fileID: 111179649170023343, guid: 491d64cf9e522cc4bb4841eeb77cd7e0, type: 3}
-  moralWastePrefab: {fileID: 111179649170023343, guid: ba1d775dc8ff56b43a9c5cc83c01f1eb, type: 3}
-  goreWastePrefab: {fileID: 111179649170023343, guid: a1f52dac53dee8641bcc3c5a29b5f28e, type: 3}
-  bombPrefab: {fileID: 111179649170023343, guid: 3af2065b96aa1be47803c1070e8fbc88, type: 3}
+  normalWastePrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+  moralWastePrefab: {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
+  goreWastePrefab: {fileID: 5345613369068697587, guid: 52377809839141248a4bcaf24cee7a49, type: 3}
+  bombPrefab: {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
 --- !u!1001 &4418011868117091713
 PrefabInstance:
   m_ObjectHideFlags: 0
