@@ -1,0 +1,20 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Style src="prova.uss" />
+    <ui:VisualElement class="monitor-root">
+        <ui:VisualElement class="monitor-frame">
+            <ui:VisualElement class="monitor-header">
+                <ui:Label text="OPERATORE: EVA-03" class="monitor-speaker horror-title" />
+                <ui:Label text="SEGNALE: STABILE" class="monitor-status" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="monitor-body">
+                <ui:Label text="Sto rilevando movimenti nel corridoio 4.\nNon vedo nessuno, ma il sensore e impazzito.\nRimani in ascolto." class="monitor-text horror-text" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="monitor-footer">
+                <ui:Label text="TRASMISSIONE IN CORSO..." class="monitor-footer-text" />
+                <ui:Label text="00:42:17" class="monitor-timer" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
