@@ -3,15 +3,23 @@
   "WorkspaceRootPath": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelate.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\scripts\\tutorial\\worlddialoguepopup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\scripts\\tutorial\\worlddialoguepopup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\scripts\\tutorial\\tutorialuicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\scripts\\tutorial\\tutorialuicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\assets\\_project\\shaders\\pixelate\\pixelate.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelate.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelaterenderpass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\assets\\_project\\shaders\\pixelate\\pixelaterenderpass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelaterenderpass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|c:\\developement\\unity\\avenuegamejam\\xravenue_gamejam\\assets\\_project\\shaders\\pixelate\\pixelaterendererfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\assets\\_project\\shaders\\pixelate\\pixelaterendererfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F9758594-A223-AF00-E249-47A2A9C48F77}|Assembly-CSharp.csproj|solutionrelative:assets\\_project\\shaders\\pixelate\\pixelaterendererfeature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -30,11 +38,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TutorialUiController.cs",
+              "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Scripts\\Tutorial\\TutorialUiController.cs",
+              "RelativeDocumentMoniker": "Assets\\_Project\\Scripts\\Tutorial\\TutorialUiController.cs",
+              "ToolTip": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Scripts\\Tutorial\\TutorialUiController.cs",
+              "RelativeToolTip": "Assets\\_Project\\Scripts\\Tutorial\\TutorialUiController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T23:16:19.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "WorldDialoguePopUp.cs",
+              "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Scripts\\Tutorial\\WorldDialoguePopUp.cs",
+              "RelativeDocumentMoniker": "Assets\\_Project\\Scripts\\Tutorial\\WorldDialoguePopUp.cs",
+              "ToolTip": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Scripts\\Tutorial\\WorldDialoguePopUp.cs",
+              "RelativeToolTip": "Assets\\_Project\\Scripts\\Tutorial\\WorldDialoguePopUp.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAAK0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T23:07:19.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Pixelate.shader",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
@@ -42,12 +76,11 @@
               "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.shader",
               "ViewState": "AgIAAAcAAAAAAAAAAAAswDIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-05-29T14:08:37.763Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T14:08:37.763Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "PixelateRenderPass.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
@@ -55,12 +88,11 @@
               "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRenderPass.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAA4wDcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T13:57:40.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T13:57:40.967Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "PixelateRendererFeature.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
@@ -68,12 +100,11 @@
               "RelativeToolTip": "Assets\\_Project\\Shaders\\Pixelate\\PixelateRendererFeature.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T13:56:41.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T13:56:41.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Pixelate.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Assets\\_Project\\Shaders\\Pixelate\\Pixelate.cs",
               "RelativeDocumentMoniker": "Assets\\_Project\\Shaders\\Pixelate\\Pixelate.cs",
@@ -84,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "FeatureHelpers.cs",
               "DocumentMoniker": "C:\\Developement\\Unity\\AvenueGameJam\\XrAvenue_GameJam\\Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
@@ -92,8 +123,7 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.xr.openxr@ef0033a586bf\\Editor\\FeatureSupport\\FeatureHelpers.cs",
               "ViewState": "AgIAACYBAAAAAAAAAAAUwDkBAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T13:30:51.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-29T13:30:51.868Z"
             }
           ]
         }
