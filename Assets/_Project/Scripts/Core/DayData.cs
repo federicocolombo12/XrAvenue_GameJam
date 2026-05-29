@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AvenueXR.Core
 {
@@ -8,9 +9,10 @@ namespace AvenueXR.Core
         [Header("Info Giorno")]
         public string dayLabel;
         
+        [FormerlySerializedAs("dialogueData")]
         [Header("Sistema Dialoghi (Esterno)")]
         [Tooltip("Trascina qui l'asset dei dialoghi creato dall'altro sistema")]
-        public ScriptableObject dialogueData;
+        public DialogueData dialogueData_Boss;
 
         [Header("Configurazione Rifiuti")]
         public int normalWasteCount = 5;

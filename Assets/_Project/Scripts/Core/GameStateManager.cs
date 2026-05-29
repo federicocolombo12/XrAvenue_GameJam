@@ -17,6 +17,7 @@ namespace AvenueXR.Core
         public GameEvent onDayEnd;
         public StringEvent onBossSpeech;
         public BoolEvent onMoralChoiceMade;
+        public DialogueDataEvent onDialogueStart;
 
         void Start()
         {
@@ -43,6 +44,7 @@ namespace AvenueXR.Core
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
             if (onDayStart != null) onDayStart.Raise(_currentDay);
+            if (onDialogueStart != null && _currentDay.dialogueData_Boss != null) onDialogueStart.Raise(_currentDay.dialogueData_Boss);
         }
 
         private void HandleMoralChoice(bool isGood)
