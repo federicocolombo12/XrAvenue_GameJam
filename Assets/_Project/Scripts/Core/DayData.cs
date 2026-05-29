@@ -1,22 +1,30 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace AvenueXR.Core
 {
+    [System.Serializable]
+    public class WasteDeliveryStep
+    {
+        public string stepLabel = "Consegna";
+        public WasteType type;
+        
+        [Header("Dialoghi Opzionali")]
+        public DialogueData npcDialogue;  // Cosa dice l'NPC quando arriva
+        public DialogueData bossDialogue; // Cosa dice il Boss quando l'NPC arriva
+    }
+
     [CreateAssetMenu(fileName = "NewDay", menuName = "AvenueXR/Day Data")]
     public class DayData : ScriptableObject
     {
         [Header("Info Giorno")]
         public string dayLabel;
         
-        [Header("Sistema Dialoghi (Esterno)")]
-        [Tooltip("Trascina qui l'asset dei dialoghi creato dall'altro sistema")]
-        public ScriptableObject dialogueData;
+        [Header("Dialogo Iniziale (Opzionale)")]
+        public DialogueData introDialogue;
 
-        [Header("Configurazione Rifiuti")]
-        public int normalWasteCount = 5;
-        public bool hasMoralObject = false;
-        public bool hasGoreObject = false;
-        public bool hasBomb = false;
+        [Header("Sequenza Consegne")]
+        public List<WasteDeliveryStep> deliveries = new List<WasteDeliveryStep>();
 
         [Header("Bivi Narrativi")]
         public DayData nextDayObedient;
