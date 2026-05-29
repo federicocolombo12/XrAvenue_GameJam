@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 5cffae643fbc89b4cba1fffb13b5ac91
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - firstDay: {instanceID: 0}
+  - isRebelVariable: {fileID: 11400000, guid: fa3f2e7546faafd4c898d2793c5c26ca, type: 2}
+  - onDayStart: {instanceID: 0}
+  - onDayEnd: {instanceID: 0}
+  - onBossSpeech: {instanceID: 0}
+  - onMoralChoiceMade: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

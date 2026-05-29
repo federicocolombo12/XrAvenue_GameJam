@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dd96ecbc3d015a4b81931480c138ffe, type: 3}
-  m_Name: Day1
+  m_Name: Day1_tutorial
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
-  dayLabel: 
+  dayLabel: Day 1_Tutorial
   introBossMessage: 
   normalWasteCount: 5
   hasMoralObject: 0
   hasGoreObject: 0
   hasBomb: 0
-  nextDayObedient: {fileID: 0}
-  nextDayRebel: {fileID: 0}
+  nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
+  nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0
