@@ -979,6 +979,7 @@ MonoBehaviour:
   targetCrank: {fileID: 0}
   beltPositiveX: {fileID: 1567881285524637421}
   beltNegativeX: {fileID: 218768146484750172}
+  rotationAxis: {x: 0, y: 1, z: 0}
   rotationMultiplier: 1
 --- !u!1 &8900843438759758702
 GameObject:

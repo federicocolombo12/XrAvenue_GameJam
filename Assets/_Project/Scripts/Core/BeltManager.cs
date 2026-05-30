@@ -14,13 +14,23 @@ namespace AvenueXR.Core
         public Transform beltNegativeX;
 
         [Header("Settings")]
-        [Tooltip("Asse locale di rotazione dei rulli.")]
+        [Tooltip("Asse locale di rotazione dei rulli (quello che ruota nell'inspector).")]
         public Vector3 rotationAxis = Vector3.right;
         
         [Tooltip("Moltiplicatore tra rotazione manovella e rotazione rulli.")]
         public float rotationMultiplier = 1.0f;
 
         private float _currentRotation = 0f;
+        
+        // Memorizziamo le rotazioni iniziali per non "resettare" il modello
+        private Quaternion _initialRotationPos;
+        private Quaternion _initialRotationNeg;
+
+        private void Start()
+        {
+            if (beltPositiveX != null) _initialRotationPos = beltPositiveX.localRotation;
+            if (beltNegativeX != null) _initialRotationNeg = beltNegativeX.localRotation;
+        }
 
         private void OnEnable()
         {
@@ -43,15 +53,16 @@ namespace AvenueXR.Core
             float adjustedDelta = delta * rotationMultiplier;
             _currentRotation += adjustedDelta;
 
-            // Applichiamo le rotazioni opposte sull'asse scelto
+            // Applichiamo la rotazione cumulativa MANTENENDO la base iniziale
             if (beltPositiveX != null)
             {
-                beltPositiveX.localRotation = Quaternion.AngleAxis(_currentRotation, rotationAxis);
+                // Moltiplicazione tra Quaternioni: Applica la rotazione sull'asse locale relativo alla pos iniziale
+                beltPositiveX.localRotation = _initialRotationPos * Quaternion.AngleAxis(_currentRotation, rotationAxis);
             }
 
             if (beltNegativeX != null)
             {
-                beltNegativeX.localRotation = Quaternion.AngleAxis(-_currentRotation, rotationAxis);
+                beltNegativeX.localRotation = _initialRotationNeg * Quaternion.AngleAxis(-_currentRotation, rotationAxis);
             }
         }
     }

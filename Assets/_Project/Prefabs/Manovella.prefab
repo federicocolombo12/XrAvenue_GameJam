@@ -365,8 +365,8 @@ MonoBehaviour:
   m_MaxAngularVelocityDelta: 20
   visualTransform: {fileID: 9160473296179043593}
   rotationAxis: {x: 0, y: 0, z: 1}
-  sensitivity: 10
-  invertRotation: 1
+  sensitivity: 1
+  invertRotation: 0
   totalRotationVariable: {fileID: 11400000, guid: 88ff152cbe1427c459f6ec6a6ef15229, type: 2}
   onRotationStep: {fileID: 11400000, guid: 2fc69401d69a1964fb653b7a7627217f, type: 2}
 --- !u!54 &6268830398668062001

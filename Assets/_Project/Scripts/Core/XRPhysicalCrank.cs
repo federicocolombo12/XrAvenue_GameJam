@@ -57,8 +57,9 @@ namespace AvenueXR.Core
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            // Memorizziamo l'angolo iniziale della mano rispetto al pivot
-            _lastHandAngle = GetAngleFromHand(args.interactorObject.transform.position);
+            // Per le mani è meglio usare il punto di aggancio (attachTransform)
+            _lastHandAngle = GetAngleFromHand(args.interactorObject.GetAttachTransform(this).position);
+            Debug.Log($"[Crank] Grab iniziato da: {args.interactorObject.transform.name}");
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -77,14 +78,17 @@ namespace AvenueXR.Core
 
             // 1. Troviamo l'angolo attuale della mano
             var interactor = interactorsSelecting[0];
-            float currentHandAngle = GetAngleFromHand(interactor.transform.position);
+            // Usiamo GetAttachTransform per seguire il punto preciso del Pinch/Grip
+            Vector3 handPos = interactor.GetAttachTransform(this).position;
+            float currentHandAngle = GetAngleFromHand(handPos);
 
             // 2. Calcoliamo lo spostamento angolare (usando DeltaAngle per gestire il wrap 360)
             float deltaAngle = Mathf.DeltaAngle(_lastHandAngle, currentHandAngle);
-            _lastHandAngle = currentHandAngle;
 
             if (Mathf.Abs(deltaAngle) > 0.001f)
             {
+                _lastHandAngle = currentHandAngle; // Aggiorna solo se c'è movimento
+                
                 if (invertRotation) deltaAngle *= -1f;
                 float adjustedDelta = deltaAngle * sensitivity;
 
