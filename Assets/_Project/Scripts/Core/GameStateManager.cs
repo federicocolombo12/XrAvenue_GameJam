@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using Dev.Nicklaj.Butter;
 
 namespace AvenueXR.Core
@@ -30,13 +31,13 @@ namespace AvenueXR.Core
         void OnEnable()
         {
             if (onMoralChoiceMade != null) onMoralChoiceMade.RegisterListener(HandleMoralChoice);
-            if (onDayEnd != null) onDayEnd.RegisterListener(_ => TransitionToNextDay());
+            if (onDayEnd != null) onDayEnd.RegisterListener(_ => StartCoroutine(TransitionToNextDayRoutine()));
         }
 
         void OnDisable()
         {
             if (onMoralChoiceMade != null) onMoralChoiceMade.DeregisterListener(HandleMoralChoice);
-            if (onDayEnd != null) onDayEnd.DeregisterListener(_ => TransitionToNextDay());
+            if (onDayEnd != null) onDayEnd.DeregisterListener(_ => StartCoroutine(TransitionToNextDayRoutine()));
         }
 
         private void StartDay()
@@ -45,10 +46,6 @@ namespace AvenueXR.Core
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
             if (onDayStart != null) onDayStart.Raise(_currentDay);
-            
-            // Se c'è un dialogo iniziale per questo giorno, facciamolo partire
-            if (onDialogueStart != null && _currentDay.introDialogue != null) 
-                onDialogueStart.Raise(_currentDay.introDialogue);
         }
 
         private void HandleMoralChoice(bool isGood)
@@ -59,8 +56,11 @@ namespace AvenueXR.Core
             if (onBossSpeech != null) onBossSpeech.Raise(feedback);
         }
 
-        private void TransitionToNextDay()
+        private IEnumerator TransitionToNextDayRoutine()
         {
+            Debug.Log("[GameStateManager] Giorno finito. Attendo prima di passare al prossimo...");
+            yield return new WaitForSeconds(1.0f);
+
             bool hasRebelled = isRebelVariable != null && isRebelVariable.Value;
 
             if (hasRebelled)

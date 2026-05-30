@@ -21,9 +21,11 @@ namespace AvenueXR.Core
         public WasteObjectSpawner objectSpawner;
 
         private List<WasteDeliveryStep> _currentDaySteps;
+        private DayData _currentDayData;
         private int _currentStepIndex;
         
         private bool _isWaitingForIntro = false;
+        private bool _isWaitingForOutro = false;
         private bool _isWaitingForStepDialogue = false;
         private bool _isWaitingForObjectProcess = false;
         private bool _isWaitingForNPCLeave = false;
@@ -57,11 +59,13 @@ namespace AvenueXR.Core
             if (day == null) return;
             
             Debug.Log($"[WasteDeliveryManager] Inizio nuovo giorno: {day.dayLabel}");
+            _currentDayData = day;
             _currentDaySteps = day.deliveries;
             _currentStepIndex = 0;
             
             // Reset di sicurezza per tutti i flag
             _isWaitingForIntro = false;
+            _isWaitingForOutro = false;
             _isWaitingForStepDialogue = false;
             _isWaitingForObjectProcess = false;
             _isWaitingForNPCLeave = false;
@@ -84,6 +88,12 @@ namespace AvenueXR.Core
                 Debug.Log("[WasteDeliveryManager] Intro terminata. Richiedo prima consegna.");
                 _isWaitingForIntro = false;
                 RequestNextDelivery();
+            }
+            else if (_isWaitingForOutro)
+            {
+                Debug.Log("[WasteDeliveryManager] Outro terminata. Fine giorno ufficiale.");
+                _isWaitingForOutro = false;
+                if (onDayEnd != null) onDayEnd.Raise();
             }
             else if (_isWaitingForStepDialogue)
             {
@@ -124,7 +134,22 @@ namespace AvenueXR.Core
             }
             else
             {
-                Debug.Log("[WasteDeliveryManager] !!! Tutte le consegne completate. Giorno finito !!!");
+                FinishDayFlow();
+            }
+        }
+
+        private void FinishDayFlow()
+        {
+            Debug.Log("[WasteDeliveryManager] Tutte le consegne completate. Controllo Outro.");
+            
+            if (_currentDayData != null && _currentDayData.outroDialogue != null)
+            {
+                _isWaitingForOutro = true;
+                onDialogueStart.Raise(_currentDayData.outroDialogue);
+            }
+            else
+            {
+                Debug.Log("[WasteDeliveryManager] Nessun Outro. Fine giorno.");
                 if (onDayEnd != null) onDayEnd.Raise();
             }
         }

@@ -23,6 +23,9 @@ namespace AvenueXR.Core
         [Header("Dialogo Iniziale (Opzionale)")]
         public DialogueData introDialogue;
 
+        [Header("Dialogo Finale (Opzionale)")]
+        public DialogueData outroDialogue;
+
         [Header("Sequenza Consegne")]
         public List<WasteDeliveryStep> deliveries = new List<WasteDeliveryStep>();
 

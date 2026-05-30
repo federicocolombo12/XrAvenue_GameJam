@@ -27,18 +27,21 @@ namespace AvenueXR.Core
         // --- Evento locale per il BinCrusher ---
         public event System.Action<float> OnRotationDelta;
 
-        private Vector3 _previousLocalHandDir;
         private float _accumulatedAngle = 0f;
         private float _audioStepCounter = 0f;
+        private float _lastHandAngle;
 
         protected override void Awake()
         {
             base.Awake();
             
-            // Setup Rigidbody meccanico: non cade, non si sposta, non reagisce a colpi
+            // Setup Rigidbody meccanico
             Rigidbody rb = GetComponent<Rigidbody>();
-            rb.isKinematic = true;
-            rb.useGravity = false;
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
 
             // Configurazione Grab per rotazione pura
             trackRotation = false;
@@ -48,16 +51,14 @@ namespace AvenueXR.Core
 
             if (visualTransform == null) visualTransform = transform;
             
-            // Sincronizziamo l'accumulatore con la rotazione iniziale dell'oggetto
-            // (Assumiamo che ruoti sull'asse impostato)
             _accumulatedAngle = 0f; 
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            // Al momento del grab, guardiamo dove si trova la mano rispetto al centro della manovella
-            _previousLocalHandDir = GetLocalDirectionToHand(args.interactorObject.transform.position);
+            // Memorizziamo l'angolo iniziale della mano rispetto al pivot
+            _lastHandAngle = GetAngleFromHand(args.interactorObject.transform.position);
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -74,48 +75,56 @@ namespace AvenueXR.Core
         {
             if (interactorsSelecting.Count == 0) return;
 
-            // 1. Troviamo la posizione attuale della mano
+            // 1. Troviamo l'angolo attuale della mano
             var interactor = interactorsSelecting[0];
-            Vector3 currentLocalHandDir = GetLocalDirectionToHand(interactor.transform.position);
+            float currentHandAngle = GetAngleFromHand(interactor.transform.position);
 
-            // 2. Calcoliamo quanto la mano si è spostata lungo il cerchio dall'ultimo frame
-            float deltaAngle = Vector3.SignedAngle(_previousLocalHandDir, currentLocalHandDir, rotationAxis);
+            // 2. Calcoliamo lo spostamento angolare (usando DeltaAngle per gestire il wrap 360)
+            float deltaAngle = Mathf.DeltaAngle(_lastHandAngle, currentHandAngle);
+            _lastHandAngle = currentHandAngle;
 
-            if (Mathf.Abs(deltaAngle) > 0.01f)
+            if (Mathf.Abs(deltaAngle) > 0.001f)
             {
                 if (invertRotation) deltaAngle *= -1f;
                 float adjustedDelta = deltaAngle * sensitivity;
 
-                // 3. Sommiamo lo spostamento alla rotazione totale (permette infiniti giri)
+                // 3. Sommiamo lo spostamento
                 _accumulatedAngle += adjustedDelta;
 
                 // 4. Applichiamo la rotazione visiva
                 visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedAngle, rotationAxis);
 
-                // 5. Notifichiamo gli altri sistemi (Butter, Smaciullamento)
+                // 5. Notifichiamo gli altri sistemi
                 if (totalRotationVariable != null) totalRotationVariable.Value += adjustedDelta;
                 OnRotationDelta?.Invoke(adjustedDelta);
 
-                // 6. Feedback sonoro ogni 15 gradi di rotazione effettiva
+                // 6. Feedback sonoro
                 _audioStepCounter += Mathf.Abs(adjustedDelta);
                 if (_audioStepCounter >= 15f)
                 {
                     onRotationStep?.Raise(_audioStepCounter);
                     _audioStepCounter = 0f;
                 }
-
-                // 7. Prepariamo il prossimo frame
-                _previousLocalHandDir = currentLocalHandDir;
             }
         }
 
-        private Vector3 GetLocalDirectionToHand(Vector3 handWorldPos)
+        private float GetAngleFromHand(Vector3 handWorldPos)
         {
-            // Portiamo la posizione della mano nello spazio locale del ROOT (che sta fermo)
-            Vector3 localPos = transform.InverseTransformPoint(handWorldPos);
-            // Proiettiamo sul piano di rotazione per ignorare se la mano tira in avanti/indietro
-            Vector3 direction = Vector3.ProjectOnPlane(localPos, rotationAxis);
-            return direction.normalized;
+            // Centro e asse in coordinate world
+            Vector3 worldPivot = transform.position;
+            Vector3 worldAxis = transform.TransformDirection(rotationAxis);
+            
+            // Direzione dal pivot alla mano
+            Vector3 dirToHand = (handWorldPos - worldPivot).normalized;
+            
+            // Proiettiamo sul piano di rotazione della manovella
+            Vector3 projectedDir = Vector3.ProjectOnPlane(dirToHand, worldAxis).normalized;
+            
+            // Usiamo un riferimento "Up" world per calcolare l'angolo assoluto
+            Vector3 referenceUp = Vector3.up;
+            if (Mathf.Abs(Vector3.Dot(referenceUp, worldAxis)) > 0.9f) referenceUp = Vector3.forward;
+            
+            return Vector3.SignedAngle(referenceUp, projectedDir, worldAxis);
         }
     }
 }
