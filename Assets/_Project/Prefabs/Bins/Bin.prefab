@@ -940,6 +940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6019538516474171318}
   - component: {fileID: 682957716095269196}
+  - component: {fileID: 4128623161743613446}
   m_Layer: 0
   m_Name: RulloManager
   m_TagString: Untagged
@@ -981,6 +982,27 @@ MonoBehaviour:
   beltNegativeX: {fileID: 218768146484750172}
   rotationAxis: {x: 0, y: 1, z: 0}
   rotationMultiplier: 1
+--- !u!65 &4128623161743613446
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685917911678424767}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.53784305, z: 1}
+  m_Center: {x: 0, y: 0.008775145, z: 0}
 --- !u!1 &8900843438759758702
 GameObject:
   m_ObjectHideFlags: 0
