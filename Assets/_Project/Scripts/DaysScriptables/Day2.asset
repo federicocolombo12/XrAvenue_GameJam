@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd96ecbc3d015a4b81931480c138ffe, type: 3}
   m_Name: Day2
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
-  dayLabel: Day 1
-  introDialogue: {fileID: 0}
+  dayLabel: Day 2
+  introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
   deliveries:
   - stepLabel: 
-    type: 0
-    npcDialogue: {fileID: 0}
+    type: 7
+    npcDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: ee12c9c5426645147aebaf0d65dc793e, type: 2}
   nextDayRebel: {fileID: 11400000, guid: 190ba17ccedfa7c49bf52e7586645c97, type: 2}

@@ -10,14 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eeff1f6f86f4ab68001f3e68708e63e, type: 3}
-  m_Name: Day1_Dialogues_Boss
+  m_Name: Day1_Dialogues_NPC1
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
-  - speaker: 0
-    text: Ehi, sei fortunato, benvenuto nel tuo nuovo posto di lavoro.
-  - speaker: 0
-    text: "Sono qui per parlarti di cosa dovrai fare, ascoltami e andr\xE0 tutto
-      bene"
+  - speaker: 1
+    text: "Qui \xE8 dove le persone ti spiegheranno"
+  - speaker: 1
+    text: Che tipo di oggetto devi buttare.
+  - speaker: 1
+    text: Prendi questo libro.
+  - speaker: 1
+    text: "\xC8 un libro, buttalo nella carta."
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

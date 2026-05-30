@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: Day3Obedient
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
-  introBossMessage: 
-  normalWasteCount: 5
-  hasMoralObject: 0
-  hasGoreObject: 0
-  hasBomb: 0
+  introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
+  deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
   worldPollutionLevel: 0
