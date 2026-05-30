@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eeff1f6f86f4ab68001f3e68708e63e, type: 3}
-  m_Name: Day1_Dialogues_NPC
+  m_Name: Day1_Dialogues_NPC2
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: Porcamadonna sono dario e mi piace sborrare nelle mutandine
+    text: "Qui \xE8 dove le persone ti spiegheranno"
   - speaker: 1
-    text: "e questo non \xE8 da paraculo (MONO)"
+    text: Che tipo di oggetto devi buttare.
+  - speaker: 1
+    text: Prendi questo libro.
+  - speaker: 1
+    text: "\xC8 un libro, buttalo nella carta."
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
