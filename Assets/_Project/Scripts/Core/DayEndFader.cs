@@ -17,6 +17,14 @@ namespace AvenueXR.Core
         public float blinkDuration = 0.5f;
         public int blinkCount = 2;
 
+        private void Awake()
+        {
+            if (faderCanvasGroup != null)
+            {
+                faderCanvasGroup.alpha = 0f;
+            }
+        }
+
         void OnEnable()
         {
             if (onDayEnd != null) onDayEnd.RegisterListener(_ => PlayBlinkEffect());

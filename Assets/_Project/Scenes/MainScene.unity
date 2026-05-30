@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 440471757}
   - component: {fileID: 440471756}
   m_Layer: 0
-  m_Name: CrushManager
+  m_Name: Crushes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
