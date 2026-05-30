@@ -17,6 +17,9 @@ namespace AvenueXR.Core
 
         private int _currentModelIndex = -1;
         private Animator _activeAnimator;
+        private NPCHandBinder _activeHandBinder;
+
+        public NPCHandBinder ActiveHandBinder => _activeHandBinder;
 
         void OnEnable()
         {
@@ -65,6 +68,7 @@ namespace AvenueXR.Core
             {
                 nextModel.SetActive(true);
                 _activeAnimator = nextModel.GetComponent<Animator>();
+                _activeHandBinder = nextModel.GetComponentInChildren<NPCHandBinder>();
                 
                 if (_activeAnimator != null)
                 {
