@@ -6,21 +6,19 @@ namespace AvenueXR.Core
 {
     /// <summary>
     /// Una manovella fisica che può essere ruotata con le mani in VR/MR.
-    /// Invia il valore della rotazione tramite Butter per attivare meccanismi.
+    /// Eredita da XRGrabInteractable per supportare meglio il pinch delle mani e i controller.
     /// </summary>
-    public class XRPhysicalCrank : UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable
+    public class XRPhysicalCrank : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
     {
         [Header("Crank Settings")]
-        public Transform visualTransform; // L'oggetto che ruota visivamente
+        public Transform visualTransform;
         public Vector3 rotationAxis = Vector3.forward;
         public float sensitivity = 1.0f;
 
         [Header("Butter Output")]
-        public FloatVariable totalRotationVariable; // Accumula la rotazione totale (es. giri fatti)
-        public FloatEvent onRotationStep; // Lancia un evento ogni X gradi (es. per suono "click")
+        public FloatVariable totalRotationVariable;
+        public FloatEvent onRotationStep;
 
-        private UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor _grabbingInteractor;
-        private Quaternion _initialLocalRotation;
         private Vector3 _previousHandDirection;
         private float _currentAngleAccumulator;
 
@@ -28,22 +26,17 @@ namespace AvenueXR.Core
         {
             base.Awake();
             if (visualTransform == null) visualTransform = transform;
-            _initialLocalRotation = visualTransform.localRotation;
+            
+            // Forziamo impostazioni per rotazione fisica
+            movementType = MovementType.Instantaneous;
+            attachEaseInTime = 0;
+            retainTransformParent = true;
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            _grabbingInteractor = args.interactorObject;
-            
-            // Calcola la direzione iniziale della mano rispetto al centro della manovella
-            _previousHandDirection = GetHandDirection();
-        }
-
-        protected override void OnSelectExited(SelectExitEventArgs args)
-        {
-            base.OnSelectExited(args);
-            _grabbingInteractor = null;
+            _previousHandDirection = GetHandDirection(args.interactorObject);
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -56,23 +49,34 @@ namespace AvenueXR.Core
             }
         }
 
+        private float _accumulatedVisualAngle;
+
         private void RotateCrank()
         {
-            Vector3 currentHandDirection = GetHandDirection();
+            // Prendiamo il primo interactor che ci sta afferrando
+            var interactor = interactorsSelecting[0];
+            Vector3 currentHandDirection = GetHandDirection(interactor);
             
-            // Calcola l'angolo tra la vecchia direzione e la nuova
-            float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentHandDirection, rotationAxis);
+            // Calcola l'angolo relativo sul piano di rotazione
+            float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentHandDirection, transform.TransformDirection(rotationAxis));
             
-            // Applica la rotazione visiva
-            visualTransform.Rotate(rotationAxis, angleDelta * sensitivity, Space.Self);
+            // Applica la rotazione visiva (RESTRETTI SOLO ALL'ASSE INDICATO)
+            // Usiamo un accumulatore per evitare "drift" su altri assi
+            _accumulatedVisualAngle += angleDelta * sensitivity;
             
-            // Aggiorna la variabile di Butter
+            if (visualTransform != null)
+            {
+                // Calcoliamo la rotazione locale finale applicando l'angolo solo all'asse scelto
+                visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedVisualAngle, rotationAxis);
+            }
+            
+            // Aggiorna Butter
             if (totalRotationVariable != null)
             {
                 totalRotationVariable.Value += angleDelta;
             }
 
-            // Gestione "Click" sonoro ogni 30 gradi
+            // Click sonoro
             _currentAngleAccumulator += Mathf.Abs(angleDelta);
             if (_currentAngleAccumulator >= 30f)
             {
@@ -83,15 +87,14 @@ namespace AvenueXR.Core
             _previousHandDirection = currentHandDirection;
         }
 
-        private Vector3 GetHandDirection()
+        private Vector3 GetHandDirection(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor)
         {
-            if (_grabbingInteractor == null) return Vector3.up;
-
-            // Vettore dalla manovella alla mano dell'interactor
-            Vector3 direction = _grabbingInteractor.transform.position - transform.position;
+            // Vettore dalla manovella alla mano
+            Vector3 direction = interactor.transform.position - transform.position;
             
-            // Proietta il vettore sul piano di rotazione della manovella
-            return Vector3.ProjectOnPlane(direction, transform.TransformDirection(rotationAxis)).normalized;
+            // Proietta sul piano definito dall'asse di rotazione
+            Vector3 planeNormal = transform.TransformDirection(rotationAxis);
+            return Vector3.ProjectOnPlane(direction, planeNormal).normalized;
         }
     }
 }

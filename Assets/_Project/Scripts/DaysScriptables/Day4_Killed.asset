@@ -10,15 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dd96ecbc3d015a4b81931480c138ffe, type: 3}
-  m_Name: Day3Rebellion 1
+  m_Name: Day4_Killed
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
   introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
-  deliveries:
-  - stepLabel: 
-    type: 0
-    npcDialogue: {fileID: 0}
-    bossDialogue: {fileID: 0}
+  deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
-  worldPollutionLevel: 0
+  worldPollutionLevel: 1

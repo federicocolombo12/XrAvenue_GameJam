@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace AvenueXR.Core
 {
@@ -7,21 +8,21 @@ namespace AvenueXR.Core
         public Transform spawnPoint;
         
         [Header("Prefabs Normali")]
-        public GameObject paperPrefab;
-        public GameObject plasticPrefab;
-        public GameObject glassPrefab;
-        public GameObject metalPrefab;
-        public GameObject organicPrefab;
+        public List<GameObject> paperPrefabs = new List<GameObject>();
+        public List<GameObject> plasticPrefabs = new List<GameObject>();
+        public List<GameObject> glassPrefabs = new List<GameObject>();
+        public List<GameObject> metalPrefabs = new List<GameObject>();
+        public List<GameObject> organicPrefabs = new List<GameObject>();
 
         [Header("Prefabs Speciali")]
-        public GameObject moralWastePrefab;
-        public GameObject goreWastePrefab;
-        public GameObject bombPrefab;
+        public List<GameObject> moralWastePrefabs = new List<GameObject>();
+        public List<GameObject> goreWastePrefabs = new List<GameObject>();
+        public List<GameObject> bombPrefabs = new List<GameObject>();
 
         public void Spawn(WasteType type)
         {
             Debug.Log($"[WasteObjectSpawner] Tentativo di spawn per il tipo: {type}");
-            GameObject prefab = GetPrefabForType(type);
+            GameObject prefab = GetRandomPrefabForType(type);
 
             if (prefab != null)
             {
@@ -36,24 +37,30 @@ namespace AvenueXR.Core
             }
             else
             {
-                Debug.LogWarning($"[WasteObjectSpawner] Nessun prefab assegnato per il tipo: {type}");
+                Debug.LogWarning($"[WasteObjectSpawner] Nessun prefab assegnato o lista vuota per il tipo: {type}");
             }
         }
 
-        private GameObject GetPrefabForType(WasteType type)
+        private GameObject GetRandomPrefabForType(WasteType type)
         {
-            return type switch
+            List<GameObject> targetList = type switch
             {
-                WasteType.Paper => paperPrefab,
-                WasteType.Plastic => plasticPrefab,
-                WasteType.Glass => glassPrefab,
-                WasteType.Metal => metalPrefab,
-                WasteType.Organic => organicPrefab,
-                WasteType.Moral => moralWastePrefab,
-                WasteType.Gore => goreWastePrefab,
-                WasteType.Bomb => bombPrefab,
+                WasteType.Paper => paperPrefabs,
+                WasteType.Plastic => plasticPrefabs,
+                WasteType.Glass => glassPrefabs,
+                WasteType.Metal => metalPrefabs,
+                WasteType.Organic => organicPrefabs,
+                WasteType.Moral => moralWastePrefabs,
+                WasteType.Gore => goreWastePrefabs,
+                WasteType.Bomb => bombPrefabs,
                 _ => null
             };
+
+            if (targetList == null || targetList.Count == 0)
+                return null;
+
+            int randomIndex = Random.Range(0, targetList.Count);
+            return targetList[randomIndex];
         }
     }
 }

@@ -15,10 +15,30 @@ MonoBehaviour:
   dayLabel: Day 2
   introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
   deliveries:
-  - stepLabel: 
-    type: 7
-    npcDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
+  - stepLabel: Un bicchiere, base
+    type: 2
+    npcDialogue: {fileID: 11400000, guid: 637eeea8b5d3be749bd0ed81f2170759, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: Un libro, abbasso cultura
+    type: 0
+    npcDialogue: {fileID: 11400000, guid: 70b40e33c77e29949985d07572a516d9, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: Anello, fa un po' pena, prima volta
+    type: 1
+    npcDialogue: {fileID: 11400000, guid: 086d503345395724cadabbbccab94b37, type: 2}
+    bossDialogue: {fileID: 11400000, guid: 1d71f24f3ae29e2409dfc5433b7075aa, type: 2}
+  - stepLabel: Scortese, non descrive oggetto
+    type: 1
+    npcDialogue: {fileID: 11400000, guid: b697f7a0346b7c94a8b1e11f2b33fb12, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: Bad
+    type: 1
+    npcDialogue: {fileID: 11400000, guid: b697f7a0346b7c94a8b1e11f2b33fb12, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: BloodyBag
+    type: 6
+    npcDialogue: {fileID: 11400000, guid: b697f7a0346b7c94a8b1e11f2b33fb12, type: 2}
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: ee12c9c5426645147aebaf0d65dc793e, type: 2}
   nextDayRebel: {fileID: 11400000, guid: 190ba17ccedfa7c49bf52e7586645c97, type: 2}
-  worldPollutionLevel: 0
+  worldPollutionLevel: 1
