@@ -8,12 +8,14 @@ namespace AvenueXR.Core
     /// Una manovella fisica che può essere ruotata con le mani in VR/MR.
     /// Eredita da XRGrabInteractable per supportare meglio il pinch delle mani e i controller.
     /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
     public class XRPhysicalCrank : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
     {
         [Header("Crank Settings")]
         public Transform visualTransform;
-        public Vector3 rotationAxis = Vector3.forward;
+        public Vector3 rotationAxis = Vector3.forward; // Asse LOCALE di rotazione (es. Z per manopola frontale)
         public float sensitivity = 1.0f;
+        public bool invertRotation = false; // Toggle per invertire il senso di rotazione
 
         [Header("Butter Output")]
         public FloatVariable totalRotationVariable;
@@ -22,34 +24,38 @@ namespace AvenueXR.Core
         // --- Local Events for binding ---
         public event System.Action<float> OnRotationDelta;
 
-        private Vector3 _previousHandDirection;
+        private Vector3 _initialLocalHandDir;
+        private Quaternion _initialVisualRotation;
         private float _currentAngleAccumulator;
-        private float _accumulatedVisualAngle;
+        private float _totalSessionRotation; // Rotazione accumulata in questa sessione di grab
 
         protected override void Awake()
         {
             base.Awake();
             
-            // DISABILITIAMO il tracking automatico di Unity
-            // Vogliamo solo sapere DOVE è la mano, non che Unity sposti l'oggetto
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
+
             trackRotation = false;
             trackPosition = false;
-            
-            if (visualTransform == null)
-            {
-                Debug.LogWarning($"[XRPhysicalCrank] VisualTransform non assegnata su {gameObject.name}. La rotazione potrebbe essere instabile.");
-                visualTransform = transform;
-            }
-            
             movementType = MovementType.Instantaneous;
             attachEaseInTime = 0;
+
+            if (visualTransform == null) visualTransform = transform;
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            // Inizializziamo la direzione in spazio LOCALE per essere indipendenti dalla rotazione del mondo
-            _previousHandDirection = GetLocalHandDirection(args.interactorObject);
+            
+            // Memorizziamo lo stato iniziale al momento del grab
+            _initialLocalHandDir = GetLocalDirectionToHand(args.interactorObject.transform.position);
+            _initialVisualRotation = visualTransform.localRotation;
+            _totalSessionRotation = 0f;
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -64,50 +70,51 @@ namespace AvenueXR.Core
 
         private void RotateCrank()
         {
+            if (interactorsSelecting.Count == 0) return;
+
             var interactor = interactorsSelecting[0];
-            Vector3 currentLocalDirection = GetLocalHandDirection(interactor);
+            Vector3 currentLocalHandDir = GetLocalDirectionToHand(interactor.transform.position);
             
-            // Calcola l'angolo tra le direzioni locali proiettate sul piano
-            // Usiamo rotationAxis come normale del piano locale
-            float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentLocalDirection, rotationAxis);
+            // Calcola l'angolo tra la direzione iniziale e quella attuale
+            float angleDiff = Vector3.SignedAngle(_initialLocalHandDir, currentLocalHandDir, rotationAxis);
             
-            if (Mathf.Abs(angleDelta) > 0.001f)
+            if (invertRotation) angleDiff *= -1f;
+
+            // Applichiamo la rotazione "diretta" basata sull'offset dal grab iniziale
+            float targetAngle = angleDiff * sensitivity;
+            
+            // Applichiamo la rotazione alla visual transform partendo dalla sua rotazione iniziale
+            visualTransform.localRotation = _initialVisualRotation * Quaternion.AngleAxis(targetAngle, rotationAxis);
+
+            // Per gli eventi di Butter e i calcoli di smaciullamento, usiamo il delta
+            float delta = targetAngle - _totalSessionRotation;
+            if (Mathf.Abs(delta) > 0.01f)
             {
-                _accumulatedVisualAngle += angleDelta * sensitivity;
-                
-                if (visualTransform != null)
-                {
-                    // Applichiamo la rotazione LOCALE solo all'asse desiderato
-                    visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedVisualAngle, rotationAxis);
-                }
-                
-                if (totalRotationVariable != null)
-                {
-                    totalRotationVariable.Value += angleDelta;
-                }
+                if (totalRotationVariable != null) totalRotationVariable.Value += delta;
+                OnRotationDelta?.Invoke(delta);
 
-                OnRotationDelta?.Invoke(angleDelta);
-
-                _currentAngleAccumulator += Mathf.Abs(angleDelta);
-                if (_currentAngleAccumulator >= 30f)
+                // Click sonoro ogni 20 gradi
+                _currentAngleAccumulator += Mathf.Abs(delta);
+                if (_currentAngleAccumulator >= 20f)
                 {
                     onRotationStep?.Raise(_currentAngleAccumulator);
                     _currentAngleAccumulator = 0f;
                 }
-
-                _previousHandDirection = currentLocalDirection;
+                
+                _totalSessionRotation = targetAngle;
             }
         }
 
-        private Vector3 GetLocalHandDirection(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor)
+        private Vector3 GetLocalDirectionToHand(Vector3 handWorldPos)
         {
-            // Trasformiamo la posizione della mano nello spazio locale della manovella (il ROOT, che non ruota)
-            Vector3 handWorldPos = interactor.transform.position;
+            // Trasforma la posizione della mano in spazio locale rispetto al ROOT della manovella
             Vector3 localHandPos = transform.InverseTransformPoint(handWorldPos);
             
-            // Proietta la posizione locale sul piano definito dal rotationAxis locale
-            // Se rotationAxis è (0,0,1), proietta sul piano XY
-            return Vector3.ProjectOnPlane(localHandPos, rotationAxis).normalized;
+            // Proietta sul piano di rotazione (definito dall'asse come normale)
+            // Se rotationAxis è Vector3.forward, proietta sul piano XY locale
+            Vector3 direction = Vector3.ProjectOnPlane(localHandPos, rotationAxis);
+            
+            return direction.normalized;
         }
     }
 }
