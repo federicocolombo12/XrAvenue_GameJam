@@ -614,6 +614,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3013994986271868299, guid: 1e16cb90e44ebf54aad9574bd15324bf, type: 3}
+      propertyPath: onRotationStep
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fc69401d69a1964fb653b7a7627217f, type: 2}
+    - target: {fileID: 3013994986271868299, guid: 1e16cb90e44ebf54aad9574bd15324bf, type: 3}
       propertyPath: totalRotationVariable
       value: 
       objectReference: {fileID: 11400000, guid: 88ff152cbe1427c459f6ec6a6ef15229, type: 2}
