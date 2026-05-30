@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eeff1f6f86f4ab68001f3e68708e63e, type: 3}
-  m_Name: Day3R_Dialogues_NPC2
+  m_Name: Day3R_Dialogues_NPC3
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: "Perch\xE8 lo stai facendo?"
+    text: "C'\xE8 speranza per tutti noi, dobbiamo solo saperne approfittare"
   - speaker: 1
-    text: Cosa ci guadagni?
+    text: Non farti vedere, nascondi la bomba nel cassetto
+  - speaker: 1
+    text: "Questo \xE8 un punto di riciclo estremamente profittevole per il governo"
+  - speaker: 1
+    text: "Fai in modo che non possano pi\xF9 approfittarsi di noi"
+  - speaker: 1
+    text: Il sacrificio di uno, per la salvezza di tutti
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

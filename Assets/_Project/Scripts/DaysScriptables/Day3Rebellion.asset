@@ -17,7 +17,19 @@ MonoBehaviour:
   deliveries:
   - stepLabel: Random glass
     type: 2
-    npcDialogue: {fileID: 0}
+    npcDialogue: {fileID: 11400000, guid: c70b7b46ecd13794294fc5a67f973b03, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: Random glass
+    type: 2
+    npcDialogue: {fileID: 11400000, guid: f689a256e7772e949bb61445e81ca2b0, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: Bomba
+    type: 7
+    npcDialogue: {fileID: 11400000, guid: e9f264fa32736ec4eb2b962da40f650f, type: 2}
+    bossDialogue: {fileID: 0}
+  - stepLabel: per confondere le acque
+    type: 1
+    npcDialogue: {fileID: 11400000, guid: 412658cea2e767745b32f6b41b239d2f, type: 2}
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: d615b7e961e332842b23c7fa58b1ee28, type: 2}
   nextDayRebel: {fileID: 11400000, guid: d615b7e961e332842b23c7fa58b1ee28, type: 2}

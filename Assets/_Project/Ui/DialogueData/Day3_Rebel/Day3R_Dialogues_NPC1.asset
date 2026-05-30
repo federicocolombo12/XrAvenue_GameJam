@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: Ciao
+    text: Siete dei bastardi
   - speaker: 1
-    text: Devo consegnarti questo bicchiere
-  - speaker: 0
-    text: Credo sia di vetro
+    text: "Non vi \xE8 bastato prendervi tutto"
+  - speaker: 1
+    text: Ora anche questo
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
