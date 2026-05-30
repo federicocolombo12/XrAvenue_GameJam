@@ -5,57 +5,59 @@ using Dev.Nicklaj.Butter;
 namespace AvenueXR.Core
 {
     /// <summary>
-    /// Una manovella fisica che può essere ruotata con le mani in VR/MR.
-    /// Eredita da XRGrabInteractable per supportare meglio il pinch delle mani e i controller.
+    /// Simulatore di manovella meccanica reale. 
+    /// Ideale per rotazioni continue (verricelli, meccanismi a manovella).
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
     public class XRPhysicalCrank : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
     {
-        [Header("Crank Settings")]
+        [Header("Meccanica Manovella")]
+        [Tooltip("L'oggetto figlio che deve ruotare visivamente.")]
         public Transform visualTransform;
-        public Vector3 rotationAxis = Vector3.forward; // Asse LOCALE di rotazione (es. Z per manopola frontale)
+        [Tooltip("Asse locale di rotazione (solitamente Vector3.forward o Vector3.up).")]
+        public Vector3 rotationAxis = Vector3.forward;
+        [Tooltip("Moltiplicatore di forza. 1 = 1:1 con la mano.")]
         public float sensitivity = 1.0f;
-        public bool invertRotation = false; // Toggle per invertire il senso di rotazione
+        public bool invertRotation = false;
 
         [Header("Butter Output")]
         public FloatVariable totalRotationVariable;
         public FloatEvent onRotationStep;
 
-        // --- Local Events for binding ---
+        // --- Evento locale per il BinCrusher ---
         public event System.Action<float> OnRotationDelta;
 
-        private Vector3 _initialLocalHandDir;
-        private Quaternion _initialVisualRotation;
-        private float _currentAngleAccumulator;
-        private float _totalSessionRotation; // Rotazione accumulata in questa sessione di grab
+        private Vector3 _previousLocalHandDir;
+        private float _accumulatedAngle = 0f;
+        private float _audioStepCounter = 0f;
 
         protected override void Awake()
         {
             base.Awake();
             
+            // Setup Rigidbody meccanico: non cade, non si sposta, non reagisce a colpi
             Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-                rb.useGravity = false;
-            }
+            rb.isKinematic = true;
+            rb.useGravity = false;
 
+            // Configurazione Grab per rotazione pura
             trackRotation = false;
             trackPosition = false;
             movementType = MovementType.Instantaneous;
             attachEaseInTime = 0;
 
             if (visualTransform == null) visualTransform = transform;
+            
+            // Sincronizziamo l'accumulatore con la rotazione iniziale dell'oggetto
+            // (Assumiamo che ruoti sull'asse impostato)
+            _accumulatedAngle = 0f; 
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            
-            // Memorizziamo lo stato iniziale al momento del grab
-            _initialLocalHandDir = GetLocalDirectionToHand(args.interactorObject.transform.position);
-            _initialVisualRotation = visualTransform.localRotation;
-            _totalSessionRotation = 0f;
+            // Al momento del grab, guardiamo dove si trova la mano rispetto al centro della manovella
+            _previousLocalHandDir = GetLocalDirectionToHand(args.interactorObject.transform.position);
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -64,56 +66,55 @@ namespace AvenueXR.Core
 
             if (isSelected && updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
             {
-                RotateCrank();
+                ApplyMechanicalRotation();
             }
         }
 
-        private void RotateCrank()
+        private void ApplyMechanicalRotation()
         {
             if (interactorsSelecting.Count == 0) return;
 
+            // 1. Troviamo la posizione attuale della mano
             var interactor = interactorsSelecting[0];
             Vector3 currentLocalHandDir = GetLocalDirectionToHand(interactor.transform.position);
-            
-            // Calcola l'angolo tra la direzione iniziale e quella attuale
-            float angleDiff = Vector3.SignedAngle(_initialLocalHandDir, currentLocalHandDir, rotationAxis);
-            
-            if (invertRotation) angleDiff *= -1f;
 
-            // Applichiamo la rotazione "diretta" basata sull'offset dal grab iniziale
-            float targetAngle = angleDiff * sensitivity;
-            
-            // Applichiamo la rotazione alla visual transform partendo dalla sua rotazione iniziale
-            visualTransform.localRotation = _initialVisualRotation * Quaternion.AngleAxis(targetAngle, rotationAxis);
+            // 2. Calcoliamo quanto la mano si è spostata lungo il cerchio dall'ultimo frame
+            float deltaAngle = Vector3.SignedAngle(_previousLocalHandDir, currentLocalHandDir, rotationAxis);
 
-            // Per gli eventi di Butter e i calcoli di smaciullamento, usiamo il delta
-            float delta = targetAngle - _totalSessionRotation;
-            if (Mathf.Abs(delta) > 0.01f)
+            if (Mathf.Abs(deltaAngle) > 0.01f)
             {
-                if (totalRotationVariable != null) totalRotationVariable.Value += delta;
-                OnRotationDelta?.Invoke(delta);
+                if (invertRotation) deltaAngle *= -1f;
+                float adjustedDelta = deltaAngle * sensitivity;
 
-                // Click sonoro ogni 20 gradi
-                _currentAngleAccumulator += Mathf.Abs(delta);
-                if (_currentAngleAccumulator >= 20f)
+                // 3. Sommiamo lo spostamento alla rotazione totale (permette infiniti giri)
+                _accumulatedAngle += adjustedDelta;
+
+                // 4. Applichiamo la rotazione visiva
+                visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedAngle, rotationAxis);
+
+                // 5. Notifichiamo gli altri sistemi (Butter, Smaciullamento)
+                if (totalRotationVariable != null) totalRotationVariable.Value += adjustedDelta;
+                OnRotationDelta?.Invoke(adjustedDelta);
+
+                // 6. Feedback sonoro ogni 15 gradi di rotazione effettiva
+                _audioStepCounter += Mathf.Abs(adjustedDelta);
+                if (_audioStepCounter >= 15f)
                 {
-                    onRotationStep?.Raise(_currentAngleAccumulator);
-                    _currentAngleAccumulator = 0f;
+                    onRotationStep?.Raise(_audioStepCounter);
+                    _audioStepCounter = 0f;
                 }
-                
-                _totalSessionRotation = targetAngle;
+
+                // 7. Prepariamo il prossimo frame
+                _previousLocalHandDir = currentLocalHandDir;
             }
         }
 
         private Vector3 GetLocalDirectionToHand(Vector3 handWorldPos)
         {
-            // Trasforma la posizione della mano in spazio locale rispetto al ROOT della manovella
-            Vector3 localHandPos = transform.InverseTransformPoint(handWorldPos);
-            
-            // Proietta sul piano di rotazione (definito dall'asse come normale)
-            // Se rotationAxis è Vector3.forward, proietta sul piano XY locale
-            Vector3 direction = Vector3.ProjectOnPlane(localHandPos, rotationAxis);
-            
+            // Portiamo la posizione della mano nello spazio locale del ROOT (che sta fermo)
+            Vector3 localPos = transform.InverseTransformPoint(handWorldPos);
+            // Proiettiamo sul piano di rotazione per ignorare se la mano tira in avanti/indietro
+            Vector3 direction = Vector3.ProjectOnPlane(localPos, rotationAxis);
             return direction.normalized;
         }
     }
