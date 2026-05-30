@@ -24,22 +24,32 @@ namespace AvenueXR.Core
 
         private Vector3 _previousHandDirection;
         private float _currentAngleAccumulator;
+        private float _accumulatedVisualAngle;
 
         protected override void Awake()
         {
             base.Awake();
-            if (visualTransform == null) visualTransform = transform;
             
-            // Forziamo impostazioni per rotazione fisica
+            // DISABILITIAMO il tracking automatico di Unity
+            // Vogliamo solo sapere DOVE è la mano, non che Unity sposti l'oggetto
+            trackRotation = false;
+            trackPosition = false;
+            
+            if (visualTransform == null)
+            {
+                Debug.LogWarning($"[XRPhysicalCrank] VisualTransform non assegnata su {gameObject.name}. La rotazione potrebbe essere instabile.");
+                visualTransform = transform;
+            }
+            
             movementType = MovementType.Instantaneous;
             attachEaseInTime = 0;
-            retainTransformParent = true;
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            _previousHandDirection = GetHandDirection(args.interactorObject);
+            // Inizializziamo la direzione in spazio LOCALE per essere indipendenti dalla rotazione del mondo
+            _previousHandDirection = GetLocalHandDirection(args.interactorObject);
         }
 
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
@@ -52,55 +62,52 @@ namespace AvenueXR.Core
             }
         }
 
-        private float _accumulatedVisualAngle;
-
         private void RotateCrank()
         {
-            // Prendiamo il primo interactor che ci sta afferrando
             var interactor = interactorsSelecting[0];
-            Vector3 currentHandDirection = GetHandDirection(interactor);
+            Vector3 currentLocalDirection = GetLocalHandDirection(interactor);
             
-            // Calcola l'angolo relativo sul piano di rotazione
-            float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentHandDirection, transform.TransformDirection(rotationAxis));
+            // Calcola l'angolo tra le direzioni locali proiettate sul piano
+            // Usiamo rotationAxis come normale del piano locale
+            float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentLocalDirection, rotationAxis);
             
-            // Applica la rotazione visiva (RESTRETTI SOLO ALL'ASSE INDICATO)
-            // Usiamo un accumulatore per evitare "drift" su altri assi
-            _accumulatedVisualAngle += angleDelta * sensitivity;
-            
-            if (visualTransform != null)
+            if (Mathf.Abs(angleDelta) > 0.001f)
             {
-                // Calcoliamo la rotazione locale finale applicando l'angolo solo all'asse scelto
-                visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedVisualAngle, rotationAxis);
-            }
-            
-            // Aggiorna Butter
-            if (totalRotationVariable != null)
-            {
-                totalRotationVariable.Value += angleDelta;
-            }
+                _accumulatedVisualAngle += angleDelta * sensitivity;
+                
+                if (visualTransform != null)
+                {
+                    // Applichiamo la rotazione LOCALE solo all'asse desiderato
+                    visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedVisualAngle, rotationAxis);
+                }
+                
+                if (totalRotationVariable != null)
+                {
+                    totalRotationVariable.Value += angleDelta;
+                }
 
-            // Notifica evento locale
-            OnRotationDelta?.Invoke(angleDelta);
+                OnRotationDelta?.Invoke(angleDelta);
 
-            // Click sonoro
-            _currentAngleAccumulator += Mathf.Abs(angleDelta);
-            if (_currentAngleAccumulator >= 30f)
-            {
-                onRotationStep?.Raise(_currentAngleAccumulator);
-                _currentAngleAccumulator = 0f;
+                _currentAngleAccumulator += Mathf.Abs(angleDelta);
+                if (_currentAngleAccumulator >= 30f)
+                {
+                    onRotationStep?.Raise(_currentAngleAccumulator);
+                    _currentAngleAccumulator = 0f;
+                }
+
+                _previousHandDirection = currentLocalDirection;
             }
-
-            _previousHandDirection = currentHandDirection;
         }
 
-        private Vector3 GetHandDirection(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor)
+        private Vector3 GetLocalHandDirection(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor)
         {
-            // Vettore dalla manovella alla mano
-            Vector3 direction = interactor.transform.position - transform.position;
+            // Trasformiamo la posizione della mano nello spazio locale della manovella (il ROOT, che non ruota)
+            Vector3 handWorldPos = interactor.transform.position;
+            Vector3 localHandPos = transform.InverseTransformPoint(handWorldPos);
             
-            // Proietta sul piano definito dall'asse di rotazione
-            Vector3 planeNormal = transform.TransformDirection(rotationAxis);
-            return Vector3.ProjectOnPlane(direction, planeNormal).normalized;
+            // Proietta la posizione locale sul piano definito dal rotationAxis locale
+            // Se rotationAxis è (0,0,1), proietta sul piano XY
+            return Vector3.ProjectOnPlane(localHandPos, rotationAxis).normalized;
         }
     }
 }
