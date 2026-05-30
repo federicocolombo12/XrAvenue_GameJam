@@ -7,17 +7,30 @@ namespace AvenueXR.Core
     {
         [Header("Butter Events")]
         public GameEvent onDayEnd;
-        public DayDataEvent onDayStart; // Per resettare il fader a inizio giorno
+        public DayDataEvent onDayStart; 
 
         [Header("Animator Settings")]
         public Animator faderAnimator;
         public string dayEndBool = "DayEnd";
 
+        [Header("Safety Reset")]
+        public CanvasGroup faderCanvasGroup;
+
+        private void Awake()
+        {
+            // Sicurezza: forziamo la trasparenza all'avvio nel caso l'alpha sia rimasta a 1 nell'editor
+            if (faderCanvasGroup != null)
+            {
+                faderCanvasGroup.alpha = 0f;
+            }
+        }
+
         void OnEnable()
         {
+            // Usiamo una lambda per gestire il parametro richiesto dal sistema di eventi di Butter
             if (onDayEnd != null)
-                onDayEnd.RegisterListener(HandleDayEnd);
-
+                onDayEnd.RegisterListener(HandleDayEndWrapper);
+            
             if (onDayStart != null)
                 onDayStart.RegisterListener(HandleDayStart);
         }
@@ -25,10 +38,16 @@ namespace AvenueXR.Core
         void OnDisable()
         {
             if (onDayEnd != null)
-                onDayEnd.DeregisterListener(HandleDayEnd);
+                onDayEnd.DeregisterListener(HandleDayEndWrapper);
 
             if (onDayStart != null)
                 onDayStart.DeregisterListener(HandleDayStart);
+        }
+
+        // Wrapper per compatibilità con l'evento di Butter
+        private void HandleDayEndWrapper(Unit unit)
+        {
+            HandleDayEnd();
         }
 
         private void HandleDayEnd()
@@ -54,4 +73,3 @@ namespace AvenueXR.Core
         }
     }
 }
-
