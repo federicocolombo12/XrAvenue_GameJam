@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eeff1f6f86f4ab68001f3e68708e63e, type: 3}
-  m_Name: Day2_Dialogues_NPC3
+  m_Name: Day3O_Dialogues_Boss_Intro
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
-  - speaker: 1
-    text: Ciao...
-  - speaker: 1
-    text: Mi hanno chiesto di lasciarti questo anello
-  - speaker: 1
-    text: Ma ci sono molto affezionata...
-  - speaker: 1
-    text: 'Era un regalo di mia nonna, ti dispiacerebbe ridarmelo indietro? '
+  - speaker: 0
+    text: Ti sei impegnato lo scorso giorno.
+  - speaker: 0
+    text: Hai compiuto il tuo dovere.
+  - speaker: 0
+    text: "Prendi questi soldi in pi\xF9."
+  - speaker: 0
+    text: E ricorda di continuare a svolgere il lavoro al meglio
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
-  maxPauseSeconds: 5
+  maxPauseSeconds: 4

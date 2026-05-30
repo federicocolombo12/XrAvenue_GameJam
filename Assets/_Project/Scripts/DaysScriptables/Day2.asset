@@ -41,4 +41,4 @@ MonoBehaviour:
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: ee12c9c5426645147aebaf0d65dc793e, type: 2}
   nextDayRebel: {fileID: 11400000, guid: 190ba17ccedfa7c49bf52e7586645c97, type: 2}
-  worldPollutionLevel: 0
+  worldPollutionLevel: 1
