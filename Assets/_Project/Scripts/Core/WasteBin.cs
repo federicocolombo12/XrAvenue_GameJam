@@ -10,7 +10,7 @@ namespace AvenueXR.Core
         public bool isRejectBin = false; // Se vero, questo cestino è per il rifiuto del compito
 
         [Header("Butter Events")]
-        public WasteTypeEvent onWasteSorted;
+        public WasteTypeEvent onItemPendingCrush; // Nuovo evento per lo smaciullamento manuale
         public BoolEvent onMoralChoiceMade;
         public StringEvent onBossSpeech;
 
@@ -52,13 +52,13 @@ namespace AvenueXR.Core
                 }
                 else
                 {
-                    // Errore di smistamento (non necessariamente ribellione, forse solo incompetenza)
+                    // Errore di smistamento
                     if (onBossSpeech != null) onBossSpeech.Raise("Errore di smistamento. La tua paga verrà decurtata.");
                 }
             }
 
-            // Notifica il sistema che un oggetto è stato processato per far avanzare lo spawner
-            if (onWasteSorted != null) onWasteSorted.Raise(item.type);
+            // Invece di far avanzare subito il gioco, mandiamo l'evento al CrushManager
+            if (onItemPendingCrush != null) onItemPendingCrush.Raise(item.type);
 
             Destroy(item.gameObject);
         }
