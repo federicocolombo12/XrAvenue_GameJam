@@ -49,6 +49,8 @@ namespace AvenueXR.Core
             }
         }
 
+        private float _accumulatedVisualAngle;
+
         private void RotateCrank()
         {
             // Prendiamo il primo interactor che ci sta afferrando
@@ -58,8 +60,15 @@ namespace AvenueXR.Core
             // Calcola l'angolo relativo sul piano di rotazione
             float angleDelta = Vector3.SignedAngle(_previousHandDirection, currentHandDirection, transform.TransformDirection(rotationAxis));
             
-            // Applica la rotazione visiva (in locale)
-            visualTransform.Rotate(rotationAxis, angleDelta * sensitivity, Space.Self);
+            // Applica la rotazione visiva (RESTRETTI SOLO ALL'ASSE INDICATO)
+            // Usiamo un accumulatore per evitare "drift" su altri assi
+            _accumulatedVisualAngle += angleDelta * sensitivity;
+            
+            if (visualTransform != null)
+            {
+                // Calcoliamo la rotazione locale finale applicando l'angolo solo all'asse scelto
+                visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedVisualAngle, rotationAxis);
+            }
             
             // Aggiorna Butter
             if (totalRotationVariable != null)
