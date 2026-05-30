@@ -18,14 +18,16 @@ namespace AvenueXR.Core
         [Header("Path Waypoints")]
         public List<Transform> waypoints = new List<Transform>();
 
-        // --- Animation Hooks ---
+        // --- Animation & Lifecycle Hooks ---
         public event Action<NPCState> OnStateChanged;
-        public event Action<float> OnSpeedChanged; // Passa la velocità attuale (0 se fermo, moveSpeed se cammina)
+        public event Action<float> OnSpeedChanged;
+        public event Action OnLeftScene; // Notifica quando l'NPC ha finito il giro ed è tornato alla base
 
         public NPCState CurrentState { get; private set; } = NPCState.Idle;
         public float CurrentSpeed { get; private set; } = 0f;
         
         private bool _isMoving = false;
+        private bool _canReturn = false;
 
         public void DeliverObject(WasteType type, Action onArrivalAtDesk)
         {
@@ -37,7 +39,16 @@ namespace AvenueXR.Core
                 return;
             }
 
+            _canReturn = false;
             StartCoroutine(DeliveryRoutine(onArrivalAtDesk));
+        }
+
+        /// <summary>
+        /// Chiamalo per dire all'NPC che può andarsene (es. dopo che l'oggetto è stato smaciullato o restituito)
+        /// </summary>
+        public void CompleteInteraction()
+        {
+            _canReturn = true;
         }
 
         private IEnumerator DeliveryRoutine(Action onArrival)
@@ -53,18 +64,20 @@ namespace AvenueXR.Core
             UpdateState(NPCState.Interacting);
             onArrival?.Invoke();
             
-            // Aspetta il tempo dell'animazione di consegna
-            yield return new WaitForSeconds(interactionDuration);
+            // 3. ATTESA: Invece di un tempo fisso, aspetta che _canReturn diventi true
+            Debug.Log("[NPCController] In attesa che l'azione del giocatore sia completata...");
+            yield return new WaitUntil(() => _canReturn);
 
-            // 3. Torna indietro
+            // 4. Torna indietro
             UpdateState(NPCState.Walking);
             for (int i = waypoints.Count - 2; i >= 0; i--)
             {
                 yield return StartCoroutine(MoveTo(waypoints[i].position));
             }
 
-            // 4. Finito!
+            // 5. Finito!
             UpdateState(NPCState.Idle);
+            OnLeftScene?.Invoke();
         }
 
         private IEnumerator MoveTo(Vector3 target)
