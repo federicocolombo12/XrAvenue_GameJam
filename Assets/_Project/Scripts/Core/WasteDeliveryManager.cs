@@ -54,9 +54,17 @@ namespace AvenueXR.Core
 
         private void StartNewDay(DayData day)
         {
+            if (day == null) return;
+            
             Debug.Log($"[WasteDeliveryManager] Inizio nuovo giorno: {day.dayLabel}");
             _currentDaySteps = day.deliveries;
             _currentStepIndex = 0;
+            
+            // Reset di sicurezza per tutti i flag
+            _isWaitingForIntro = false;
+            _isWaitingForStepDialogue = false;
+            _isWaitingForObjectProcess = false;
+            _isWaitingForNPCLeave = false;
             
             if (day.introDialogue != null)
             {
@@ -87,13 +95,17 @@ namespace AvenueXR.Core
 
         private void RequestNextDelivery()
         {
+            if (_currentDaySteps == null) return;
+
             if (_currentStepIndex < _currentDaySteps.Count)
             {
                 WasteDeliveryStep step = _currentDaySteps[_currentStepIndex];
-                Debug.Log($"[WasteDeliveryManager] Richiedo consegna {_currentStepIndex}: {step.type}");
+                Debug.Log($"[WasteDeliveryManager] --- Inizio Step {_currentStepIndex} ---");
                 
+                // Reset flag per il nuovo step
                 _isWaitingForObjectProcess = true;
                 _isWaitingForNPCLeave = true;
+                _isWaitingForStepDialogue = false;
 
                 npcController.DeliverObject(step.type, () => {
                     // L'NPC è arrivato alla scrivania
@@ -112,7 +124,7 @@ namespace AvenueXR.Core
             }
             else
             {
-                Debug.Log("[WasteDeliveryManager] Tutte le consegne completate. Giorno finito.");
+                Debug.Log("[WasteDeliveryManager] !!! Tutte le consegne completate. Giorno finito !!!");
                 if (onDayEnd != null) onDayEnd.Raise();
             }
         }

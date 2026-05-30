@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 0
+    speakerName: Boss
     text: Benvenuto.
   - speaker: 0
+    speakerName: Boss
     text: "Questo \xE8 il tuo nuovo posto di lavoro."
   - speaker: 0
+    speakerName: Boss
     text: Sono qui per parlarti di cosa dovrai fare.
   - speaker: 0
+    speakerName: Boss
     text: "Il tuo lavoro \xE8 semplice..."
   - speaker: 0
+    speakerName: Boss
     text: "Fai quello e andr\xE0 tutto bene."
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04

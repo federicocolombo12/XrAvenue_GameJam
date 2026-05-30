@@ -36,18 +36,24 @@ namespace AvenueXR.Core
         {
             if (data == null || data.lines.Count == 0)
             {
-                onDialogueFinished?.Raise();
+                if (!_isProcessing) onDialogueFinished?.Raise();
                 return;
             }
 
+            // Se stiamo già processando, accodiamo le nuove linee alla coda esistente
+            if (_isProcessing)
+            {
+                Debug.Log($"[DialogueManager] Sequenza in corso. Accodo {data.lines.Count} nuove linee.");
+                foreach (var line in data.lines) _lineQueue.Enqueue(line);
+                return;
+            }
+
+            // Nuova sequenza
             _currentData = data;
             _lineQueue.Clear();
             foreach (var line in data.lines) _lineQueue.Enqueue(line);
 
-            if (!_isProcessing)
-            {
-                StartCoroutine(ProcessQueue());
-            }
+            StartCoroutine(ProcessQueue());
         }
 
         private IEnumerator ProcessQueue()
@@ -70,20 +76,18 @@ namespace AvenueXR.Core
                 // Chiudi l'altro fumetto se è aperto
                 if (otherPopup != null) otherPopup.Close();
 
+                bool lineFinished = false;
                 if (targetPopup != null)
                 {
-                    // Calcolo approssimativo della durata del typewriter
-                    float estimatedTime = line.text.Length * targetPopup.typewriterDelay + targetPopup.animDuration;
-                    
-                    targetPopup.ShowDialogue(line.text, line.speakerName);
-                    
-                    // Aspettiamo che il testo finisca di scriversi
-                    yield return new WaitForSeconds(estimatedTime);
+                    targetPopup.ShowDialogue(line.text, line.speakerName, () => lineFinished = true);
                 }
                 else
                 {
                     Debug.LogWarning($"[DialogueManager] Manca il popup per lo speaker: {line.speaker}");
+                    lineFinished = true;
                 }
+
+                yield return new WaitUntil(() => lineFinished);
 
                 // Delay di lettura prima della prossima linea
                 float pauseTime = Mathf.Clamp(line.text.Length * 0.05f, _currentData.minPauseSeconds, _currentData.maxPauseSeconds);

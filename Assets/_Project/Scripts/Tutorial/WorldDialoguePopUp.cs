@@ -25,9 +25,11 @@ public class WorldDialoguePopup : MonoBehaviour
 
     private Coroutine _typewriterCoroutine;
     private bool _isOpen = false;
+    private System.Action _onTypewriterComplete;
 
     private void Awake()
     {
+// ... (rest of Awake unchanged)
 
         if (panel != null)
             panel.localScale = Vector3.zero;
@@ -44,19 +46,27 @@ public class WorldDialoguePopup : MonoBehaviour
     public void Open()
     {
         if (_isOpen) return;
+        gameObject.SetActive(true);
+        _isOpen = true;
         StopTypewriter();
+        panel.DOKill();
         OpenAnim();
     }
 
-    public void ShowDialogue(string message, string speakerName = "")
+    public void ShowDialogue(string message, string speakerName = "", System.Action onComplete = null)
     {
+        panel.DOKill();
         StopTypewriter();
+        _onTypewriterComplete = onComplete;
 
         if (speakerNameText != null)
             speakerNameText.text = speakerName ?? "";
 
-        if (!_isOpen)
+        // Se il pannello è chiuso o quasi chiuso (magari per un'animazione di chiusura in corso)
+        if (!_isOpen || panel.localScale.x < 0.1f)
         {
+            gameObject.SetActive(true);
+            _isOpen = true;
             OpenAnim(() => StartTypewriter(message));
         }
         else
@@ -69,6 +79,7 @@ public class WorldDialoguePopup : MonoBehaviour
     public void Clean()
     {
         StopTypewriter();
+        panel.DOKill();
         if (dialogueText != null)
             dialogueText.text = "";
     }
@@ -77,6 +88,7 @@ public class WorldDialoguePopup : MonoBehaviour
     {
         if (!_isOpen) return;
         StopTypewriter();
+        panel.DOKill();
         CloseAnim();
     }
 
@@ -153,6 +165,10 @@ public class WorldDialoguePopup : MonoBehaviour
         panel.localScale = Vector3.one;
 
         _typewriterCoroutine = null;
+        
+        // Notifichiamo la fine
+        _onTypewriterComplete?.Invoke();
+        _onTypewriterComplete = null;
     }
 
 #if UNITY_EDITOR

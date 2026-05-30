@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 0
+    speakerName: Boss
     text: Hai eseguito il tuo compito.
   - speaker: 0
+    speakerName: 
     text: Bene.
   - speaker: 0
+    speakerName: 
     text: Ci vediamo domani.
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
