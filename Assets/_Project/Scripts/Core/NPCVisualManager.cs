@@ -80,7 +80,13 @@ namespace AvenueXR.Core
                     _activeAnimator.Rebind();
                     _activeAnimator.Update(0f);
                     
-                    SetAnimatorBool(isWalkingBool, false);
+                    // Sincronizzazione immediata con lo stato attuale del controller
+                    // Nel caso in cui il DeliveryManager abbia già dato l'ordine di camminare
+                    bool isWalking = (controller.CurrentState == NPCState.Walking);
+                    bool isInteracting = (controller.CurrentState == NPCState.Interacting);
+
+                    SetAnimatorBool(isWalkingBool, isWalking);
+                    SetAnimatorBool("isInteracting", isInteracting);
                 }
                 else
                 {
