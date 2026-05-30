@@ -1776,14 +1776,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.WasteObjectSpawner
   spawnPoint: {fileID: 2090644810}
-  paperPrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
-  plasticPrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
-  glassPrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
-  metalPrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
-  organicPrefab: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
-  moralWastePrefab: {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
-  goreWastePrefab: {fileID: 5345613369068697587, guid: 52377809839141248a4bcaf24cee7a49, type: 3}
-  bombPrefab: {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
+  paperPrefabs:
+  - {fileID: 3098007518949588521, guid: 9f5548159f4528045871fa967af8f823, type: 3}
+  - {fileID: 3098007518949588521, guid: 901d561244b203442a1835f9813715b0, type: 3}
+  - {fileID: 6059682000117895032, guid: f56ff1c8e0ba4c448946729df53dcdfe, type: 3}
+  - {fileID: 3098007518949588521, guid: b5acde1b9afe402478dbd3cb73a742c5, type: 3}
+  plasticPrefabs:
+  - {fileID: 3008116145758251924, guid: ef37ad30ae6598b418f11eed535edaad, type: 3}
+  glassPrefabs:
+  - {fileID: 5893036222178232115, guid: c089f7e83d162264597fc110c01b77d8, type: 3}
+  - {fileID: 5893036222178232115, guid: 9e5107e5dfa716e4f9cd166ea58ce0d5, type: 3}
+  metalPrefabs: []
+  organicPrefabs: []
+  moralWastePrefabs: []
+  goreWastePrefabs:
+  - {fileID: 5345613369068697587, guid: 52377809839141248a4bcaf24cee7a49, type: 3}
+  bombPrefabs:
+  - {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
 --- !u!1 &2103561222
 GameObject:
   m_ObjectHideFlags: 0
