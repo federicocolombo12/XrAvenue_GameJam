@@ -15,6 +15,9 @@ namespace AvenueXR.Core
         public WorldDialoguePopup bossWorldPopup;
         public WorldDialoguePopup npcWorldPopup;
 
+        [Header("Butter Events - Scene Sync")]
+        public BoolEvent onTVStateChanged;
+
         private Queue<DialogueLine> _lineQueue = new Queue<DialogueLine>();
         private DialogueData _currentData;
         private bool _isProcessing = false;
@@ -58,6 +61,12 @@ namespace AvenueXR.Core
                 WorldDialoguePopup targetPopup = isBoss ? bossWorldPopup : npcWorldPopup;
                 WorldDialoguePopup otherPopup = isBoss ? npcWorldPopup : bossWorldPopup;
 
+                // Gestione TV via Butter: Accesa se parla il Boss, spenta se parla l'NPC
+                if (onTVStateChanged != null)
+                {
+                    onTVStateChanged.Raise(isBoss);
+                }
+
                 // Chiudi l'altro fumetto se è aperto
                 if (otherPopup != null) otherPopup.Close();
 
@@ -81,9 +90,10 @@ namespace AvenueXR.Core
                 yield return new WaitForSeconds(pauseTime + _currentData.basePauseSeconds);
             }
 
-            // Fine della sequenza - Chiudiamo tutti i fumetti
+            // Fine della sequenza - Chiudiamo tutti i fumetti e spegniamo la TV via Butter
             if (bossWorldPopup != null) bossWorldPopup.Close();
             if (npcWorldPopup != null) npcWorldPopup.Close();
+            if (onTVStateChanged != null) onTVStateChanged.Raise(false);
 
             _isProcessing = false;
             
