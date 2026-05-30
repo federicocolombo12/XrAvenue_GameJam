@@ -15,18 +15,18 @@ MonoBehaviour:
   dayLabel: Day 1_Tutorial
   introDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
   deliveries:
-  - stepLabel: 
+  - stepLabel: Libro base
     type: 0
     npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 0}
-  - stepLabel: 
+    bossDialogue: {fileID: 11400000, guid: e9ef085b5f6da0c4294de288ef788d6e, type: 2}
+  - stepLabel: Bottiglia + compito subito dopo
     type: 2
-    npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
+    npcDialogue: {fileID: 11400000, guid: 5cb751912d204d744a0b378b7e53c354, type: 2}
     bossDialogue: {fileID: 0}
-  - stepLabel: 
+  - stepLabel: Qua ti vengono i primi dubbi, qualcosa di politico
     type: 5
-    npcDialogue: {fileID: 11400000, guid: 6309820252bf2c14c8161385cb9c8209, type: 2}
-    bossDialogue: {fileID: 0}
+    npcDialogue: {fileID: 11400000, guid: 7bd19a1a69d5c2341989f5c71e99b358, type: 2}
+    bossDialogue: {fileID: 11400000, guid: 647b66542ab57314e9de9d8079efcb4b, type: 2}
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0
