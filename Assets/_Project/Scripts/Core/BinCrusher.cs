@@ -15,6 +15,7 @@ namespace AvenueXR.Core
 
         [Header("Butter Output")]
         public WasteTypeEvent onWasteSorted; // Per far avanzare il gioco (Manager)
+        public BoolEvent onSortingResult;    // true se corretto, false se sbagliato
         public GameEvent onCrushStart;       // Feedback visivo/sonoro
         public GameEvent onCrushTick;
 
@@ -74,6 +75,11 @@ namespace AvenueXR.Core
         private void CompleteCrush()
         {
             Debug.Log($"[BinCrusher] Cestino {targetBin.acceptedType}: Smaciullamento completato per {_pendingType}!");
+            
+            // Verifica correttezza
+            bool isCorrect = (_pendingType == targetBin.acceptedType);
+            if (onSortingResult != null) onSortingResult.Raise(isCorrect);
+
             _isPending = false;
             _accumulatedRotation = 0f;
 

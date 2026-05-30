@@ -790,6 +790,7 @@ MonoBehaviour:
   targetBin: {fileID: 5821665739973919939}
   targetCrank: {fileID: 0}
   onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
+  onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
   onCrushStart: {fileID: 11400000, guid: 0ce0980e167c9d646a6aa2c856c70e3a, type: 2}
   onCrushTick: {fileID: 11400000, guid: e53770103e0646346bcdeada4597476a, type: 2}
   rotationNeeded: 360
