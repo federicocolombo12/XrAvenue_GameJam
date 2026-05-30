@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 0
+    speakerName: Boss
     text: Bene.
   - speaker: 0
+    speakerName: Boss
     text: Vediamo se hai capito.
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04

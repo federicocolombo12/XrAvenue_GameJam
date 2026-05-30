@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1_Tutorial
   introDialogue: {fileID: 11400000, guid: a3ed09fd543d4d747a7e3c0ae97d4233, type: 2}
+  outroDialogue: {fileID: 11400000, guid: 647b66542ab57314e9de9d8079efcb4b, type: 2}
   deliveries:
   - stepLabel: Libro base
     type: 0
@@ -26,7 +27,7 @@ MonoBehaviour:
   - stepLabel: Qua ti vengono i primi dubbi, qualcosa di politico
     type: 5
     npcDialogue: {fileID: 11400000, guid: 7bd19a1a69d5c2341989f5c71e99b358, type: 2}
-    bossDialogue: {fileID: 11400000, guid: 647b66542ab57314e9de9d8079efcb4b, type: 2}
+    bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0

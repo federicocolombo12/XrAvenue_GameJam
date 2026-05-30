@@ -21,9 +21,12 @@ namespace AvenueXR.Core
 
         public void Spawn(WasteType type)
         {
-            Debug.Log($"[WasteObjectSpawner] Tentativo di spawn per il tipo: {type}");
             GameObject prefab = GetRandomPrefabForType(type);
+            SpawnPrefab(prefab);
+        }
 
+        public void SpawnPrefab(GameObject prefab)
+        {
             if (prefab != null)
             {
                 if (spawnPoint == null)
@@ -35,13 +38,9 @@ namespace AvenueXR.Core
                 Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
                 Debug.Log($"[WasteObjectSpawner] Spawn riuscito: {prefab.name} a {spawnPoint.position}");
             }
-            else
-            {
-                Debug.LogWarning($"[WasteObjectSpawner] Nessun prefab assegnato o lista vuota per il tipo: {type}");
-            }
         }
 
-        private GameObject GetRandomPrefabForType(WasteType type)
+        public GameObject GetRandomPrefabForType(WasteType type)
         {
             List<GameObject> targetList = type switch
             {

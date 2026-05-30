@@ -67,5 +67,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -6056541330796499132, guid: bc2b5aa43462f0d47bebbe009794d6e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1205753413733260352}
   m_SourcePrefab: {fileID: 100100000, guid: bc2b5aa43462f0d47bebbe009794d6e0, type: 3}
+--- !u!1 &1031171470595663443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6056541330796499132, guid: bc2b5aa43462f0d47bebbe009794d6e0, type: 3}
+  m_PrefabInstance: {fileID: 2719509256368294167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1205753413733260352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031171470595663443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37410d59416f12141b90e8accb69ed48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.NPCHandBinder

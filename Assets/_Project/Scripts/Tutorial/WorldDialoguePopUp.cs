@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -7,70 +7,71 @@ using DG.Tweening;
 public class WorldDialoguePopup : MonoBehaviour
 {
     [Header("References")]
-    [Tooltip("Il Panel (o RectTransform root) dentro al Canvas")]
     public RectTransform panel;
-
-    [Tooltip("Il componente TextMeshProUGUI per il nome del parlante (appare istantaneamente)")]
     public TextMeshProUGUI speakerNameText;
-
-    [Tooltip("Il componente TextMeshProUGUI per il testo del dialogo")]
     public TextMeshProUGUI dialogueText;
 
-    [Header("Timing")]
-    [Tooltip("Durata dell'animazione di apertura/chiusura (secondi)")]
-    public float animDuration = 0.5f;
+    [Header("Settings")]
+    public float animDuration = 0.4f;
+    public float typewriterDelay = 0.03f;
 
-    [Tooltip("Secondi tra una lettera e l'altra nel typewriter")]
-    public float typewriterDelay = 0.04f;
+    [Header("Persistence")]
+    public bool keepPersistent = false;
 
     private Coroutine _typewriterCoroutine;
     private bool _isOpen = false;
+    private bool _isOpening = false;
+    private System.Action _onTypewriterComplete;
 
     private void Awake()
     {
+        if (panel == null) panel = GetComponent<RectTransform>();
+        
+        // Reset iniziale
+        if (panel != null) panel.localScale = Vector3.zero;
+        if (dialogueText != null) dialogueText.text = "";
+        if (speakerNameText != null) speakerNameText.text = "";
 
-        if (panel != null)
-            panel.localScale = Vector3.zero;
-
-        if (dialogueText != null)
-            dialogueText.text = "";
-
-        if (speakerNameText != null)
-            speakerNameText.text = "";
-
-        gameObject.SetActive(false);
+        if (!keepPersistent) gameObject.SetActive(false);
     }
 
-    public void Open()
+    public void Open(System.Action onComplete = null)
     {
-        if (_isOpen) return;
+        if (_isOpen || _isOpening) 
+        {
+            onComplete?.Invoke();
+            return;
+        }
+        
         StopTypewriter();
-        OpenAnim();
+        OpenAnim(() => {
+            onComplete?.Invoke();
+        });
     }
 
-    public void ShowDialogue(string message, string speakerName = "")
+    public void ShowDialogue(string message, string speakerName = "", System.Action onComplete = null)
     {
-        StopTypewriter();
-
+        _onTypewriterComplete = onComplete;
+        
         if (speakerNameText != null)
             speakerNameText.text = speakerName ?? "";
 
-        if (!_isOpen)
+        // Se è chiuso o si sta chiudendo, lo apriamo
+        if (!_isOpen && !_isOpening)
         {
-            OpenAnim(() => StartTypewriter(message));
+            Open(() => StartTypewriter(message));
+        }
+        else if (_isOpening)
+        {
+            // Se si sta già aprendo, il typewriter partirà dalla callback già settata o ne accodiamo una
+            // Per semplicità, fermiamo e ripartiamo quando possibile o semplicemente sovrascriviamo
+            // In questo caso, StartTypewriter verrà chiamato alla fine di OpenAnim
         }
         else
         {
-            dialogueText.text = "";
+            // È già aperto, scrivi e basta
             StartTypewriter(message);
         }
-    }
-
-    public void Clean()
-    {
-        StopTypewriter();
-        if (dialogueText != null)
-            dialogueText.text = "";
     }
 
     public void Close()
@@ -80,42 +81,49 @@ public class WorldDialoguePopup : MonoBehaviour
         CloseAnim();
     }
 
-    private void OpenAnim(TweenCallback onComplete = null)
+    private void OpenAnim(System.Action onComplete = null)
     {
         gameObject.SetActive(true);
-        _isOpen = true;
-
+        _isOpening = true;
+        
+        panel.DOKill();
         panel.localScale = Vector3.zero;
+        panel.localRotation = Quaternion.Euler(0f, 0f, -5f);
 
-        panel.DOScale(Vector3.one, animDuration)
-             .SetEase(Ease.OutBack)
-             .OnComplete(onComplete);
-
-        panel.localRotation = Quaternion.Euler(0f, 0f, -4f);
-        panel.DOLocalRotate(Vector3.zero, animDuration * 0.8f)
-             .SetEase(Ease.OutBack);
+        panel.DOScale(Vector3.one, animDuration).SetEase(Ease.OutBack);
+        panel.DOLocalRotate(Vector3.zero, animDuration).SetEase(Ease.OutBack)
+             .OnComplete(() => {
+                 _isOpen = true;
+                 _isOpening = false;
+                 onComplete?.Invoke();
+             });
     }
 
     private void CloseAnim()
     {
-
-        panel.DOScale(Vector3.zero, animDuration * 0.75f)
-             .SetEase(Ease.InBack)
-             .OnComplete(() =>
-             {
-                 _isOpen = false;
-                 dialogueText.text = "";
-                 if (speakerNameText != null) speakerNameText.text = "";
-                 gameObject.SetActive(false);
+        _isOpen = false;
+        _isOpening = false;
+        panel.DOKill();
+        
+        panel.DOScale(Vector3.zero, animDuration * 0.8f).SetEase(Ease.InBack)
+             .OnComplete(() => {
+                 if (!keepPersistent) gameObject.SetActive(false);
              });
-
-        panel.DOLocalRotate(new Vector3(0f, 0f, 3f), animDuration * 0.75f)
-             .SetEase(Ease.InBack);
     }
 
     private void StartTypewriter(string message)
     {
-        _typewriterCoroutine = StartCoroutine(TypewriterRoutine(message));
+        StopTypewriter();
+        if (gameObject.activeInHierarchy)
+        {
+            _typewriterCoroutine = StartCoroutine(TypewriterRoutine(message));
+        }
+        else
+        {
+            // Fallback se spento
+            if (dialogueText != null) dialogueText.text = message;
+            _onTypewriterComplete?.Invoke();
+        }
     }
 
     private void StopTypewriter()
@@ -129,46 +137,19 @@ public class WorldDialoguePopup : MonoBehaviour
 
     private IEnumerator TypewriterRoutine(string message)
     {
+        if (dialogueText == null) yield break;
 
-        dialogueText.maxVisibleCharacters = 0;
         dialogueText.text = message;
+        dialogueText.maxVisibleCharacters = 0;
 
-        int total = message.Length;
-        for (int i = 0; i <= total; i++)
+        for (int i = 0; i <= message.Length; i++)
         {
             dialogueText.maxVisibleCharacters = i;
-
-            panel.DOKill(true);
-            panel.localScale = Vector3.one;
-            panel.DOScale(new Vector3(1.05f, 0.95f, 1f), typewriterDelay * 0.4f)
-                 .SetEase(Ease.OutQuad)
-                 .OnComplete(() =>
-                     panel.DOScale(Vector3.one, typewriterDelay * 0.6f)
-                          .SetEase(Ease.OutElastic));
-
             yield return new WaitForSeconds(typewriterDelay);
         }
 
-        panel.DOKill(true);
-        panel.localScale = Vector3.one;
-
         _typewriterCoroutine = null;
+        _onTypewriterComplete?.Invoke();
+        _onTypewriterComplete = null;
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("TEST – Open")]
-    private void TestOpen() => Open();
-
-    [ContextMenu("TEST – ShowDialogue")]
-    private void TestShow() => ShowDialogue("Ciao! Questo è un dialogo in world space, lettera per lettera!", "Mario");
-
-    [ContextMenu("TEST – ShowDialogue (no name)")]
-    private void TestShowNoName() => ShowDialogue("Senza nome parlante...");
-
-    [ContextMenu("TEST – Clean")]
-    private void TestClean() => Clean();
-
-    [ContextMenu("TEST – Close")]
-    private void TestClose() => Close();
-#endif
 }

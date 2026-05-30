@@ -11,9 +11,12 @@ namespace AvenueXR.Core
         public DialogueDataEvent onDialogueStart;
         public GameEvent onDialogueFinished;
 
-        [Header("UI Controllers")]
-        public DialogueUIController bossUI;
-        public DialogueUIController npcUI;
+        [Header("World Space Popups")]
+        public WorldDialoguePopup bossWorldPopup;
+        public WorldDialoguePopup npcWorldPopup;
+
+        [Header("Butter Events - Scene Sync")]
+        public BoolEvent onTVStateChanged;
 
         private Queue<DialogueLine> _lineQueue = new Queue<DialogueLine>();
         private DialogueData _currentData;
@@ -33,18 +36,24 @@ namespace AvenueXR.Core
         {
             if (data == null || data.lines.Count == 0)
             {
-                onDialogueFinished?.Raise();
+                if (!_isProcessing) onDialogueFinished?.Raise();
                 return;
             }
 
+            // Se stiamo già processando, accodiamo le nuove linee alla coda esistente
+            if (_isProcessing)
+            {
+                Debug.Log($"[DialogueManager] Sequenza in corso. Accodo {data.lines.Count} nuove linee.");
+                foreach (var line in data.lines) _lineQueue.Enqueue(line);
+                return;
+            }
+
+            // Nuova sequenza
             _currentData = data;
             _lineQueue.Clear();
             foreach (var line in data.lines) _lineQueue.Enqueue(line);
 
-            if (!_isProcessing)
-            {
-                StartCoroutine(ProcessQueue());
-            }
+            StartCoroutine(ProcessQueue());
         }
 
         private IEnumerator ProcessQueue()
@@ -54,21 +63,27 @@ namespace AvenueXR.Core
             while (_lineQueue.Count > 0)
             {
                 DialogueLine line = _lineQueue.Dequeue();
-                DialogueUIController targetUI = (line.speaker == DialogueSpeaker.Boss) ? bossUI : npcUI;
-                DialogueUIController otherUI = (line.speaker == DialogueSpeaker.Boss) ? npcUI : bossUI;
+                bool isBoss = line.speaker == DialogueSpeaker.Boss;
+                WorldDialoguePopup targetPopup = isBoss ? bossWorldPopup : npcWorldPopup;
+                WorldDialoguePopup otherPopup = isBoss ? npcWorldPopup : bossWorldPopup;
 
-                // Nascondi l'altro pannello se attivo
-                if (otherUI != null) otherUI.Hide();
+                // Gestione TV via Butter: Accesa se parla il Boss, spenta se parla l'NPC
+                if (onTVStateChanged != null)
+                {
+                    onTVStateChanged.Raise(isBoss);
+                }
+
+                // Chiudi l'altro fumetto se è aperto
+                if (otherPopup != null) otherPopup.Close();
 
                 bool lineFinished = false;
-                if (targetUI != null)
+                if (targetPopup != null)
                 {
-                    targetUI.ShowLine(line.text, _currentData.secondsPerCharacter, () => {
-                        lineFinished = true;
-                    });
+                    targetPopup.ShowDialogue(line.text, line.speakerName, () => lineFinished = true);
                 }
                 else
                 {
+                    Debug.LogWarning($"[DialogueManager] Manca il popup per lo speaker: {line.speaker}");
                     lineFinished = true;
                 }
 
@@ -79,9 +94,10 @@ namespace AvenueXR.Core
                 yield return new WaitForSeconds(pauseTime + _currentData.basePauseSeconds);
             }
 
-            // Fine del dialogo
-            if (bossUI != null) bossUI.Hide();
-            if (npcUI != null) npcUI.Hide();
+            // Fine della sequenza - Chiudiamo tutti i fumetti e spegniamo la TV via Butter
+            if (bossWorldPopup != null) bossWorldPopup.Close();
+            if (npcWorldPopup != null) npcWorldPopup.Close();
+            if (onTVStateChanged != null) onTVStateChanged.Raise(false);
 
             _isProcessing = false;
             

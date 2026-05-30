@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Dev.Nicklaj.Butter;
-using PrimeTween;
 
 namespace AvenueXR.Core
 {
@@ -9,41 +7,69 @@ namespace AvenueXR.Core
     {
         [Header("Butter Events")]
         public GameEvent onDayEnd;
+        public DayDataEvent onDayStart; 
 
-        [Header("UI References")]
+        [Header("Animator Settings")]
+        public Animator faderAnimator;
+        public string dayEndBool = "DayEnd";
+
+        [Header("Safety Reset")]
         public CanvasGroup faderCanvasGroup;
-        
-        [Header("Settings")]
-        public float blinkDuration = 0.5f;
-        public int blinkCount = 2;
+
+        private void Awake()
+        {
+            // Sicurezza: forziamo la trasparenza all'avvio nel caso l'alpha sia rimasta a 1 nell'editor
+            if (faderCanvasGroup != null)
+            {
+                faderCanvasGroup.alpha = 0f;
+            }
+        }
 
         void OnEnable()
         {
-            if (onDayEnd != null) onDayEnd.RegisterListener(_ => PlayBlinkEffect());
+            // Usiamo una lambda per gestire il parametro richiesto dal sistema di eventi di Butter
+            if (onDayEnd != null)
+                onDayEnd.RegisterListener(HandleDayEndWrapper);
+            
+            if (onDayStart != null)
+                onDayStart.RegisterListener(HandleDayStart);
         }
 
         void OnDisable()
         {
-            if (onDayEnd != null) onDayEnd.DeregisterListener(_ => PlayBlinkEffect());
+            if (onDayEnd != null)
+                onDayEnd.DeregisterListener(HandleDayEndWrapper);
+
+            if (onDayStart != null)
+                onDayStart.DeregisterListener(HandleDayStart);
         }
 
-        [ContextMenu("Test Blink")]
-        public void PlayBlinkEffect()
+        // Wrapper per compatibilità con l'evento di Butter
+        private void HandleDayEndWrapper(Unit unit)
         {
-            if (faderCanvasGroup == null)
+            HandleDayEnd();
+        }
+
+        private void HandleDayEnd()
+        {
+            if (faderAnimator != null)
             {
-                Debug.LogWarning("[DayEndFader] CanvasGroup non assegnato!");
-                return;
+                Debug.Log("[DayEndFader] Attivazione animazione Fine Giornata.");
+                faderAnimator.SetBool(dayEndBool, true);
             }
+            else
+            {
+                Debug.LogWarning("[DayEndFader] Animator non assegnato!");
+            }
+        }
 
-            Debug.Log("[DayEndFader] Inizio animazione blink fine giornata.");
-
-            // Sequenza di blink: Fade In (nero) -> Fade Out
-            // Usiamo SetLoops(count) sulla sequenza
-            Sequence.Create(cycles: blinkCount)
-                .Chain(Tween.Alpha(faderCanvasGroup, 1f, blinkDuration / 2f, Ease.InQuad))
-                .Chain(Tween.Alpha(faderCanvasGroup, 0f, blinkDuration / 2f, Ease.OutQuad))
-                .OnComplete(() => Debug.Log("[DayEndFader] Animazione completata."));
+        private void HandleDayStart(DayData data)
+        {
+            if (faderAnimator != null)
+            {
+                Debug.Log("[DayEndFader] Reset animazione per Inizio Giornata.");
+                faderAnimator.SetBool(dayEndBool, false);
+            }
         }
     }
 }

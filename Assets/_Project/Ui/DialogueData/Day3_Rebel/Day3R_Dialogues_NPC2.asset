@@ -16,7 +16,7 @@ MonoBehaviour:
   - speaker: 1
     text: "Perch\xE8 lo stai facendo?"
   - speaker: 1
-    text: Mi puoi dire cosa ci guadagni?
+    text: Cosa ci guadagni?
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
