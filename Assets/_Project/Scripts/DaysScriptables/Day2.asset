@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd96ecbc3d015a4b81931480c138ffe, type: 3}
   m_Name: Day2
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
-  dayLabel: Day 1
-  introDialogue: {fileID: 0}
+  dayLabel: Day 2
+  introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
   deliveries:
   - stepLabel: 
     type: 0

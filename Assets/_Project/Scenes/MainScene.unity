@@ -1899,9 +1899,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 761957346017732083, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 4.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 761957346017732083, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180418147510624223, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180418147510624223, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2660568084460505264, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
       propertyPath: m_Name
       value: NpcController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5329882072321227852, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 5329882072321227852, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.62
       objectReference: {fileID: 0}
     - target: {fileID: 8022028283108307649, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
       propertyPath: deskPosition
@@ -1911,6 +1935,10 @@ PrefabInstance:
       propertyPath: startPosition
       value: 
       objectReference: {fileID: 1071279868}
+    - target: {fileID: 8888444358930024365, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9130839061033943816, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1975,9 +2003,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2725219870535132989, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_text
+      value: "New \tText"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725219870535132989, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_fontSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725219870535132989, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3064872134054400581, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
       propertyPath: m_Name
       value: BossDialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005298227101483454, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4549578106196483345, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
       propertyPath: m_Pivot.x
@@ -2005,11 +2069,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4549578106196483345, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 5
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 4549578106196483345, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4549578106196483345, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2063,6 +2127,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1106935169}
+    - target: {fileID: 5686432283696299855, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686432283696299855, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6407621228492483415, guid: 9f94769810368e547968f4d39c3fc341, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
