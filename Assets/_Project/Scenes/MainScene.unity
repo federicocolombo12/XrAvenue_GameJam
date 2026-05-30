@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -210,6 +210,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
   m_PrefabInstance: {fileID: 4496734251864993839}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &286696775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4457475654451511710, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+  m_PrefabInstance: {fileID: 4418011868117091713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c56cf6e3eea2e498a91c63b9d03244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.WasteDeliveryManager
 --- !u!43 &354619959
 Mesh:
   m_ObjectHideFlags: 0
@@ -647,31 +658,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.342
+      value: -3.702
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9237491
+      value: 0.94637465
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.32989532
+      value: 0.25791135
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.18323393
+      value: -0.1877219
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.065437704
+      value: 0.051159035
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.375
+      value: -5.354
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.717
+      value: 1.567
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -693,9 +704,33 @@ PrefabInstance:
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3606318909552518923, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4347539862412542290, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_Name
       value: MoneyUi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613173831800492792, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_text
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613173831800492792, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_fontSize
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613173831800492792, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421512198063429268, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_fontSize
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421512198063429268, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1199,6 +1234,7 @@ GameObject:
   - component: {fileID: 701890125}
   - component: {fileID: 701890124}
   - component: {fileID: 701890128}
+  - component: {fileID: 701890129}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1301,6 +1337,28 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &701890129
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701890123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31c1b2f5f6c0c634d91de25714cf9215, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &736966437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
@@ -1731,6 +1789,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3000098899962928885, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
   m_PrefabInstance: {fileID: 4418011868117091713}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1070829618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1070829620}
+  - component: {fileID: 1070829619}
+  m_Layer: 0
+  m_Name: FlowDebugger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1070829619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070829618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60487288ab16e449be0782a43dae39e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.FlowDebugger
+  deliveryManager: {fileID: 286696775}
+  npcController: {fileID: 829640023}
+  gameStateManager: {fileID: 1384486235}
+  onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
+  onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
+  onDialogueFinished: {fileID: 11400000, guid: 872d7d6e46adcea43b8473dcb94fe4cd, type: 2}
+  simulateType: 0
+  setAsRebel: 0
+  isRebelVariable: {fileID: 11400000, guid: fa3f2e7546faafd4c898d2793c5c26ca, type: 2}
+--- !u!4 &1070829620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070829618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1071279867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,7 +2236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.MoneyManager
   onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
   displayPopup: {fileID: 465843293}
-  headerText: SALDO ATTUALE
+  headerLabel: 'SALDO: '
   currentBalance: 0
   rewardAmount: 10
   penaltyAmount: 5
@@ -2145,6 +2256,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1384486235 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+  m_PrefabInstance: {fileID: 4418011868117091713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cffae643fbc89b4cba1fffb13b5ac91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.GameStateManager
 --- !u!1001 &1411290403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2807,3 +2929,4 @@ SceneRoots:
   - {fileID: 1203655590}
   - {fileID: 465843289}
   - {fileID: 1313388140}
+  - {fileID: 1070829620}

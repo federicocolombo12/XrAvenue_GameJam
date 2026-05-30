@@ -12,7 +12,7 @@ namespace AvenueXR.Core
         public WorldDialoguePopup displayPopup;
 
         [Header("Settings")]
-        public string headerText = "SALDO ATTUALE";
+        public string headerLabel = "SALDO: ";
         public float currentBalance = 0f;
         public float rewardAmount = 10f;
         public float penaltyAmount = 5f;
@@ -22,7 +22,7 @@ namespace AvenueXR.Core
         {
             if (displayPopup != null)
             {
-                // Importante: forziamo l'apertura all'inizio
+                // Avviamo il sistema
                 displayPopup.Open();
                 UpdateDisplay();
             }
@@ -48,12 +48,16 @@ namespace AvenueXR.Core
             UpdateDisplay();
         }
 
+        [ContextMenu("Test Update Display")]
         private void UpdateDisplay()
         {
             if (displayPopup != null)
             {
-                string message = $"{currentBalance:F2}{currencySymbol}";
-                displayPopup.ShowDialogue(message, headerText);
+                // Uniamo etichetta e valore per essere sicuri che appaiano nel corpo del testo animato
+                string fullMessage = $"{headerLabel}{currentBalance:F2}{currencySymbol}";
+                
+                // Passiamo una stringa vuota come speakerName per evitare doppioni
+                displayPopup.ShowDialogue(fullMessage, ""); 
             }
         }
     }
