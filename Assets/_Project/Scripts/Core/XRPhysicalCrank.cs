@@ -19,6 +19,9 @@ namespace AvenueXR.Core
         public FloatVariable totalRotationVariable;
         public FloatEvent onRotationStep;
 
+        // --- Local Events for binding ---
+        public event System.Action<float> OnRotationDelta;
+
         private Vector3 _previousHandDirection;
         private float _currentAngleAccumulator;
 
@@ -75,6 +78,9 @@ namespace AvenueXR.Core
             {
                 totalRotationVariable.Value += angleDelta;
             }
+
+            // Notifica evento locale
+            OnRotationDelta?.Invoke(angleDelta);
 
             // Click sonoro
             _currentAngleAccumulator += Mathf.Abs(angleDelta);

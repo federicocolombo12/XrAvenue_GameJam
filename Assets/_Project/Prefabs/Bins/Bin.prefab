@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 8647972083319126760}
   - component: {fileID: 3569585946773415240}
   - component: {fileID: 8567049367081733708}
+  - component: {fileID: 1241915882440007695}
   m_Layer: 0
   m_Name: Bin
   m_TagString: Untagged
@@ -774,6 +775,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1241915882440007695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3476402856961503988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b5b09c8508f9c44ba78943e993383c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.BinCrusher
+  targetBin: {fileID: 5821665739973919939}
+  targetCrank: {fileID: 0}
+  onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
+  onCrushStart: {fileID: 11400000, guid: 0ce0980e167c9d646a6aa2c856c70e3a, type: 2}
+  onCrushTick: {fileID: 11400000, guid: e53770103e0646346bcdeada4597476a, type: 2}
+  rotationNeeded: 360
 --- !u!1 &7484095074150685978
 GameObject:
   m_ObjectHideFlags: 0

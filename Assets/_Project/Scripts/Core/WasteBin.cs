@@ -14,6 +14,9 @@ namespace AvenueXR.Core
         public BoolEvent onMoralChoiceMade;
         public StringEvent onBossSpeech;
 
+        // --- Local Events ---
+        public event System.Action<WasteType> OnItemReceived;
+
         private void OnTriggerEnter(Collider other)
         {
             WasteItem item = other.GetComponentInParent<WasteItem>();
@@ -59,6 +62,7 @@ namespace AvenueXR.Core
 
             // Invece di far avanzare subito il gioco, mandiamo l'evento al CrushManager
             if (onItemPendingCrush != null) onItemPendingCrush.Raise(item.type);
+            OnItemReceived?.Invoke(item.type);
 
             Destroy(item.gameObject);
         }
