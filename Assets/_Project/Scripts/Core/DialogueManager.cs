@@ -11,9 +11,9 @@ namespace AvenueXR.Core
         public DialogueDataEvent onDialogueStart;
         public GameEvent onDialogueFinished;
 
-        [Header("UI Controllers")]
-        public DialogueUIController bossUI;
-        public DialogueUIController npcUI;
+        [Header("World Space Popups")]
+        public WorldDialoguePopup bossWorldPopup;
+        public WorldDialoguePopup npcWorldPopup;
 
         private Queue<DialogueLine> _lineQueue = new Queue<DialogueLine>();
         private DialogueData _currentData;
@@ -54,34 +54,36 @@ namespace AvenueXR.Core
             while (_lineQueue.Count > 0)
             {
                 DialogueLine line = _lineQueue.Dequeue();
-                DialogueUIController targetUI = (line.speaker == DialogueSpeaker.Boss) ? bossUI : npcUI;
-                DialogueUIController otherUI = (line.speaker == DialogueSpeaker.Boss) ? npcUI : bossUI;
+                bool isBoss = line.speaker == DialogueSpeaker.Boss;
+                WorldDialoguePopup targetPopup = isBoss ? bossWorldPopup : npcWorldPopup;
+                WorldDialoguePopup otherPopup = isBoss ? npcWorldPopup : bossWorldPopup;
 
-                // Nascondi l'altro pannello se attivo
-                if (otherUI != null) otherUI.Hide();
+                // Chiudi l'altro fumetto se è aperto
+                if (otherPopup != null) otherPopup.Close();
 
-                bool lineFinished = false;
-                if (targetUI != null)
+                if (targetPopup != null)
                 {
-                    targetUI.ShowLine(line.text, _currentData.secondsPerCharacter, () => {
-                        lineFinished = true;
-                    });
+                    // Calcolo approssimativo della durata del typewriter
+                    float estimatedTime = line.text.Length * targetPopup.typewriterDelay + targetPopup.animDuration;
+                    
+                    targetPopup.ShowDialogue(line.text, line.speakerName);
+                    
+                    // Aspettiamo che il testo finisca di scriversi
+                    yield return new WaitForSeconds(estimatedTime);
                 }
                 else
                 {
-                    lineFinished = true;
+                    Debug.LogWarning($"[DialogueManager] Manca il popup per lo speaker: {line.speaker}");
                 }
-
-                yield return new WaitUntil(() => lineFinished);
 
                 // Delay di lettura prima della prossima linea
                 float pauseTime = Mathf.Clamp(line.text.Length * 0.05f, _currentData.minPauseSeconds, _currentData.maxPauseSeconds);
                 yield return new WaitForSeconds(pauseTime + _currentData.basePauseSeconds);
             }
 
-            // Fine del dialogo
-            if (bossUI != null) bossUI.Hide();
-            if (npcUI != null) npcUI.Hide();
+            // Fine della sequenza - Chiudiamo tutti i fumetti
+            if (bossWorldPopup != null) bossWorldPopup.Close();
+            if (npcWorldPopup != null) npcWorldPopup.Close();
 
             _isProcessing = false;
             

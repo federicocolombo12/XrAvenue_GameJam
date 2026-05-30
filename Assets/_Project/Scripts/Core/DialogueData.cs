@@ -13,6 +13,7 @@ namespace AvenueXR.Core
     public class DialogueLine
     {
         public DialogueSpeaker speaker = DialogueSpeaker.Boss;
+        public string speakerName; // Nome visualizzato nel popup
         [TextArea(2, 5)]
         public string text;
     }
