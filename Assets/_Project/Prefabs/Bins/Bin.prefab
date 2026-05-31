@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1139169272091398227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.566, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.76477766, z: 1}
-  m_Center: {x: 0, y: -0.117611155, z: 0}
+  m_Size: {x: 1, y: 0.55395067, z: 1}
+  m_Center: {x: 0, y: -0.22302468, z: 0}
 --- !u!114 &5821665739973919939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,7 +942,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6019538516474171318}
   - component: {fileID: 682957716095269196}
-  - component: {fileID: 4128623161743613446}
   - component: {fileID: 5949173144345766155}
   m_Layer: 0
   m_Name: RulloManager
@@ -985,27 +984,6 @@ MonoBehaviour:
   beltNegativeX: {fileID: 218768146484750172}
   rotationAxis: {x: 0, y: 1, z: 0}
   rotationMultiplier: 1
---- !u!65 &4128623161743613446
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7685917911678424767}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 0.53784305, z: 1}
-  m_Center: {x: 0, y: 0.008775145, z: 0}
 --- !u!82 &5949173144345766155
 AudioSource:
   m_ObjectHideFlags: 0
