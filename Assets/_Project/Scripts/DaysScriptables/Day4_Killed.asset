@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
   introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
+  outroDialogue: {fileID: 0}
   deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
   worldPollutionLevel: 1
+  dayAmbientMusic: {fileID: 0}
+  isFinale: 0
+  endingTitle: 
+  endingDescription: 
+  endingSoundClip: {fileID: 0}

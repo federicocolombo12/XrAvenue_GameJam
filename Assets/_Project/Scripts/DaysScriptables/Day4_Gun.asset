@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
   introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
+  outroDialogue: {fileID: 0}
   deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
   worldPollutionLevel: 4
+  dayAmbientMusic: {fileID: 0}
+  isFinale: 1
+  endingTitle: "Dario Romano \xE8 morto"
+  endingDescription: "Dario \xE8 Morto e tu non hai fatto nulla per salvarlo"
+  endingSoundClip: {fileID: 8300000, guid: b91d477c86620c64b85f6abf1236afdd, type: 3}
