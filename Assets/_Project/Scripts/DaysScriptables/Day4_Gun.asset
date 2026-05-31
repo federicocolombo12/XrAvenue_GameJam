@@ -27,6 +27,6 @@ MonoBehaviour:
   isFinale: 1
   endingTitle: Sei Morto
   endingDescription: La tua vita non aveva senso
-  endingSoundClip: {fileID: 8300000, guid: b91d477c86620c64b85f6abf1236afdd, type: 3}
+  endingSoundClip: {fileID: 8300000, guid: 5297698aa356ae849bb8c2d81c73d111, type: 3}
   endingPollutionLevel: 0
   specialFinaleObjectPrefab: {fileID: 1458629491273962561, guid: 124c13672c1750a4d90246a7ed737ed3, type: 3}

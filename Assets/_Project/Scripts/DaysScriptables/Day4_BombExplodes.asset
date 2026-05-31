@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day4_BombExplodes
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
-  introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
+  introDialogue: {fileID: 11400000, guid: 316570e678e7d8143bc1fe4f75530e1f, type: 2}
   outroDialogue: {fileID: 0}
   deliveries: []
   nextDayObedient: {fileID: 0}
@@ -27,6 +27,6 @@ MonoBehaviour:
   isFinale: 1
   endingTitle: Bomba
   endingDescription: "La bomba \xE8 scoppiata"
-  endingSoundClip: {fileID: 0}
+  endingSoundClip: {fileID: 8300000, guid: 9eb35c82f6f0fd44aad5f5966a8ba329, type: 3}
   endingPollutionLevel: 0
   specialFinaleObjectPrefab: {fileID: 0}

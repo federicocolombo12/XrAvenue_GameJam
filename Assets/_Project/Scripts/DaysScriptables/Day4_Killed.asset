@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day4_Killed
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
-  introDialogue: {fileID: 11400000, guid: 00c04f32b2801874c956a6213bc688a9, type: 2}
+  introDialogue: {fileID: 11400000, guid: b5fc87a4be542e249ab96a0a7f4fc2fe, type: 2}
   outroDialogue: {fileID: 0}
   deliveries: []
   nextDayObedient: {fileID: 0}
@@ -27,6 +27,6 @@ MonoBehaviour:
   isFinale: 1
   endingTitle: Sei morto
   endingDescription: Sei morto male
-  endingSoundClip: {fileID: 0}
+  endingSoundClip: {fileID: 8300000, guid: 5297698aa356ae849bb8c2d81c73d111, type: 3}
   endingPollutionLevel: 0
   specialFinaleObjectPrefab: {fileID: 0}
