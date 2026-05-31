@@ -19,7 +19,7 @@ namespace AvenueXR.Core
         
         [Header("Settings")]
         [Tooltip("Delay prima di mostrare il finale (utile per attendere il fade-out del fader).")]
-        public float appearanceDelay = 1.5f;
+        public float appearanceDelay = 4.0f; // Aumentato per un fade più lungo e drammatico
 
         private void Awake()
         {
@@ -55,12 +55,21 @@ namespace AvenueXR.Core
             // Attendiamo che il fader di fine giornata abbia completato la sua animazione
             yield return new WaitForSeconds(appearanceDelay);
 
+            // FIX: Per il finale, forziamo il popup in Screen Space Overlay 
+            // per assicurarci che sia sopra il fader nero (Overlay Canvas).
+            Canvas canvas = finaleDialoguePopup.GetComponent<Canvas>();
+            if (canvas != null)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                canvas.sortingOrder = 999;
+            }
+
             // Utilizziamo il sistema di dialogo esistente:
             // - endingTitle viene usato come nome dello speaker (in alto)
             // - endingDescription viene usato come corpo del testo (con typewriter effect)
             finaleDialoguePopup.ShowDialogue(day.endingDescription, day.endingTitle);
             
-            Debug.Log("[FinaleUIManager] Finale visualizzato tramite DialogueBox.");
+            Debug.Log("[FinaleUIManager] Finale visualizzato tramite DialogueBox (Forced Overlay).");
         }
     }
 }

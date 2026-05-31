@@ -18,6 +18,10 @@ namespace AvenueXR.Core
         public float penaltyAmount = 5f;
         public string currencySymbol = " $";
 
+        [Header("Display Settings")]
+        public Color positiveColor = Color.green;
+        public Color negativeColor = Color.red;
+
         private void Start()
         {
             if (displayPopup != null)
@@ -53,10 +57,18 @@ namespace AvenueXR.Core
         {
             if (displayPopup != null)
             {
-                // Uniamo etichetta e valore per essere sicuri che appaiano nel corpo del testo animato
-                string fullMessage = $"{headerLabel}{currentBalance:F2}{currencySymbol}";
+                Color targetColor = currentBalance >= 0 ? positiveColor : negativeColor;
+                string colorHex = ColorUtility.ToHtmlStringRGB(targetColor);
+
+                // Applichiamo il colore direttamente ai componenti se possibile
+                if (displayPopup.speakerNameText != null) displayPopup.speakerNameText.color = targetColor;
+                if (displayPopup.dialogueText != null) displayPopup.dialogueText.color = targetColor;
+
+                // Usiamo anche il Rich Text per sicurezza nel corpo del messaggio
+                string fullMessage = $"<color=#{colorHex}>{headerLabel}{currentBalance:F2}{currencySymbol}</color>";
                 
-                // Passiamo una stringa vuota come speakerName per evitare doppioni
+                // Passiamo una stringa vuota come speakerName e il messaggio colorato nel corpo
+                // NOTA: Ho invertito i parametri rispetto a prima per usare il corpo del testo (dialogueText)
                 displayPopup.ShowDialogue("", fullMessage); 
             }
         }
