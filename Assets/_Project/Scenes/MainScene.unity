@@ -218,6 +218,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 554609415313508051, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: keepPersistent
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2185,63 +2189,11 @@ Transform:
   - {fileID: 736966437}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1455744545 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3000098899962928885, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-  m_PrefabInstance: {fileID: 4418011868117091713}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1471451671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
   m_PrefabInstance: {fileID: 1213533262}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1724116229
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1724116230}
-  - component: {fileID: 1724116231}
-  m_Layer: 0
-  m_Name: FinaleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1724116230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724116229}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1455744545}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1724116231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724116229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53bc0f828d7a06f44bec9e70aa7bba7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.FinaleUIManager
-  onFinaleReached: {fileID: 11400000, guid: f1ab9ae4da314aa42baff9f063a9f24c, type: 2}
-  finaleDialoguePopup: {fileID: 172574860}
-  appearanceDelay: 1.5
 --- !u!1 &1862891414 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6968222811199511598, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
@@ -2349,6 +2301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 949430103672531220, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: finaleDialoguePopup
+      value: 
+      objectReference: {fileID: 172574860}
     - target: {fileID: 998884939075356907, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: displayPopup
       value: 
@@ -2417,14 +2373,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
-    - target: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-      propertyPath: firstDay
-      value: 
-      objectReference: {fileID: 11400000, guid: 4bd3cfe0aed6f5b40849ddd5ef3f0a68, type: 2}
-    - target: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-      propertyPath: onFinaleReached
-      value: 
-      objectReference: {fileID: 11400000, guid: f1ab9ae4da314aa42baff9f063a9f24c, type: 2}
     - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: npcWorldPopup
       value: 
@@ -2435,10 +2383,7 @@ PrefabInstance:
       objectReference: {fileID: 77399747}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3000098899962928885, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1724116230}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
 --- !u!1001 &4496734251864993839
