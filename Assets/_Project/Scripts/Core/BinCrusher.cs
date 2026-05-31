@@ -12,6 +12,8 @@ namespace AvenueXR.Core
         [Header("References")]
         public WasteBin targetBin;
         public XRPhysicalCrank targetCrank;
+        public AudioSource audioSource;
+        public WasteAudioData audioData;
 
         [Header("Butter Output")]
         public WasteTypeEvent onWasteSorted; // Per far avanzare il gioco (Manager)
@@ -25,6 +27,7 @@ namespace AvenueXR.Core
         private bool _isPending = false;
         private float _accumulatedRotation = 0f;
         private WasteType _pendingType;
+        private WasteItem _pendingItem;
 
         private void OnEnable()
         {
@@ -44,13 +47,14 @@ namespace AvenueXR.Core
                 targetCrank.OnRotationDelta -= HandleRotationDelta;
         }
 
-        private void HandleItemReceived(WasteType type)
+        private void HandleItemReceived(WasteItem item)
         {
             // Se c'è già un oggetto in questo cestino, ignoriamo o accodiamo (qui ignoriamo per semplicità)
             if (_isPending) return;
 
             _isPending = true;
-            _pendingType = type;
+            _pendingType = item.type;
+            _pendingItem = item;
             _accumulatedRotation = 0f;
 
             Debug.Log($"[BinCrusher] Cestino {targetBin.acceptedType}: Oggetto {_pendingType} pronto. Gira la manovella!");
@@ -76,11 +80,29 @@ namespace AvenueXR.Core
         {
             Debug.Log($"[BinCrusher] Cestino {targetBin.acceptedType}: Smaciullamento completato per {_pendingType}!");
             
+            // Riproduzione Audio Spazializzato basato sul tipo
+            if (audioSource != null && audioData != null)
+            {
+                AudioClip clip = audioData.GetAudioForType(_pendingType);
+                if (clip != null)
+                {
+                    audioSource.pitch = Random.Range(0.9f, 1.1f);
+                    audioSource.PlayOneShot(clip);
+                }
+            }
+
             // Verifica correttezza
             bool isCorrect = (_pendingType == targetBin.acceptedType);
             if (onSortingResult != null) onSortingResult.Raise(isCorrect);
 
+            // Distruzione effettiva dell'oggetto dopo lo smaciullamento
+            if (_pendingItem != null)
+            {
+                Destroy(_pendingItem.gameObject);
+            }
+
             _isPending = false;
+            _pendingItem = null;
             _accumulatedRotation = 0f;
 
             if (onWasteSorted != null)

@@ -62,17 +62,35 @@ namespace AvenueXR.Core
             }
 
             _currentModelIndex = (_currentModelIndex + 1) % npcModels.Count;
-            
+
             GameObject nextModel = npcModels[_currentModelIndex];
             if (nextModel != null)
             {
                 nextModel.SetActive(true);
-                _activeAnimator = nextModel.GetComponent<Animator>();
+
+                // Cerchiamo l'animator anche nei figli (più sicuro per prefab complessi)
+                _activeAnimator = nextModel.GetComponentInChildren<Animator>();
                 _activeHandBinder = nextModel.GetComponentInChildren<NPCHandBinder>();
-                
+
                 if (_activeAnimator != null)
                 {
-                    _activeAnimator.SetBool(isWalkingBool, false);
+                    Debug.Log($"[NPCVisualManager] Attivato NPC: {nextModel.name} - Animator trovato su: {_activeAnimator.name}");
+                    
+                    // Reset e ricollegamento bones
+                    _activeAnimator.Rebind();
+                    _activeAnimator.Update(0f);
+                    
+                    // Sincronizzazione immediata con lo stato attuale del controller
+                    // Nel caso in cui il DeliveryManager abbia già dato l'ordine di camminare
+                    bool isWalking = (controller.CurrentState == NPCState.Walking);
+                    bool isInteracting = (controller.CurrentState == NPCState.Interacting);
+
+                    SetAnimatorBool(isWalkingBool, isWalking);
+                    SetAnimatorBool("isInteracting", isInteracting);
+                }
+                else
+                {
+                    Debug.LogError($"[NPCVisualManager] ATTENZIONE: Nessun Animator trovato nel modello {nextModel.name}!");
                 }
             }
         }
@@ -81,9 +99,30 @@ namespace AvenueXR.Core
         {
             if (_activeAnimator == null) return;
 
-            // Semplicemente: se sta camminando isWalking = true, altrimenti false
-            bool walking = (newState == NPCState.Walking);
-            _activeAnimator.SetBool(isWalkingBool, walking);
+            bool isWalking = (newState == NPCState.Walking);
+            bool isInteracting = (newState == NPCState.Interacting);
+
+            SetAnimatorBool(isWalkingBool, isWalking);
+
+            // Se hai un parametro "isInteracting" nell'animator, lo settiamo qui
+            SetAnimatorBool("isInteracting", isInteracting);
+        }
+
+        /// <summary>
+        /// Imposta un bool nell'animator solo se il parametro esiste, evitando errori.
+        /// </summary>
+        private void SetAnimatorBool(string paramName, bool value)
+        {
+            if (_activeAnimator == null || string.IsNullOrEmpty(paramName)) return;
+
+            foreach (AnimatorControllerParameter param in _activeAnimator.parameters)
+            {
+                if (param.name == paramName)
+                {
+                    _activeAnimator.SetBool(paramName, value);
+                    return;
+                }
+            }
         }
 
         private void HandleNPCLeft()

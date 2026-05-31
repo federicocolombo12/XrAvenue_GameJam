@@ -31,3 +31,10 @@ MonoBehaviour:
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0
+  dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
+  bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
+  npcVoiceFallback: {fileID: 8300000, guid: 0b1547eb7ec427b40b2373bb7c0aefe8, type: 3}
+  isFinale: 0
+  endingTitle: 
+  endingDescription: 
+  endingSoundClip: {fileID: 0}

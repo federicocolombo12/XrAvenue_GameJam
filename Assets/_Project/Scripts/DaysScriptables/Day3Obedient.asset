@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DayData
   dayLabel: Day 1
   introDialogue: {fileID: 11400000, guid: 10ad0352048e2854b8cb71f49082f1cd, type: 2}
+  outroDialogue: {fileID: 0}
   deliveries:
   - stepLabel: 
     type: 0
@@ -30,3 +31,10 @@ MonoBehaviour:
   nextDayObedient: {fileID: 11400000, guid: 0256e44b39a9206449dcd0fbe7255e1e, type: 2}
   nextDayRebel: {fileID: 11400000, guid: 4bd3cfe0aed6f5b40849ddd5ef3f0a68, type: 2}
   worldPollutionLevel: 2
+  dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
+  bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
+  npcVoiceFallback: {fileID: 8300000, guid: 0b1547eb7ec427b40b2373bb7c0aefe8, type: 3}
+  isFinale: 0
+  endingTitle: 
+  endingDescription: 
+  endingSoundClip: {fileID: 0}

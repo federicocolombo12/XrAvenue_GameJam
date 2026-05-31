@@ -15,7 +15,7 @@ namespace AvenueXR.Core
         public StringEvent onBossSpeech;
 
         // --- Local Events ---
-        public event System.Action<WasteType> OnItemReceived;
+        public event System.Action<WasteItem> OnItemReceived;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -62,9 +62,26 @@ namespace AvenueXR.Core
 
             // Invece di far avanzare subito il gioco, mandiamo l'evento al CrushManager
             if (onItemPendingCrush != null) onItemPendingCrush.Raise(item.type);
-            OnItemReceived?.Invoke(item.type);
+            
+            // "Catturiamo" l'oggetto per lo smistamento
+            PrepareItemForCrushing(item);
 
-            Destroy(item.gameObject);
+            OnItemReceived?.Invoke(item);
+        }
+
+        private void PrepareItemForCrushing(WasteItem item)
+        {
+            // Disabilitiamo il collider e rendiamo kinematico per evitare che cada o si muova
+            // mentre aspettiamo la manovella
+            Collider col = item.GetComponent<Collider>();
+            if (col != null) col.enabled = false;
+
+            Rigidbody rb = item.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.linearVelocity = Vector3.zero;
+            }
         }
     }
 }

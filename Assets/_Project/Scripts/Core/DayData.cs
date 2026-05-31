@@ -34,6 +34,18 @@ namespace AvenueXR.Core
         public DayData nextDayRebel;
 
         [Header("Feedback Visivo")]
-        public float worldPollutionLevel; 
+        public float worldPollutionLevel;
+
+        [Header("Audio (Opzionale)")]
+        public AudioClip dayAmbientMusic;
+        public AudioClip bossVoiceFallback;
+        public AudioClip npcVoiceFallback;
+
+        [Header("Logica Finali (Opzionale)")]
+        public bool isFinale = false;
+        public string endingTitle;
+        [TextArea(3, 10)]
+        public string endingDescription;
+        public AudioClip endingSoundClip;
     }
 }
