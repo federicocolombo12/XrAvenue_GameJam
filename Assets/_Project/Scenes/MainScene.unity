@@ -2442,7 +2442,7 @@ PrefabInstance:
       objectReference: {fileID: 839941656}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 470
+      value: 473
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2601,7 +2601,7 @@ PrefabInstance:
       objectReference: {fileID: 486176583}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 470
+      value: 473
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2973,6 +2973,9 @@ MonoBehaviour:
   - {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
   bombPrefabs:
   - {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
+  cardPrefabs: []
+  babyPrefabs: []
+  boxPrefabs: []
 --- !u!1 &2103561222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3210,7 +3213,7 @@ PrefabInstance:
       objectReference: {fileID: 354619959}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 476
+      value: 479
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
