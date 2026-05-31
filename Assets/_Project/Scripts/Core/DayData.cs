@@ -38,6 +38,8 @@ namespace AvenueXR.Core
 
         [Header("Audio (Opzionale)")]
         public AudioClip dayAmbientMusic;
+        public AudioClip bossVoiceFallback;
+        public AudioClip npcVoiceFallback;
 
         [Header("Logica Finali (Opzionale)")]
         public bool isFinale = false;

@@ -296,11 +296,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.38
+      value: 29002.336
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.99
+      value: 3802.7046
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -316,6 +316,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 692120249253279462, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728381469828669478, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
+      propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4347539862412542290, guid: 3417b78c9dcf61e4e9b8d3226e25170e, type: 3}
@@ -1598,7 +1602,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2682,6 +2686,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: firstDay
+      value: 
+      objectReference: {fileID: 11400000, guid: 9da0c66ead16f624da2851de9d425131, type: 2}
     - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: ambientSource
       value: 
@@ -2691,9 +2699,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1911828381}
     - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onStopNpcVoice
+      value: 
+      objectReference: {fileID: 11400000, guid: 04ad44bc111bac9459c5a046ecb40075, type: 2}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: bossVoiceSource
       value: 
       objectReference: {fileID: 1026000748}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onFinaleReached
+      value: 
+      objectReference: {fileID: 11400000, guid: f1ab9ae4da314aa42baff9f063a9f24c, type: 2}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onStopBossVoice
+      value: 
+      objectReference: {fileID: 11400000, guid: 673f09a7f3875c24aa11edb813685600, type: 2}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onNpcVoiceTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bc22d78e4bfdfb499134c9983120f57, type: 2}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onBossVoiceTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 018a30e9f9380d04f8615d27f844e9b8, type: 2}
+    - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onVoiceClipTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 018a30e9f9380d04f8615d27f844e9b8, type: 2}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onDayStart
+      value: 
+      objectReference: {fileID: 11400000, guid: ff02b8b0a0486fd4e9011bbd0e9c5147, type: 2}
     - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: npcWorldPopup
       value: 
@@ -2702,6 +2738,26 @@ PrefabInstance:
       propertyPath: bossWorldPopup
       value: 
       objectReference: {fileID: 77399747}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onStopNpcVoice
+      value: 
+      objectReference: {fileID: 11400000, guid: 04ad44bc111bac9459c5a046ecb40075, type: 2}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onStopBossVoice
+      value: 
+      objectReference: {fileID: 11400000, guid: 673f09a7f3875c24aa11edb813685600, type: 2}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onNpcVoiceTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bc22d78e4bfdfb499134c9983120f57, type: 2}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onBossVoiceTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 018a30e9f9380d04f8615d27f844e9b8, type: 2}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onVoiceClipTriggered
+      value: 
+      objectReference: {fileID: 11400000, guid: 018a30e9f9380d04f8615d27f844e9b8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2897,9 +2953,9 @@ SceneRoots:
   - {fileID: 1071279868}
   - {fileID: 632190029}
   - {fileID: 2103561223}
+  - {fileID: 172574859}
   - {fileID: 701890127}
   - {fileID: 440471757}
   - {fileID: 1203655590}
   - {fileID: 465843289}
   - {fileID: 1070829620}
-  - {fileID: 172574859}

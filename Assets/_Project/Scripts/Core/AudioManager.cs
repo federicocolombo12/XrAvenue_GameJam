@@ -1,19 +1,41 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using Dev.Nicklaj.Butter;
+using System.Collections;
 
 namespace AvenueXR.Core
 {
+    [System.Serializable]
+    public class SpatialSFX
+    {
+        public AudioClip clip;
+        public AudioSource targetSource;
+
+        public void Play(float pitchMin = 1f, float pitchMax = 1f)
+        {
+            if (clip == null || targetSource == null) return;
+            
+            targetSource.pitch = Random.Range(pitchMin, pitchMax);
+            targetSource.PlayOneShot(clip);
+        }
+    }
+
     public class AudioManager : MonoBehaviour
     {
         [Header("Audio Mixer")]
         public AudioMixer mainMixer;
 
-        [Header("Audio Sources")]
+        [Header("Audio Sources - Global")]
         public AudioSource bossVoiceSource;  // Per dialoghi boss
         public AudioSource npcVoiceSource;   // Per dialoghi npc
         public AudioSource ambientSource;    // Per musica di sottofondo
-        public AudioSource sfxSource;        // Per effetti sonori
+        
+        [Header("Spatialized SFX")]
+        public SpatialSFX wasteDropSFX;
+        public SpatialSFX itemPlacedSFX;
+        public SpatialSFX errorSFX;
+        public SpatialSFX uiClickSFX;
+        public SpatialSFX finaleSFX; // Sorgente per i finali
 
         [Header("Butter Events - Game Flow")]
         public DayDataEvent onDayStart;
@@ -23,21 +45,13 @@ namespace AvenueXR.Core
         public GameEvent onDialogueFinished;
 
         [Header("Butter Events - Voice")]
-        public StringEvent onBossSpeech;
-        public StringEvent onNpcSpeech;
+        public AudioClipEvent onBossVoiceTriggered; // Nuovo evento per audio Boss
+        public AudioClipEvent onNpcVoiceTriggered;  // Nuovo evento per audio NPC
+        public GameEvent onStopBossVoice;
+        public GameEvent onStopNpcVoice;
 
         [Header("Butter Events - Interaction")]
         public WasteTypeEvent onWasteSorted;
-
-        [Header("Audio Clips - Ambient (Day)")]
-        public AudioClip ambientDayClip;
-        public AudioClip ambientNightClip;
-
-        [Header("Audio Clips - SFX")]
-        public AudioClip wasteDropClip;
-        public AudioClip itemPlacedClip;
-        public AudioClip errorClip;
-        public AudioClip uiClickClip;
 
         [Header("Voice Pitch Settings")]
         public float bossPitchMin = 0.9f;
@@ -46,16 +60,18 @@ namespace AvenueXR.Core
         public float npcPitchMax = 1.15f;
 
         private bool _isAmbientPlaying = false;
-        private bool _isBossVoiceLooping = false;
-        private bool _isNpcVoiceLooping = false;
+        private Coroutine _bossVoiceCoroutine;
+        private Coroutine _npcVoiceCoroutine;
 
         void OnEnable()
         {
             if (onDayStart != null) onDayStart.RegisterListener(HandleDayStart);
             if (onDayEnd != null) onDayEnd.RegisterListener(_ => HandleDayEnd());
             if (onFinaleReached != null) onFinaleReached.RegisterListener(HandleFinaleReached);
-            if (onBossSpeech != null) onBossSpeech.RegisterListener(PlayBossSound);
-            if (onNpcSpeech != null) onNpcSpeech.RegisterListener(PlayNpcSound);
+            if (onBossVoiceTriggered != null) onBossVoiceTriggered.RegisterListener(PlayBossVoiceDirectly);
+            if (onNpcVoiceTriggered != null) onNpcVoiceTriggered.RegisterListener(PlayNpcVoiceDirectly);
+            if (onStopBossVoice != null) onStopBossVoice.RegisterListener(_ => StopBossVoice());
+            if (onStopNpcVoice != null) onStopNpcVoice.RegisterListener(_ => StopNpcVoice());
             if (onWasteSorted != null) onWasteSorted.RegisterListener(PlayWasteSortedSFX);
         }
 
@@ -64,8 +80,10 @@ namespace AvenueXR.Core
             if (onDayStart != null) onDayStart.DeregisterListener(HandleDayStart);
             if (onDayEnd != null) onDayEnd.DeregisterListener(_ => HandleDayEnd());
             if (onFinaleReached != null) onFinaleReached.DeregisterListener(HandleFinaleReached);
-            if (onBossSpeech != null) onBossSpeech.DeregisterListener(PlayBossSound);
-            if (onNpcSpeech != null) onNpcSpeech.DeregisterListener(PlayNpcSound);
+            if (onBossVoiceTriggered != null) onBossVoiceTriggered.DeregisterListener(PlayBossVoiceDirectly);
+            if (onNpcVoiceTriggered != null) onNpcVoiceTriggered.DeregisterListener(PlayNpcVoiceDirectly);
+            if (onStopBossVoice != null) onStopBossVoice.DeregisterListener(_ => StopBossVoice());
+            if (onStopNpcVoice != null) onStopNpcVoice.DeregisterListener(_ => StopNpcVoice());
             if (onWasteSorted != null) onWasteSorted.DeregisterListener(PlayWasteSortedSFX);
         }
 
@@ -77,10 +95,6 @@ namespace AvenueXR.Core
             if (day.dayAmbientMusic != null)
             {
                 PlayAmbientLoop(day.dayAmbientMusic);
-            }
-            else
-            {
-                PlayAmbientLoop(ambientDayClip);
             }
         }
 
@@ -96,108 +110,84 @@ namespace AvenueXR.Core
             
             Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Riproduzione audio finale.");
             StopAmbient();
-            PlayDirectSFX(day.endingSoundClip);
+            
+            if (finaleSFX.targetSource != null)
+            {
+                finaleSFX.targetSource.PlayOneShot(day.endingSoundClip);
+            }
         }
 
         // ========== VOICE ==========
-        private void PlayBossSound(string audioClipName)
+        private void PlayBossVoiceDirectly(AudioClip clip)
         {
-            PlayVoiceLoop(bossVoiceSource, audioClipName, bossPitchMin, bossPitchMax, ref _isBossVoiceLooping, "Audio/Voice");
+            if (clip == null || bossVoiceSource == null) return;
+            
+            StopBossVoice();
+            _bossVoiceCoroutine = StartCoroutine(VoiceLoopRoutine(bossVoiceSource, clip, bossPitchMin, bossPitchMax));
+            Debug.Log($"[AudioManager] Inizio loop voce Boss: {clip.name}");
         }
 
-        private void PlayNpcSound(string audioClipName)
+        private void PlayNpcVoiceDirectly(AudioClip clip)
         {
-            PlayVoiceLoop(npcVoiceSource, audioClipName, npcPitchMin, npcPitchMax, ref _isNpcVoiceLooping, "Audio/Voice");
+            if (clip == null || npcVoiceSource == null) return;
+            
+            StopNpcVoice();
+            _npcVoiceCoroutine = StartCoroutine(VoiceLoopRoutine(npcVoiceSource, clip, npcPitchMin, npcPitchMax));
+            Debug.Log($"[AudioManager] Inizio loop voce NPC: {clip.name}");
+        }
+
+        private IEnumerator VoiceLoopRoutine(AudioSource source, AudioClip clip, float minPitch, float maxPitch)
+        {
+            source.clip = clip;
+            source.loop = false; // Gestiamo il loop manualmente
+
+            while (true)
+            {
+                source.pitch = Random.Range(minPitch, maxPitch);
+                source.Play();
+                
+                // Attendiamo la fine della clip prima di ripartire col prossimo "giro" e nuovo pitch
+                yield return new WaitForSeconds(clip.length / Mathf.Abs(source.pitch));
+            }
+        }
+
+        private void StopBossVoice()
+        {
+            if (_bossVoiceCoroutine != null)
+            {
+                StopCoroutine(_bossVoiceCoroutine);
+                _bossVoiceCoroutine = null;
+            }
+
+            if (bossVoiceSource != null)
+            {
+                bossVoiceSource.Stop();
+                bossVoiceSource.clip = null;
+            }
+        }
+
+        private void StopNpcVoice()
+        {
+            if (_npcVoiceCoroutine != null)
+            {
+                StopCoroutine(_npcVoiceCoroutine);
+                _npcVoiceCoroutine = null;
+            }
+
+            if (npcVoiceSource != null)
+            {
+                npcVoiceSource.Stop();
+                npcVoiceSource.clip = null;
+            }
         }
 
         // ========== INTERACTION SFX ==========
         private void PlayWasteSortedSFX(WasteType type)
         {
-            PlayOneShot(sfxSource, "item_placed");
+            itemPlacedSFX.Play();
         }
 
         // ========== PUBLIC METHODS ==========
-        /// <summary>
-        /// Riproduce un audio in loop con pitch variabile
-        /// </summary>
-        public void PlayVoiceLoop(AudioSource source, string clipName, float pitchMin, float pitchMax, ref bool isLooping, string folder = "Audio/SFX")
-        {
-            AudioClip clip = Resources.Load<AudioClip>($"{folder}/{clipName}");
-            if (clip == null || source == null)
-            {
-                Debug.LogWarning($"[AudioManager] Clip non trovato: {folder}/{clipName}");
-                return;
-            }
-
-            // Applica pitch random
-            float randomPitch = Random.Range(pitchMin, pitchMax);
-            source.pitch = randomPitch;
-
-            // Riproduce il clip in loop
-            source.clip = clip;
-            source.loop = true;
-            source.Play();
-            isLooping = true;
-
-            Debug.Log($"[AudioManager] Voice loop iniziato: {clipName} (pitch: {randomPitch:F2})");
-        }
-
-        /// <summary>
-        /// Ferma il loop voice del boss
-        /// </summary>
-        public void StopBossVoiceLoop()
-        {
-            if (bossVoiceSource != null && _isBossVoiceLooping)
-            {
-                bossVoiceSource.Stop();
-                bossVoiceSource.clip = null;
-                bossVoiceSource.loop = false;
-                _isBossVoiceLooping = false;
-                Debug.Log("[AudioManager] Boss voice loop fermato");
-            }
-        }
-
-        /// <summary>
-        /// Ferma il loop voice dell'NPC
-        /// </summary>
-        public void StopNpcVoiceLoop()
-        {
-            if (npcVoiceSource != null && _isNpcVoiceLooping)
-            {
-                npcVoiceSource.Stop();
-                npcVoiceSource.clip = null;
-                npcVoiceSource.loop = false;
-                _isNpcVoiceLooping = false;
-                Debug.Log("[AudioManager] NPC voice loop fermato");
-            }
-        }
-
-        /// <summary>
-        /// Ferma entrambi i loop voice
-        /// </summary>
-        public void StopAllVoiceLoops()
-        {
-            StopBossVoiceLoop();
-            StopNpcVoiceLoop();
-        }
-
-        /// <summary>
-        /// Riproduce un suono una sola volta (one-shot)
-        /// </summary>
-        public void PlayOneShot(AudioSource source, string clipName, string folder = "Audio/SFX")
-        {
-            AudioClip clip = Resources.Load<AudioClip>($"{folder}/{clipName}");
-            if (clip != null && source != null)
-            {
-                source.PlayOneShot(clip);
-                Debug.Log($"[AudioManager] Riprodotto one-shot: {clipName}");
-            }
-            else
-            {
-                Debug.LogWarning($"[AudioManager] Clip non trovato: {folder}/{clipName}");
-            }
-        }
-
         /// <summary>
         /// Riproduce un audio in loop finché non viene fermato
         /// </summary>
@@ -266,18 +256,6 @@ namespace AvenueXR.Core
             }
 
             ambientSource.volume = targetVolume;
-        }
-
-        /// <summary>
-        /// Riproduce un effetto sonoro diretto (da Inspector)
-        /// </summary>
-        public void PlayDirectSFX(AudioClip clip)
-        {
-            if (clip != null && sfxSource != null)
-            {
-                sfxSource.PlayOneShot(clip);
-                Debug.Log($"[AudioManager] Riprodotto SFX diretto: {clip.name}");
-            }
         }
     }
 }

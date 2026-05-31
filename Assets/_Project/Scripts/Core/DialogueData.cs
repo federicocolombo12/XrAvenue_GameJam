@@ -16,6 +16,9 @@ namespace AvenueXR.Core
         public string speakerName; // Nome visualizzato nel popup
         [TextArea(2, 5)]
         public string text;
+        
+        [Header("Audio (Opzionale)")]
+        public AudioClip voiceClip;
     }
 
     [CreateAssetMenu(fileName = "NewDialogue", menuName = "AvenueXR/Dialogue Data")]
