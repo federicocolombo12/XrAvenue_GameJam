@@ -25,7 +25,7 @@ MonoBehaviour:
     npcDialogue: {fileID: 11400000, guid: 70b40e33c77e29949985d07572a516d9, type: 2}
     bossDialogue: {fileID: 0}
   - stepLabel: foto, fa un po' pena, prima volta
-    type: 1
+    type: 0
     npcDialogue: {fileID: 11400000, guid: 086d503345395724cadabbbccab94b37, type: 2}
     bossDialogue: {fileID: 11400000, guid: 1d71f24f3ae29e2409dfc5433b7075aa, type: 2}
   - stepLabel: Scortese, non descrive oggetto

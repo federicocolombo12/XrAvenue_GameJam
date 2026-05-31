@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: "Questo \xE8 una carta d'identit\xE0. "
+    speakerName: 
+    text: "Tieni, \xE8 una carta d'identit\xE0 "
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: "Non ha pi\xF9 un padrone."
+    speakerName: 
+    text: "Non serve pi\xF9"
+    voiceClip: {fileID: 0}
   - speaker: 1
+    speakerName: 
     text: Liberatene.
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
