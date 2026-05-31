@@ -21,10 +21,10 @@ MonoBehaviour:
     npcDialogue: {fileID: 11400000, guid: 637eeea8b5d3be749bd0ed81f2170759, type: 2}
     bossDialogue: {fileID: 0}
   - stepLabel: Un libro, abbasso cultura
-    type: 0
+    type: 10
     npcDialogue: {fileID: 11400000, guid: 70b40e33c77e29949985d07572a516d9, type: 2}
     bossDialogue: {fileID: 0}
-  - stepLabel: Anello, fa un po' pena, prima volta
+  - stepLabel: foto, fa un po' pena, prima volta
     type: 1
     npcDialogue: {fileID: 11400000, guid: 086d503345395724cadabbbccab94b37, type: 2}
     bossDialogue: {fileID: 11400000, guid: 1d71f24f3ae29e2409dfc5433b7075aa, type: 2}
