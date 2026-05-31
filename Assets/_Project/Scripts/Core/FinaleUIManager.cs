@@ -19,7 +19,7 @@ namespace AvenueXR.Core
         
         [Header("Settings")]
         [Tooltip("Delay prima di mostrare il finale (utile per attendere il fade-out del fader).")]
-        public float appearanceDelay = 1.5f;
+        public float appearanceDelay = 4.0f; // Aumentato per un fade più lungo e drammatico
 
         private void Awake()
         {

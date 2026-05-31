@@ -23,6 +23,6 @@ MonoBehaviour:
   bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
   npcVoiceFallback: {fileID: 8300000, guid: 0b1547eb7ec427b40b2373bb7c0aefe8, type: 3}
   isFinale: 1
-  endingTitle: "Dario Romano \xE8 morto"
-  endingDescription: "Dario \xE8 Morto e tu non hai fatto nulla per salvarlo"
+  endingTitle: Sei Morto
+  endingDescription: La tua vita non aveva senso
   endingSoundClip: {fileID: 8300000, guid: b91d477c86620c64b85f6abf1236afdd, type: 3}

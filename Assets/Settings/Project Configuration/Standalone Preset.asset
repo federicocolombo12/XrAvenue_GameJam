@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513c4bf4d5542da49bf75545aea6f765, type: 3}
   m_Name: PixelateRendererFeature
   m_EditorClassIdentifier: Assembly-CSharp::PixelateRendererFeature
-  m_Active: 0
+  m_Active: 1
   settings:
     shader: {fileID: 4800000, guid: 703b245f98d111d418d988ba74eefbce, type: 3}
     pixelSizeX: 3

@@ -108,9 +108,14 @@ namespace AvenueXR.Core
         {
             if (day == null || day.endingSoundClip == null) return;
             
-            Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Riproduzione audio finale.");
+            Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Preparazione audio finale.");
+            
+            // Fermiamo subito l'ambient per creare il vuoto
             StopAmbient();
             
+            // Facciamo partire l'audio del finale. 
+            // Se vogliamo che parta ESATTAMENTE quando appare il testo, 
+            // potremmo usare un delay, ma l'utente ha chiesto che parta subito dopo il fade.
             if (finaleSFX.targetSource != null)
             {
                 finaleSFX.targetSource.PlayOneShot(day.endingSoundClip);
