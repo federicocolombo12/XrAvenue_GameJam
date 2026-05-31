@@ -373,7 +373,7 @@ MonoBehaviour:
   totalRotationVariable: {fileID: 11400000, guid: 88ff152cbe1427c459f6ec6a6ef15229, type: 2}
   onRotationStep: {fileID: 11400000, guid: 2fc69401d69a1964fb653b7a7627217f, type: 2}
   localAudioSource: {fileID: 151293593024330789}
-  tickSound: {fileID: 8300000, guid: 16fba6d30ed741d4a9fdd6e79ee2f3ac, type: 3}
+  tickSound: {fileID: 8300000, guid: 1b0dd524ef7d516488a3d65572f761b4, type: 3}
   tickVolume: 0.6
 --- !u!54 &6268830398668062001
 Rigidbody:
