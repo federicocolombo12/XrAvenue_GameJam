@@ -2973,7 +2973,8 @@ MonoBehaviour:
   - {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
   bombPrefabs:
   - {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
-  cardPrefabs: []
+  cardPrefabs:
+  - {fileID: 0}
   babyPrefabs: []
   boxPrefabs: []
 --- !u!1 &2103561222
@@ -3098,7 +3099,7 @@ PrefabInstance:
     - target: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: firstDay
       value: 
-      objectReference: {fileID: 11400000, guid: 4bd3cfe0aed6f5b40849ddd5ef3f0a68, type: 2}
+      objectReference: {fileID: 11400000, guid: 0256e44b39a9206449dcd0fbe7255e1e, type: 2}
     - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: musicSource
       value: 
