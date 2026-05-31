@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
+    speakerName: 
     text: Tieni una scatola
+    voiceClip: {fileID: 0}
   - speaker: 1
+    speakerName: 
     text: Non so cosa c'era dentro
-  - speaker: 0
+    voiceClip: {fileID: 0}
+  - speaker: 1
+    speakerName: 
     text: Poco importa
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

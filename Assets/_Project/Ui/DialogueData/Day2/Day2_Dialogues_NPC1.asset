@@ -21,7 +21,7 @@ MonoBehaviour:
     speakerName: 
     text: Guarda qua che bottiglia
     voiceClip: {fileID: 0}
-  - speaker: 0
+  - speaker: 1
     speakerName: 
     text: Credo sia di vetro?
     voiceClip: {fileID: 0}

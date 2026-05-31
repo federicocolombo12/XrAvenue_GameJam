@@ -21,7 +21,7 @@ MonoBehaviour:
     speakerName: 
     text: "Lo so che \xE8 stato ritirato perch\xE9 considerato di propaganda..."
     voiceClip: {fileID: 0}
-  - speaker: 0
+  - speaker: 1
     speakerName: 
     text: "Ma...potrei chiederti di non distruggerlo? Ha davvero senso farlo? Non
       \xE8 un simbolo"
