@@ -24,6 +24,12 @@ namespace AvenueXR.Core
         public FloatVariable totalRotationVariable;
         public FloatEvent onRotationStep;
 
+        [Header("Audio Feedback")]
+        public AudioSource localAudioSource;
+        public AudioClip tickSound;
+        [Range(0f, 1f)]
+        public float tickVolume = 0.6f;
+
         // --- Evento locale per il BinCrusher ---
         public event System.Action<float> OnRotationDelta;
 
@@ -106,6 +112,12 @@ namespace AvenueXR.Core
                 _audioStepCounter += Mathf.Abs(adjustedDelta);
                 if (_audioStepCounter >= 15f)
                 {
+                    if (localAudioSource != null && tickSound != null)
+                    {
+                        localAudioSource.pitch = Random.Range(0.95f, 1.05f);
+                        localAudioSource.PlayOneShot(tickSound, tickVolume);
+                    }
+
                     onRotationStep?.Raise(_audioStepCounter);
                     _audioStepCounter = 0f;
                 }
