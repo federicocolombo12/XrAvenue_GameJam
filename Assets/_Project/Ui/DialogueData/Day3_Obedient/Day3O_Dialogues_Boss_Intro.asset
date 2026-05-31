@@ -14,13 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 0
-    text: Ti sei impegnato lo scorso giorno.
+    speakerName: 
+    text: Ti sei impegnato lo scorso giorno. Ottimo.
+    voiceClip: {fileID: 0}
   - speaker: 0
-    text: Hai compiuto il tuo dovere.
+    speakerName: 
+    text: Mi aspetto di continuare ad osservare lo stesso comportamento quest'oggi.
+    voiceClip: {fileID: 0}
   - speaker: 0
-    text: "Prendi questi soldi in pi\xF9."
-  - speaker: 0
-    text: E ricorda di continuare a svolgere il lavoro al meglio
+    speakerName: 
+    text: "Sii devoto a questo paese, e ringrazia della poszione che ti \xE8 stata
+      data."
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
