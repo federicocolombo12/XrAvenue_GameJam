@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eeff1f6f86f4ab68001f3e68708e63e, type: 3}
+  m_Name: Day4BombExplosion_Dialogues_Boss_Intro
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
+  lines:
+  - speaker: 0
+    speakerName: 
+    text: Abbiamo recentemente ricevuto notizie preoccupanti.
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: 'Ci sono stati diversi attacchi a strutture governative nella scorsa giornata. '
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: Sarai sicuramente preccupato, lo capisco.
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: Ma tu non faresti mai un'azione simile vero?
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: PERCHE' HAI ACCETATO QUELLA BOMBA IERI.
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: "Ti credevo pi\xF9 furbo di cos\xEC. Non vedi tutte quelle telecamere attorno
+      a te?"
+    voiceClip: {fileID: 0}
+  - speaker: 0
+    speakerName: 
+    text: Pensavi veramente che non avessimo qualcuno a tenerti d'occhio tutto il
+      tempo-
+    voiceClip: {fileID: 0}
+  basePauseSeconds: 0.6
+  secondsPerCharacter: 0.04
+  minPauseSeconds: 0.5
+  maxPauseSeconds: 4
