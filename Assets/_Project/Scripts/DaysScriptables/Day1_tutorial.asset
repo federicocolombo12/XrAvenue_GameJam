@@ -25,7 +25,7 @@ MonoBehaviour:
     npcDialogue: {fileID: 11400000, guid: 5cb751912d204d744a0b378b7e53c354, type: 2}
     bossDialogue: {fileID: 0}
   - stepLabel: Qua ti vengono i primi dubbi, qualcosa di politico
-    type: 5
+    type: 8
     npcDialogue: {fileID: 11400000, guid: 7bd19a1a69d5c2341989f5c71e99b358, type: 2}
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
