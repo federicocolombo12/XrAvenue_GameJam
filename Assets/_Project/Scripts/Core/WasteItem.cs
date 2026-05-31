@@ -11,10 +11,22 @@ namespace AvenueXR.Core
         public AudioClip grabSound;
         public AudioClip dropSound;
 
+        [Header("Respawn Settings")]
+        public float killYThreshold = 0.2f;
+        private Vector3 _respawnPosition;
+        private Quaternion _respawnRotation;
+        private Rigidbody _rb;
+
         private bool _wasGrabbed = false;
 
         private void Start()
         {
+            _rb = GetComponent<Rigidbody>();
+            
+            // Registriamo la posizione iniziale come punto di respawn sicuro
+            _respawnPosition = transform.position;
+            _respawnRotation = transform.rotation;
+
             // Se non hai assegnato un AudioSource, proviamo a prenderlo o aggiungerlo
             if (audioSource == null) audioSource = GetComponent<AudioSource>();
             if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
@@ -22,6 +34,38 @@ namespace AvenueXR.Core
             // Impostazioni base per audio 3D
             audioSource.spatialBlend = 1.0f; // 3D
             audioSource.playOnAwake = false;
+        }
+
+        private void Update()
+        {
+            // Se l'oggetto cade sotto la soglia, respawna
+            if (transform.position.y < killYThreshold)
+            {
+                Respawn();
+            }
+        }
+
+        public void Respawn()
+        {
+            Debug.Log($"[WasteItem] {gameObject.name} caduto fuori mappa. Respawn a {_respawnPosition}");
+            
+            transform.position = _respawnPosition;
+            transform.rotation = _respawnRotation;
+
+            if (_rb != null)
+            {
+                _rb.linearVelocity = Vector3.zero;
+                _rb.angularVelocity = Vector3.zero;
+            }
+        }
+
+        /// <summary>
+        /// Aggiorna il punto di respawn (es. quando viene consegnato sulla scrivania)
+        /// </summary>
+        public void SetRespawnPoint(Vector3 pos, Quaternion rot)
+        {
+            _respawnPosition = pos;
+            _respawnRotation = rot;
         }
 
         /// <summary>
