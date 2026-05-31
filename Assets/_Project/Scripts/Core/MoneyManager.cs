@@ -57,7 +57,7 @@ namespace AvenueXR.Core
                 string fullMessage = $"{headerLabel}{currentBalance:F2}{currencySymbol}";
                 
                 // Passiamo una stringa vuota come speakerName per evitare doppioni
-                displayPopup.ShowDialogue(fullMessage, ""); 
+                displayPopup.ShowDialogue("", fullMessage); 
             }
         }
     }
