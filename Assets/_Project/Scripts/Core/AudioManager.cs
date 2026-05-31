@@ -28,7 +28,8 @@ namespace AvenueXR.Core
         [Header("Audio Sources - Global")]
         public AudioSource bossVoiceSource;  // Per dialoghi boss
         public AudioSource npcVoiceSource;   // Per dialoghi npc
-        public AudioSource ambientSource;    // Per musica di sottofondo
+        public AudioSource ambientSource;    // Per suoni ambientali
+        public AudioSource musicSource;      // Per musica di sottofondo
         
         [Header("Spatialized SFX")]
         public SpatialSFX wasteDropSFX;
@@ -60,6 +61,7 @@ namespace AvenueXR.Core
         public float npcPitchMax = 1.15f;
 
         private bool _isAmbientPlaying = false;
+        private bool _isMusicPlaying = false;
         private Coroutine _bossVoiceCoroutine;
         private Coroutine _npcVoiceCoroutine;
 
@@ -92,16 +94,22 @@ namespace AvenueXR.Core
         {
             Debug.Log($"[AudioManager] Inizio giorno: {day.dayLabel}");
             
-            if (day.dayAmbientMusic != null)
+            if (day.dayAmbient != null)
             {
-                PlayAmbientLoop(day.dayAmbientMusic);
+                PlayAmbient(day.dayAmbient);
+            }
+
+            if (day.dayMusic != null)
+            {
+                PlayMusic(day.dayMusic);
             }
         }
 
         private void HandleDayEnd()
         {
-            Debug.Log("[AudioManager] Fine giorno. Fermo ambient.");
+            Debug.Log("[AudioManager] Fine giorno. Fermo audio di sottofondo.");
             StopAmbient();
+            StopMusic();
         }
 
         private void HandleFinaleReached(DayData day)
@@ -110,12 +118,10 @@ namespace AvenueXR.Core
             
             Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Preparazione audio finale.");
             
-            // Fermiamo subito l'ambient per creare il vuoto
+            // Fermiamo tutto per creare il vuoto
             StopAmbient();
+            StopMusic();
             
-            // Facciamo partire l'audio del finale. 
-            // Se vogliamo che parta ESATTAMENTE quando appare il testo, 
-            // potremmo usare un delay, ma l'utente ha chiesto che parta subito dopo il fade.
             if (finaleSFX.targetSource != null)
             {
                 finaleSFX.targetSource.PlayOneShot(day.endingSoundClip);
@@ -193,34 +199,41 @@ namespace AvenueXR.Core
         }
 
         // ========== PUBLIC METHODS ==========
-        /// <summary>
-        /// Riproduce un audio in loop finché non viene fermato
-        /// </summary>
-        public void PlayAmbientLoop(AudioClip clip)
+        public void PlayAmbient(AudioClip clip)
         {
-            if (clip == null || ambientSource == null)
-            {
-                Debug.LogWarning("[AudioManager] Clip o AmbientSource nullo");
-                return;
-            }
+            if (clip == null || ambientSource == null) return;
 
             ambientSource.clip = clip;
             ambientSource.loop = true;
             ambientSource.Play();
             _isAmbientPlaying = true;
-            Debug.Log($"[AudioManager] Inizio ambient loop: {clip.name}");
         }
 
-        /// <summary>
-        /// Ferma l'audio ambient in riproduzione
-        /// </summary>
         public void StopAmbient()
         {
             if (ambientSource != null && _isAmbientPlaying)
             {
                 ambientSource.Stop();
                 _isAmbientPlaying = false;
-                Debug.Log("[AudioManager] Ambient fermato");
+            }
+        }
+
+        public void PlayMusic(AudioClip clip)
+        {
+            if (clip == null || musicSource == null) return;
+
+            musicSource.clip = clip;
+            musicSource.loop = true;
+            musicSource.Play();
+            _isMusicPlaying = true;
+        }
+
+        public void StopMusic()
+        {
+            if (musicSource != null && _isMusicPlaying)
+            {
+                musicSource.Stop();
+                _isMusicPlaying = false;
             }
         }
 

@@ -39,7 +39,8 @@ namespace AvenueXR.Core
         public float worldPollutionLevel;
 
         [Header("Audio (Opzionale)")]
-        public AudioClip dayAmbientMusic;
+        public AudioClip dayAmbient;
+        public AudioClip dayMusic;
         public AudioClip bossVoiceFallback;
         public AudioClip npcVoiceFallback;
 
