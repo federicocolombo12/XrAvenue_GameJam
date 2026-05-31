@@ -334,6 +334,7 @@ MonoBehaviour:
   dialogueText: {fileID: 4613173831800492792}
   animDuration: 0.5
   typewriterDelay: 0.04
+  keepPersistent: 0
 --- !u!1 &7357726604373201610
 GameObject:
   m_ObjectHideFlags: 0

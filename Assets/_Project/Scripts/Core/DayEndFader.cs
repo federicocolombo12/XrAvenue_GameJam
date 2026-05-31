@@ -8,6 +8,7 @@ namespace AvenueXR.Core
         [Header("Butter Events")]
         public GameEvent onDayEnd;
         public DayDataEvent onDayStart; 
+        public DayDataEvent onFinaleReached; // Reset fader per mostrare il finale
 
         [Header("Animator Settings")]
         public Animator faderAnimator;
@@ -33,6 +34,9 @@ namespace AvenueXR.Core
             
             if (onDayStart != null)
                 onDayStart.RegisterListener(HandleDayStart);
+
+            if (onFinaleReached != null)
+                onFinaleReached.RegisterListener(HandleDayStart); // Usiamo lo stesso reset
         }
 
         void OnDisable()
@@ -42,6 +46,9 @@ namespace AvenueXR.Core
 
             if (onDayStart != null)
                 onDayStart.DeregisterListener(HandleDayStart);
+            
+            if (onFinaleReached != null)
+                onFinaleReached.DeregisterListener(HandleDayStart);
         }
 
         // Wrapper per compatibilità con l'evento di Butter
