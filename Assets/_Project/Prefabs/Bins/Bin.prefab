@@ -791,11 +791,14 @@ MonoBehaviour:
   targetCrank: {fileID: 0}
   audioSource: {fileID: 5949173144345766155}
   audioData: {fileID: 11400000, guid: 03e837af37a5b7744a9a178559700c87, type: 2}
+  particleData: {fileID: 11400000, guid: f0e50a02f3d14744e9c6c40e0a021823, type: 2}
+  particleSpawnPoint: {fileID: 6019538516474171318}
   onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
   onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
   onCrushStart: {fileID: 11400000, guid: 0ce0980e167c9d646a6aa2c856c70e3a, type: 2}
   onCrushTick: {fileID: 11400000, guid: e53770103e0646346bcdeada4597476a, type: 2}
   rotationNeeded: 360
+  particleStopDelay: 0.2
 --- !u!1 &7484095074150685978
 GameObject:
   m_ObjectHideFlags: 0

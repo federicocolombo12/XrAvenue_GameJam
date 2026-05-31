@@ -14,6 +14,8 @@ namespace AvenueXR.Core
         public XRPhysicalCrank targetCrank;
         public AudioSource audioSource;
         public WasteAudioData audioData;
+        public WasteParticleData particleData;
+        public Transform particleSpawnPoint;
 
         [Header("Butter Output")]
         public WasteTypeEvent onWasteSorted; // Per far avanzare il gioco (Manager)
@@ -23,11 +25,14 @@ namespace AvenueXR.Core
 
         [Header("Settings")]
         public float rotationNeeded = 360f; // 1 giro completo per smaciullare
+        public float particleStopDelay = 0.2f; // Tempo di attesa prima di fermare le particelle se non c'è rotazione
 
         private bool _isPending = false;
         private float _accumulatedRotation = 0f;
         private WasteType _pendingType;
         private WasteItem _pendingItem;
+        private ParticleSystem _currentParticles;
+        private float _lastRotationTime;
 
         private void OnEnable()
         {
@@ -45,6 +50,21 @@ namespace AvenueXR.Core
 
             if (targetCrank != null)
                 targetCrank.OnRotationDelta -= HandleRotationDelta;
+            
+            StopParticles();
+        }
+
+        private void Update()
+        {
+            // Se le particelle sono attive ma non abbiamo ricevuto rotazione di recente, le fermiamo
+            if (_currentParticles != null && _currentParticles.isEmitting)
+            {
+                if (Time.time - _lastRotationTime > particleStopDelay)
+                {
+                    var emission = _currentParticles.emission;
+                    emission.enabled = false;
+                }
+            }
         }
 
         private void HandleItemReceived(WasteItem item)
@@ -58,7 +78,32 @@ namespace AvenueXR.Core
             _accumulatedRotation = 0f;
 
             Debug.Log($"[BinCrusher] Cestino {targetBin.acceptedType}: Oggetto {_pendingType} pronto. Gira la manovella!");
+            
+            // Prepariamo le particelle (senza farle partire ancora)
+            PrepareParticles(_pendingType);
+            
             if (onCrushStart != null) onCrushStart.Raise();
+        }
+
+        private void PrepareParticles(WasteType type)
+        {
+            if (particleData == null) return;
+
+            GameObject prefab = particleData.GetParticlePrefabForType(type);
+            if (prefab != null)
+            {
+                Vector3 spawnPos = particleSpawnPoint != null ? particleSpawnPoint.position : transform.position;
+                Quaternion spawnRot = particleSpawnPoint != null ? particleSpawnPoint.rotation : Quaternion.identity;
+                
+                GameObject particleObj = Instantiate(prefab, spawnPos, spawnRot, particleSpawnPoint);
+                _currentParticles = particleObj.GetComponentInChildren<ParticleSystem>();
+                
+                if (_currentParticles != null)
+                {
+                    var emission = _currentParticles.emission;
+                    emission.enabled = false; // Non partono subito
+                }
+            }
         }
 
         private void HandleRotationDelta(float delta)
@@ -66,6 +111,15 @@ namespace AvenueXR.Core
             if (!_isPending) return;
 
             _accumulatedRotation += Mathf.Abs(delta);
+            _lastRotationTime = Time.time;
+
+            // Attiviamo l'emissione delle particelle
+            if (_currentParticles != null)
+            {
+                var emission = _currentParticles.emission;
+                if (!emission.enabled) emission.enabled = true;
+                if (!_currentParticles.isPlaying) _currentParticles.Play();
+            }
 
             // Ogni 30 gradi circa possiamo lanciare un tick (feedback visivo del meccanismo)
             // if (_accumulatedRotation % 30 < Mathf.Abs(delta)) onCrushTick?.Raise();
@@ -80,6 +134,8 @@ namespace AvenueXR.Core
         {
             Debug.Log($"[BinCrusher] Cestino {targetBin.acceptedType}: Smaciullamento completato per {_pendingType}!");
             
+            StopParticles();
+
             // Riproduzione Audio Spazializzato basato sul tipo
             if (audioSource != null && audioData != null)
             {
@@ -107,6 +163,19 @@ namespace AvenueXR.Core
 
             if (onWasteSorted != null)
                 onWasteSorted.Raise(_pendingType);
+        }
+
+        private void StopParticles()
+        {
+            if (_currentParticles != null)
+            {
+                var emission = _currentParticles.emission;
+                emission.enabled = false;
+                _currentParticles.Stop();
+                // Distruggiamo dopo un po' per lasciare che le particelle esistenti finiscano
+                Destroy(_currentParticles.gameObject, 2f);
+                _currentParticles = null;
+            }
         }
     }
 }
