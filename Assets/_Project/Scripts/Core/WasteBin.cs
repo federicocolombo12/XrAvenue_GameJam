@@ -71,17 +71,26 @@ namespace AvenueXR.Core
 
         private void PrepareItemForCrushing(WasteItem item)
         {
-            // Disabilitiamo il collider e rendiamo kinematico per evitare che cada o si muova
-            // mentre aspettiamo la manovella
-            Collider col = item.GetComponent<Collider>();
-            if (col != null) col.enabled = false;
+            // Usiamo GetComponentsInChildren per essere sicuri di beccare tutto, 
+            // anche se l'oggetto ha una gerarchia complessa o più collider.
+            
+            Collider[] colliders = item.GetComponentsInChildren<Collider>();
+            foreach (var col in colliders)
+            {
+                col.enabled = false;
+            }
 
-            Rigidbody rb = item.GetComponent<Rigidbody>();
-            if (rb != null)
+            Rigidbody[] rigidbodies = item.GetComponentsInChildren<Rigidbody>();
+            foreach (var rb in rigidbodies)
             {
                 rb.isKinematic = true;
                 rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
             }
+
+            // Opzionale: posizioniamo l'oggetto esattamente al centro del trigger del cestino 
+            // per un feedback visivo migliore durante lo smaciullamento.
+            item.transform.position = transform.position;
         }
     }
 }

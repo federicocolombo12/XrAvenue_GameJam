@@ -1887,8 +1887,11 @@ MonoBehaviour:
   npcController: {fileID: 829640023}
   gameStateManager: {fileID: 1384486235}
   onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
+  onWasteReturned: {fileID: 0}
   onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
   onDialogueFinished: {fileID: 11400000, guid: 872d7d6e46adcea43b8473dcb94fe4cd, type: 2}
+  onMoralChoiceMade: {fileID: 0}
+  onBossSpeech: {fileID: 0}
   simulateType: 0
   setAsRebel: 0
   isRebelVariable: {fileID: 11400000, guid: fa3f2e7546faafd4c898d2793c5c26ca, type: 2}
@@ -2310,7 +2313,7 @@ PrefabInstance:
       objectReference: {fileID: 839941656}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 467
+      value: 470
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2469,7 +2472,7 @@ PrefabInstance:
       objectReference: {fileID: 486176583}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 467
+      value: 470
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3070,7 +3073,7 @@ PrefabInstance:
       objectReference: {fileID: 354619959}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 473
+      value: 476
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x

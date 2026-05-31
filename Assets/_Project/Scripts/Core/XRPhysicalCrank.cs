@@ -36,6 +36,8 @@ namespace AvenueXR.Core
         private float _accumulatedAngle = 0f;
         private float _audioStepCounter = 0f;
         private float _lastHandAngle;
+        private bool _isRotatingThisFrame = false;
+        private float _currentRotationSpeed = 0f;
 
         protected override void Awake()
         {
@@ -57,6 +59,13 @@ namespace AvenueXR.Core
 
             if (visualTransform == null) visualTransform = transform;
             
+            if (localAudioSource != null && tickSound != null)
+            {
+                localAudioSource.clip = tickSound;
+                localAudioSource.loop = true;
+                localAudioSource.playOnAwake = false;
+            }
+
             _accumulatedAngle = 0f; 
         }
 
@@ -68,6 +77,15 @@ namespace AvenueXR.Core
             Debug.Log($"[Crank] Grab iniziato da: {args.interactorObject.transform.name}");
         }
 
+        protected override void OnSelectExited(SelectExitEventArgs args)
+        {
+            base.OnSelectExited(args);
+            if (localAudioSource != null && localAudioSource.isPlaying)
+            {
+                localAudioSource.Pause();
+            }
+        }
+
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
         {
             base.ProcessInteractable(updatePhase);
@@ -76,6 +94,39 @@ namespace AvenueXR.Core
             {
                 ApplyMechanicalRotation();
             }
+        }
+
+        private void Update()
+        {
+            UpdateAudioResponsiveness();
+        }
+
+        private void UpdateAudioResponsiveness()
+        {
+            if (localAudioSource == null || tickSound == null) return;
+
+            if (isSelected && _isRotatingThisFrame)
+            {
+                if (!localAudioSource.isPlaying)
+                {
+                    localAudioSource.Play();
+                }
+
+                // Moduliamo il pitch in base alla velocità di rotazione per un feeling meccanico
+                // Più giri veloce, più il suono è acuto
+                float targetPitch = Mathf.Clamp(0.8f + (_currentRotationSpeed / 500f), 0.7f, 1.5f);
+                localAudioSource.pitch = Mathf.Lerp(localAudioSource.pitch, targetPitch, Time.deltaTime * 10f);
+            }
+            else
+            {
+                if (localAudioSource.isPlaying)
+                {
+                    localAudioSource.Pause();
+                }
+            }
+
+            // Reset per il prossimo frame
+            _isRotatingThisFrame = false;
         }
 
         private void ApplyMechanicalRotation()
@@ -98,6 +149,9 @@ namespace AvenueXR.Core
                 if (invertRotation) deltaAngle *= -1f;
                 float adjustedDelta = deltaAngle * sensitivity;
 
+                _isRotatingThisFrame = true;
+                _currentRotationSpeed = Mathf.Abs(adjustedDelta) / Time.deltaTime;
+
                 // 3. Sommiamo lo spostamento
                 _accumulatedAngle += adjustedDelta;
 
@@ -108,16 +162,10 @@ namespace AvenueXR.Core
                 if (totalRotationVariable != null) totalRotationVariable.Value += adjustedDelta;
                 OnRotationDelta?.Invoke(adjustedDelta);
 
-                // 6. Feedback sonoro
+                // Feedback Meccanico (Step)
                 _audioStepCounter += Mathf.Abs(adjustedDelta);
                 if (_audioStepCounter >= 15f)
                 {
-                    if (localAudioSource != null && tickSound != null)
-                    {
-                        localAudioSource.pitch = Random.Range(0.95f, 1.05f);
-                        localAudioSource.PlayOneShot(tickSound, tickVolume);
-                    }
-
                     onRotationStep?.Raise(_audioStepCounter);
                     _audioStepCounter = 0f;
                 }
