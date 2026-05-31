@@ -16,6 +16,7 @@ namespace AvenueXR.Core
         [Header("UI References")]
         [Tooltip("Il componente DialogueBox (WorldDialoguePopup) da usare per mostrare il finale.")]
         public WorldDialoguePopup finaleDialoguePopup;
+        public CityPollutionManager cityPollutionManager;
         
         [Header("Settings")]
         [Tooltip("Delay prima di mostrare il finale (utile per attendere il fade-out del fader).")]
@@ -28,6 +29,9 @@ namespace AvenueXR.Core
             {
                 finaleDialoguePopup.Close();
             }
+
+            if (cityPollutionManager == null)
+                cityPollutionManager = FindFirstObjectByType<CityPollutionManager>();
         }
 
         private void OnEnable()
@@ -52,6 +56,12 @@ namespace AvenueXR.Core
 
         private IEnumerator ShowFinaleRoutine(DayData day)
         {
+            // Sincronizziamo l'inquinamento subito (mentre è ancora buio o il fader sta resettando)
+            if (cityPollutionManager != null)
+            {
+                cityPollutionManager.UpdateCityVisuals(day.endingPollutionLevel);
+            }
+
             // Attendiamo che il fader di fine giornata abbia completato la sua animazione
             yield return new WaitForSeconds(appearanceDelay);
 

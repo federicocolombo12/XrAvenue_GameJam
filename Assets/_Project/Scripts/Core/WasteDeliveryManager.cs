@@ -75,7 +75,7 @@ namespace AvenueXR.Core
             _isWaitingForStepDialogue = false;
             _isWaitingForObjectProcess = false;
             _isWaitingForNPCLeave = false;
-            
+
             if (day.introDialogue != null)
             {
                 _isWaitingForIntro = true;
@@ -83,7 +83,32 @@ namespace AvenueXR.Core
             }
             else
             {
+                StartDayAction();
+            }
+        }
+
+        /// <summary>
+        /// Avvia l'azione effettiva della giornata (consegne normali o spawn speciale finale)
+        /// </summary>
+        private void StartDayAction()
+        {
+            if (_currentDayData.isFinale && _currentDayData.specialFinaleObjectPrefab != null)
+            {
+                SpawnSpecialFinaleObject(_currentDayData);
+            }
+            else
+            {
                 RequestNextDelivery();
+            }
+        }
+
+        private void SpawnSpecialFinaleObject(DayData day)
+        {
+            Debug.Log($"[WasteDeliveryManager] Finale speciale rilevato. Spawning: {day.specialFinaleObjectPrefab.name}");
+            
+            if (objectSpawner != null)
+            {
+                objectSpawner.SpawnPrefab(day.specialFinaleObjectPrefab);
             }
         }
 
@@ -91,9 +116,9 @@ namespace AvenueXR.Core
         {
             if (_isWaitingForIntro)
             {
-                Debug.Log("[WasteDeliveryManager] Intro terminata. Richiedo prima consegna.");
+                Debug.Log("[WasteDeliveryManager] Intro terminata. Avvio azione del giorno.");
                 _isWaitingForIntro = false;
-                RequestNextDelivery();
+                StartDayAction();
             }
             else if (_isWaitingForOutro)
             {

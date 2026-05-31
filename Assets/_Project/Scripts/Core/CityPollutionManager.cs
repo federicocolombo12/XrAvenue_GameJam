@@ -25,6 +25,7 @@ namespace AvenueXR.Core
 
         [Header("Butter Events")]
         public DayDataEvent onDayStart;
+        public DayDataEvent onFinaleReached; // Aggiunto per i finali
 
         [Header("City Objects Configuration")]
         [Tooltip("Lista di oggetti da attivare/disattivare in base al range di inquinamento")]
@@ -33,23 +34,32 @@ namespace AvenueXR.Core
         private void OnEnable()
         {
             if (onDayStart != null)
-            {
                 onDayStart.RegisterListener(HandleDayStart);
-            }
+
+            if (onFinaleReached != null)
+                onFinaleReached.RegisterListener(HandleFinaleReached);
         }
 
         private void OnDisable()
         {
             if (onDayStart != null)
-            {
                 onDayStart.DeregisterListener(HandleDayStart);
-            }
+
+            if (onFinaleReached != null)
+                onFinaleReached.DeregisterListener(HandleFinaleReached);
         }
 
         private void HandleDayStart(DayData day)
         {
             if (day == null) return;
             UpdateCityVisuals(day.worldPollutionLevel);
+        }
+
+        private void HandleFinaleReached(DayData day)
+        {
+            if (day == null) return;
+            // Usiamo il livello specifico del finale per mostrare le conseguenze ultime
+            UpdateCityVisuals(day.endingPollutionLevel);
         }
 
         /// <summary>
