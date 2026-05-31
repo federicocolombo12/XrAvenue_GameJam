@@ -32,6 +32,8 @@ namespace AvenueXR.Core
         [Header("Bivi Narrativi")]
         public DayData nextDayObedient;
         public DayData nextDayRebel;
+        [Tooltip("Punti ribellione necessari alla fine del giorno per attivare il ramo Rebel.")]
+        public int rebellionThreshold = 1;
 
         [Header("Feedback Visivo")]
         public float worldPollutionLevel;

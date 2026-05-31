@@ -10,22 +10,22 @@ namespace AvenueXR.Core
         public DayData firstDay;
         private DayData _currentDay;
         
-        [Header("Butter Variables")]
-        public BoolVariable isRebelVariable; 
+        [Header("Rebellion Logic")]
+        [Tooltip("Punti accumulati durante la giornata attuale.")]
+        public int currentDailyRebellionPoints = 0;
         
         [Header("Butter Events")]
         public DayDataEvent onDayStart;
         public GameEvent onDayEnd;
         public DayDataEvent onFinaleReached; // Nuovo evento per i finali
         public StringEvent onBossSpeech; // Canale Schermo (Quick feedback)
-        public StringEvent onNPCSpeech;  // Canale Cristiano (Quick feedback)
         public BoolEvent onMoralChoiceMade;
         public DialogueDataEvent onDialogueStart; // Per sequenze lunghe
 
         void Start()
         {
             _currentDay = firstDay;
-            if (isRebelVariable != null) isRebelVariable.Value = false;
+            currentDailyRebellionPoints = 0;
             StartDay();
         }
 
@@ -45,23 +45,30 @@ namespace AvenueXR.Core
         {
             if (_currentDay == null) return;
 
-            if (isRebelVariable != null) isRebelVariable.Value = false;
+            // Reset dei punti all'inizio di ogni giorno
+            currentDailyRebellionPoints = 0;
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
             if (onDayStart != null) onDayStart.Raise(_currentDay);
         }
 
-        private void HandleMoralChoice(bool isGood)
+        private void HandleMoralChoice(bool isRebellion)
         {
-            if (isGood && isRebelVariable != null) isRebelVariable.Value = true;
+            // Se isRebellion è true, aumentiamo i punti sospetto/ribellione
+            if (isRebellion) currentDailyRebellionPoints++;
+            else currentDailyRebellionPoints--; // Se obbedisce a un ordine orribile, diminuiscono i punti
+
+            currentDailyRebellionPoints = Mathf.Max(0, currentDailyRebellionPoints);
             
-            string feedback = isGood ? "ATTENZIONE: Comportamento anomalo rilevato." : "Ottimo lavoro, cittadino.";
+            string feedback = isRebellion ? "ATTENZIONE: Comportamento anomalo rilevato." : "Ottimo lavoro, cittadino.";
             if (onBossSpeech != null) onBossSpeech.Raise(feedback);
+            
+            Debug.Log($"[GameStateManager] Punti Ribellione Attuali: {currentDailyRebellionPoints}");
         }
 
         private IEnumerator TransitionToNextDayRoutine()
         {
-            Debug.Log("[GameStateManager] Giorno finito. Attendo prima di passare al prossimo...");
+            Debug.Log("[GameStateManager] Giorno finito. Calcolo esito narrativo...");
             yield return new WaitForSeconds(1.0f);
 
             // Se il giorno appena concluso era un finale, fermiamo qui la progressione
@@ -72,7 +79,9 @@ namespace AvenueXR.Core
                 yield break; 
             }
 
-            bool hasRebelled = isRebelVariable != null && isRebelVariable.Value;
+            // Calcolo se il giocatore ha superato la soglia di ribellione del giorno
+            bool hasRebelled = currentDailyRebellionPoints >= _currentDay.rebellionThreshold;
+            Debug.Log($"[GameStateManager] Esito Giorno: {(hasRebelled ? "RIBELLIONE" : "OBBEDIENZA")} (Punti: {currentDailyRebellionPoints}, Soglia: {_currentDay.rebellionThreshold})");
 
             if (hasRebelled)
             {

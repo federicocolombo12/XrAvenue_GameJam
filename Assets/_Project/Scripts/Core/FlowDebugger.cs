@@ -15,8 +15,11 @@ namespace AvenueXR.Core
 
         [Header("Butter Events to Trigger")]
         public WasteTypeEvent onWasteSorted;
+        public WasteTypeEvent onWasteReturned; // Aggiunto
         public BoolEvent onSortingResult;
         public GameEvent onDialogueFinished;
+        public BoolEvent onMoralChoiceMade; // Aggiunto
+        public StringEvent onBossSpeech; // Aggiunto
 
         [Header("Debug Settings")]
         public WasteType simulateType = WasteType.Paper;
@@ -39,6 +42,34 @@ namespace AvenueXR.Core
             if (onSortingResult != null) onSortingResult.Raise(false);
             // Avanziamo comunque lo step
             if (onWasteSorted != null) onWasteSorted.Raise(simulateType);
+        }
+
+        [ContextMenu("DEBUG: Simulate Return Waste (Rebel)")]
+        public void SimulateWasteReturned()
+        {
+            Debug.Log("<color=magenta>[FlowDebugger] Simulazione Rifiuto/Restituzione Oggetto</color>");
+            if (onWasteReturned != null) onWasteReturned.Raise(simulateType);
+        }
+
+        [ContextMenu("DEBUG: Simulate Moral Choice (Obedient)")]
+        public void SimulateObedience()
+        {
+            Debug.Log("<color=blue>[FlowDebugger] Simulazione Scelta Morale: OBBEDIENZA</color>");
+            if (onMoralChoiceMade != null) onMoralChoiceMade.Raise(false);
+        }
+
+        [ContextMenu("DEBUG: Simulate Moral Choice (Rebel)")]
+        public void SimulateRebellion()
+        {
+            Debug.Log("<color=magenta>[FlowDebugger] Simulazione Scelta Morale: RIBELLIONE</color>");
+            if (onMoralChoiceMade != null) onMoralChoiceMade.Raise(true);
+        }
+
+        [ContextMenu("DEBUG: Trigger Boss Speech")]
+        public void SimulateBossSpeech()
+        {
+            Debug.Log("<color=orange>[FlowDebugger] Simulazione Testo Boss Rapido</color>");
+            if (onBossSpeech != null) onBossSpeech.Raise("Questo è un messaggio di test del Boss.");
         }
 
         [ContextMenu("DEBUG: Skip Current Dialogue")]

@@ -30,6 +30,7 @@ MonoBehaviour:
     bossDialogue: {fileID: 0}
   nextDayObedient: {fileID: 11400000, guid: 0256e44b39a9206449dcd0fbe7255e1e, type: 2}
   nextDayRebel: {fileID: 11400000, guid: 4bd3cfe0aed6f5b40849ddd5ef3f0a68, type: 2}
+  rebellionThreshold: 3
   worldPollutionLevel: 2
   dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
   bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
