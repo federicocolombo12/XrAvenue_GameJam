@@ -19,7 +19,7 @@ MonoBehaviour:
     voiceClip: {fileID: 0}
   - speaker: 1
     speakerName: 
-    text: 'Mi hanno chiesto di consegnarti questa foto. '
+    text: "Mi hanno chiesto di consegnarti questo libro, dentro c'\xE8 una foto "
     voiceClip: {fileID: 0}
   - speaker: 1
     speakerName: 
