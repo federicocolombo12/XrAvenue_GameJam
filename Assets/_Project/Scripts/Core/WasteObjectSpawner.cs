@@ -38,8 +38,25 @@ namespace AvenueXR.Core
                     return;
                 }
 
-                Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
-                Debug.Log($"[WasteObjectSpawner] Spawn riuscito: {prefab.name} a {spawnPoint.position}");
+                GameObject spawnedObj = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+                
+                // ASSICURIAMOCI CHE I COLLIDER SIANO ATTIVI
+                // Se i prefabs hanno i collider disattivati per non collidere negli NPC,
+                // dobbiamo riattivarli non appena appaiono sul tavolo.
+                Collider[] colliders = spawnedObj.GetComponentsInChildren<Collider>(true);
+                foreach (var col in colliders)
+                {
+                    col.enabled = true;
+                }
+
+                // Assicuriamoci che anche la fisica sia attiva se necessario
+                Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = false;
+                }
+
+                Debug.Log($"[WasteObjectSpawner] Spawn riuscito e Collider ATTIVATI: {prefab.name}");
             }
         }
 

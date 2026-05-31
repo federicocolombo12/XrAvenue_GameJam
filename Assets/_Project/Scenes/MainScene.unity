@@ -2967,16 +2967,18 @@ MonoBehaviour:
   - {fileID: 5893036222178232115, guid: 9e5107e5dfa716e4f9cd166ea58ce0d5, type: 3}
   metalPrefabs: []
   organicPrefabs: []
-  moralWastePrefabs:
-  - {fileID: 3008116145758251924, guid: ef37ad30ae6598b418f11eed535edaad, type: 3}
+  moralWastePrefabs: []
   goreWastePrefabs:
-  - {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
+  - {fileID: 5345613369068697587, guid: 18d33e3245fe49c4f9181cabcc55fa05, type: 3}
+  - {fileID: 5345613369068697587, guid: a3a6fc81d7e3cea41b60e92aea4f3e46, type: 3}
   bombPrefabs:
   - {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
   cardPrefabs:
-  - {fileID: 0}
-  babyPrefabs: []
-  boxPrefabs: []
+  - {fileID: 5231817589212017985, guid: 6f31b510d0b694e46b8affbf676b9bd4, type: 3}
+  babyPrefabs:
+  - {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
+  boxPrefabs:
+  - {fileID: 5231817589212017985, guid: 27b6b0a5732e39a4d85c751ae1b2ff97, type: 3}
 --- !u!1 &2103561222
 GameObject:
   m_ObjectHideFlags: 0
