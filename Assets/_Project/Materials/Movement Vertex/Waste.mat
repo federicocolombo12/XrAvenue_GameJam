@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ImageTexture:
-        m_Texture: {fileID: 2800000, guid: 7f0e50682dc77ea4490d8917a2c48f3d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 36e630426426a464e99f0af9596de87c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -105,7 +105,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _CellSize: 0.1
+    - _CellSize: 2
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
