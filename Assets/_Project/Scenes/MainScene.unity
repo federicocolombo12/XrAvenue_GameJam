@@ -3019,6 +3019,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 949430103672531220, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: appearanceDelay
+      value: 3.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 949430103672531220, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: finaleDialoguePopup
       value: 
       objectReference: {fileID: 172574860}
