@@ -18,7 +18,7 @@ MonoBehaviour:
   deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
-  worldPollutionLevel: 1
+  worldPollutionLevel: 2
   dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
   bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
   npcVoiceFallback: {fileID: 8300000, guid: 0b1547eb7ec427b40b2373bb7c0aefe8, type: 3}
