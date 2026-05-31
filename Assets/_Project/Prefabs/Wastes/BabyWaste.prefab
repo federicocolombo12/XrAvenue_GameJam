@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.04966
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.33587
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -77,6 +77,30 @@ PrefabInstance:
     - target: {fileID: 111179649170023343, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Name
       value: BabyWaste
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7908508
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Size.y
+      value: 0.25912175
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Size.z
+      value: 0.34677115
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0008328259
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Center.y
+      value: 0.009560779
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0012448877
       objectReference: {fileID: 0}
     - target: {fileID: 2882688895595317389, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_LocalPosition.x
