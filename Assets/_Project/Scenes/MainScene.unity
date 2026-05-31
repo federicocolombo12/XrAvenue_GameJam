@@ -3039,6 +3039,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 701890129}
     - target: {fileID: 2659689690100036528, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: onFinaleReached
+      value: 
+      objectReference: {fileID: 11400000, guid: f1ab9ae4da314aa42baff9f063a9f24c, type: 2}
+    - target: {fileID: 2659689690100036528, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: faderCanvasGroup
       value: 
       objectReference: {fileID: 701890128}
