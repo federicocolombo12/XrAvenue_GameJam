@@ -14,13 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
+    speakerName: 
     text: Ciao...
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: Mi hanno chiesto di lasciarti questo anello
+    speakerName: 
+    text: 'Mi hanno chiesto di consegnarti questa foto. '
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: Ma ci sono molto affezionata...
+    speakerName: 
+    text: Ritrae me con mia madre tanti anni fa, prima che venisse arrestata
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: 'Era un regalo di mia nonna, ti dispiacerebbe ridarmelo indietro? '
+    speakerName: 
+    text: Ha un grande valore sentimentale per me...Potresti ridarmela?
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
