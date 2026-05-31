@@ -14,13 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
+    speakerName: 
     text: "Qui \xE8 dove le persone ti spiegheranno"
+    voiceClip: {fileID: 0}
   - speaker: 1
+    speakerName: 
     text: Che tipo di oggetto devi buttare.
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: Prendi questo libro.
+    speakerName: 
+    text: Prendi questa cartaccia
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: "\xC8 un libro, buttalo nella carta."
+    speakerName: 
+    text: "Sai gi\xE0 dove buttarla."
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
