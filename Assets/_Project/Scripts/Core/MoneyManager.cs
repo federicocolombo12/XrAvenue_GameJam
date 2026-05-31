@@ -61,15 +61,15 @@ namespace AvenueXR.Core
                 string colorHex = ColorUtility.ToHtmlStringRGB(targetColor);
 
                 // Applichiamo il colore direttamente ai componenti se possibile
-                if (displayPopup.speakerNameText != null) displayPopup.speakerNameText.color = targetColor;
+                if (displayPopup.speakerNameText != null) displayPopup.speakerNameText.color = Color.white;
                 if (displayPopup.dialogueText != null) displayPopup.dialogueText.color = targetColor;
-
+                
                 // Usiamo anche il Rich Text per sicurezza nel corpo del messaggio
-                string fullMessage = $"<color=#{colorHex}>{headerLabel}{currentBalance:F2}{currencySymbol}</color>";
+                string fullMessage = $"<color=#{colorHex}>{currentBalance:F2}{currencySymbol}</color>";
                 
                 // Passiamo una stringa vuota come speakerName e il messaggio colorato nel corpo
                 // NOTA: Ho invertito i parametri rispetto a prima per usare il corpo del testo (dialogueText)
-                displayPopup.ShowDialogue("", fullMessage); 
+                displayPopup.ShowDialogue(fullMessage, headerLabel); 
             }
         }
     }
