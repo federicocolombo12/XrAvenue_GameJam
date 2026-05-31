@@ -18,11 +18,15 @@ MonoBehaviour:
   deliveries: []
   nextDayObedient: {fileID: 0}
   nextDayRebel: {fileID: 0}
+  rebellionThreshold: 1
   worldPollutionLevel: -2
-  dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
+  dayAmbient: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
+  dayMusic: {fileID: 8300000, guid: 75a306595da33b34bb4aeb59f0f50d14, type: 3}
   bossVoiceFallback: {fileID: 8300000, guid: 9accac64067363940b6f4f3fd3bdcb67, type: 3}
   npcVoiceFallback: {fileID: 8300000, guid: 0b1547eb7ec427b40b2373bb7c0aefe8, type: 3}
   isFinale: 1
   endingTitle: Bomba
   endingDescription: "La bomba \xE8 scoppiata"
   endingSoundClip: {fileID: 0}
+  endingPollutionLevel: 0
+  specialFinaleObjectPrefab: {fileID: 0}

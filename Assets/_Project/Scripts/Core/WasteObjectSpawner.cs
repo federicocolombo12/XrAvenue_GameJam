@@ -18,6 +18,9 @@ namespace AvenueXR.Core
         public List<GameObject> moralWastePrefabs = new List<GameObject>();
         public List<GameObject> goreWastePrefabs = new List<GameObject>();
         public List<GameObject> bombPrefabs = new List<GameObject>();
+        public List<GameObject> cardPrefabs = new List<GameObject>();
+        public List<GameObject> babyPrefabs = new List<GameObject>();
+        public List<GameObject> boxPrefabs = new List<GameObject>();
 
         public void Spawn(WasteType type)
         {
@@ -52,6 +55,9 @@ namespace AvenueXR.Core
                 WasteType.Moral => moralWastePrefabs,
                 WasteType.Gore => goreWastePrefabs,
                 WasteType.Bomb => bombPrefabs,
+                WasteType.Card => cardPrefabs,
+                WasteType.Baby => babyPrefabs,
+                WasteType.Box => boxPrefabs,
                 _ => null
             };
 

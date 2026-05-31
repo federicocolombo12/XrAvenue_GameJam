@@ -14,11 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
+    speakerName: 
     text: Scusami...
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: Sono molto affezionata a questo libro...
+    speakerName: 
+    text: "Lo so che \xE8 stato ritirato perch\xE9 considerato di propaganda..."
+    voiceClip: {fileID: 0}
   - speaker: 0
-    text: Potrei chiederti di non distruggerlo
+    speakerName: 
+    text: "Ma...potrei chiederti di non distruggerlo? Ha davvero senso farlo? Non
+      \xE8 un simbolo"
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

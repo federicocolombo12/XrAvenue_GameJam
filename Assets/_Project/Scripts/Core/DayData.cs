@@ -50,5 +50,8 @@ namespace AvenueXR.Core
         [TextArea(3, 10)]
         public string endingDescription;
         public AudioClip endingSoundClip;
+        public float endingPollutionLevel; 
+        [Tooltip("Se assegnato, questo oggetto verrà spawnato invece degli oggetti normali all'inizio del giorno (usato per la pistola).")]
+        public GameObject specialFinaleObjectPrefab;
     }
 }

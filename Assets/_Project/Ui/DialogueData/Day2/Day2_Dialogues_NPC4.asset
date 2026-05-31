@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
+    speakerName: 
     text: Sbrigati a fare il tuo lavoro.
+    voiceClip: {fileID: 0}
   - speaker: 1
-    text: Ho degli impegni io
+    speakerName: 
+    text: Diversamente da te ho degli impegni
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

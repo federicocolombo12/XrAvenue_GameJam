@@ -2442,7 +2442,7 @@ PrefabInstance:
       objectReference: {fileID: 839941656}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 470
+      value: 473
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2601,7 +2601,7 @@ PrefabInstance:
       objectReference: {fileID: 486176583}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 470
+      value: 473
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2970,9 +2970,12 @@ MonoBehaviour:
   moralWastePrefabs:
   - {fileID: 3008116145758251924, guid: ef37ad30ae6598b418f11eed535edaad, type: 3}
   goreWastePrefabs:
-  - {fileID: 5345613369068697587, guid: 52377809839141248a4bcaf24cee7a49, type: 3}
+  - {fileID: 5808632121522567254, guid: 6f1d15d3d59835c4d975d489c08f0706, type: 3}
   bombPrefabs:
   - {fileID: 3096136959643802554, guid: 89482562fa4bab0438ebd79f5d3f07d3, type: 3}
+  cardPrefabs: []
+  babyPrefabs: []
+  boxPrefabs: []
 --- !u!1 &2103561222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,6 +3019,10 @@ PrefabInstance:
       propertyPath: finaleDialoguePopup
       value: 
       objectReference: {fileID: 172574860}
+    - target: {fileID: 949430103672531220, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: cityPollutionManager
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 998884939075356907, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: headerLabel
       value: 'Saldo:'
@@ -3091,7 +3098,7 @@ PrefabInstance:
     - target: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: firstDay
       value: 
-      objectReference: {fileID: 11400000, guid: 9da0c66ead16f624da2851de9d425131, type: 2}
+      objectReference: {fileID: 11400000, guid: 4bd3cfe0aed6f5b40849ddd5ef3f0a68, type: 2}
     - target: {fileID: 7879951798169451936, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: musicSource
       value: 
@@ -3206,7 +3213,7 @@ PrefabInstance:
       objectReference: {fileID: 354619959}
     - target: {fileID: 5233464056191808614, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_VersionIndex
-      value: 476
+      value: 479
       objectReference: {fileID: 0}
     - target: {fileID: 5471055987564934901, guid: 205d4f650a39fed40adaaf88881e3e91, type: 3}
       propertyPath: m_LocalPosition.x
