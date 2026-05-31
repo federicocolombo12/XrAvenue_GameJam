@@ -57,6 +57,13 @@ namespace AvenueXR.Core
                 _rb.linearVelocity = Vector3.zero;
                 _rb.angularVelocity = Vector3.zero;
             }
+
+            // SICUREZZA: Riattiviamo tutti i collider in caso l'oggetto sia "scappato" da un cestino
+            Collider[] colliders = GetComponentsInChildren<Collider>(true);
+            foreach (var col in colliders)
+            {
+                col.enabled = true;
+            }
         }
 
         /// <summary>
