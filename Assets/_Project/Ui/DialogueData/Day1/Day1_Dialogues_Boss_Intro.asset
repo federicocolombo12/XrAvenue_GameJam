@@ -16,18 +16,19 @@ MonoBehaviour:
   - speaker: 0
     speakerName: Boss
     text: Benvenuto.
+    voiceClip: {fileID: 0}
   - speaker: 0
     speakerName: Boss
     text: "Questo \xE8 il tuo nuovo posto di lavoro."
+    voiceClip: {fileID: 0}
   - speaker: 0
     speakerName: Boss
-    text: Sono qui per parlarti di cosa dovrai fare.
+    text: Sono qui per spiegarti cosa dovrai fare.
+    voiceClip: {fileID: 0}
   - speaker: 0
     speakerName: Boss
     text: "Il tuo lavoro \xE8 semplice..."
-  - speaker: 0
-    speakerName: Boss
-    text: "Fai quello e andr\xE0 tutto bene."
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

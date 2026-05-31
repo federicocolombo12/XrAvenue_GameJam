@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: Rifiuti.
+    speakerName: 
+    text: Ahahahahah, ci sono veramente tanti amanti della cultura in questo posto
+    voiceClip: {fileID: 0}
+  - speaker: 1
+    speakerName: 
+    text: Non capisco questa moda, non capiranno mai.
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5

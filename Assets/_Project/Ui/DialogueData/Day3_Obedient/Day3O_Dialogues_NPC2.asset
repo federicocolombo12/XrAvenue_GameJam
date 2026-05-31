@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueData
   lines:
   - speaker: 1
-    text: Ti hanno mai detto
+    speakerName: 
+    text: Ti hanno mai detto...
+    voiceClip: {fileID: 0}
   - speaker: 1
+    speakerName: 
     text: Che leggere rendere liberi?
+    voiceClip: {fileID: 0}
   basePauseSeconds: 0.6
   secondsPerCharacter: 0.04
   minPauseSeconds: 0.5
