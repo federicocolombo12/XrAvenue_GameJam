@@ -16,10 +16,10 @@ MonoBehaviour:
   - type: 6
     particlePrefab: {fileID: 194062, guid: 8c27aeead6d968e4ba986702d6b84335, type: 3}
   - type: 0
-    particlePrefab: {fileID: 0}
+    particlePrefab: {fileID: 5767164465099262937, guid: d0d65f8025562aa43a0d1bf48cf570b3, type: 3}
   - type: 1
-    particlePrefab: {fileID: 0}
+    particlePrefab: {fileID: 5767164465099262937, guid: d0d65f8025562aa43a0d1bf48cf570b3, type: 3}
   - type: 3
-    particlePrefab: {fileID: 0}
+    particlePrefab: {fileID: 5767164465099262937, guid: d0d65f8025562aa43a0d1bf48cf570b3, type: 3}
   - type: 2
-    particlePrefab: {fileID: 0}
+    particlePrefab: {fileID: 5767164465099262937, guid: d0d65f8025562aa43a0d1bf48cf570b3, type: 3}
