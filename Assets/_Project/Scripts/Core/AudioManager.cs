@@ -18,6 +18,7 @@ namespace AvenueXR.Core
         [Header("Butter Events - Game Flow")]
         public DayDataEvent onDayStart;
         public GameEvent onDayEnd;
+        public DayDataEvent onFinaleReached;
         public DialogueDataEvent onDialogueStart;
         public GameEvent onDialogueFinished;
 
@@ -52,6 +53,7 @@ namespace AvenueXR.Core
         {
             if (onDayStart != null) onDayStart.RegisterListener(HandleDayStart);
             if (onDayEnd != null) onDayEnd.RegisterListener(_ => HandleDayEnd());
+            if (onFinaleReached != null) onFinaleReached.RegisterListener(HandleFinaleReached);
             if (onBossSpeech != null) onBossSpeech.RegisterListener(PlayBossSound);
             if (onNpcSpeech != null) onNpcSpeech.RegisterListener(PlayNpcSound);
             if (onWasteSorted != null) onWasteSorted.RegisterListener(PlayWasteSortedSFX);
@@ -61,6 +63,7 @@ namespace AvenueXR.Core
         {
             if (onDayStart != null) onDayStart.DeregisterListener(HandleDayStart);
             if (onDayEnd != null) onDayEnd.DeregisterListener(_ => HandleDayEnd());
+            if (onFinaleReached != null) onFinaleReached.DeregisterListener(HandleFinaleReached);
             if (onBossSpeech != null) onBossSpeech.DeregisterListener(PlayBossSound);
             if (onNpcSpeech != null) onNpcSpeech.DeregisterListener(PlayNpcSound);
             if (onWasteSorted != null) onWasteSorted.DeregisterListener(PlayWasteSortedSFX);
@@ -85,6 +88,15 @@ namespace AvenueXR.Core
         {
             Debug.Log("[AudioManager] Fine giorno. Fermo ambient.");
             StopAmbient();
+        }
+
+        private void HandleFinaleReached(DayData day)
+        {
+            if (day == null || day.endingSoundClip == null) return;
+            
+            Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Riproduzione audio finale.");
+            StopAmbient();
+            PlayDirectSFX(day.endingSoundClip);
         }
 
         // ========== VOICE ==========

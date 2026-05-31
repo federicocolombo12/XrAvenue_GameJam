@@ -16,6 +16,7 @@ namespace AvenueXR.Core
         [Header("Butter Events")]
         public DayDataEvent onDayStart;
         public GameEvent onDayEnd;
+        public DayDataEvent onFinaleReached; // Nuovo evento per i finali
         public StringEvent onBossSpeech; // Canale Schermo (Quick feedback)
         public StringEvent onNPCSpeech;  // Canale Cristiano (Quick feedback)
         public BoolEvent onMoralChoiceMade;
@@ -42,6 +43,8 @@ namespace AvenueXR.Core
 
         private void StartDay()
         {
+            if (_currentDay == null) return;
+
             if (isRebelVariable != null) isRebelVariable.Value = false;
             Debug.Log($"Inizio { _currentDay.dayLabel}");
             
@@ -61,17 +64,29 @@ namespace AvenueXR.Core
             Debug.Log("[GameStateManager] Giorno finito. Attendo prima di passare al prossimo...");
             yield return new WaitForSeconds(1.0f);
 
+            // Se il giorno appena concluso era un finale, fermiamo qui la progressione
+            if (_currentDay.isFinale)
+            {
+                Debug.Log($"[GameStateManager] FINALE RAGGIUNTO: {_currentDay.endingTitle}");
+                if (onFinaleReached != null) onFinaleReached.Raise(_currentDay);
+                yield break; 
+            }
+
             bool hasRebelled = isRebelVariable != null && isRebelVariable.Value;
 
             if (hasRebelled)
             {
                 if (_currentDay.nextDayRebel != null)
                     _currentDay = _currentDay.nextDayRebel;
+                else
+                    Debug.LogWarning("[GameStateManager] Nessun 'Next Day Rebel' impostato!");
             }
             else
             {
                 if (_currentDay.nextDayObedient != null)
                     _currentDay = _currentDay.nextDayObedient;
+                else
+                    Debug.LogWarning("[GameStateManager] Nessun 'Next Day Obedient' impostato!");
             }
 
             StartDay();

@@ -38,5 +38,12 @@ namespace AvenueXR.Core
 
         [Header("Audio (Opzionale)")]
         public AudioClip dayAmbientMusic;
+
+        [Header("Logica Finali (Opzionale)")]
+        public bool isFinale = false;
+        public string endingTitle;
+        [TextArea(3, 10)]
+        public string endingDescription;
+        public AudioClip endingSoundClip;
     }
 }
