@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.WasteAudioData
   audioMappings:
   - type: 0
-    crushSound: {fileID: 0}
+    crushSound: {fileID: 8300000, guid: fe712441c07665b449797ba00ed55b68, type: 3}
   - type: 1
-    crushSound: {fileID: 0}
+    crushSound: {fileID: 8300000, guid: 0fa223e4b26c6e949be7b191e89d9f7d, type: 3}
   - type: 2
     crushSound: {fileID: 0}
   - type: 5
