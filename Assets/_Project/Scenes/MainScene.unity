@@ -2057,57 +2057,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 788be95c62afe3842a9501e8e40284a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
---- !u!1 &1313388138
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1313388140}
-  - component: {fileID: 1313388139}
-  m_Layer: 0
-  m_Name: MoneyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1313388139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313388138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4384c3ab17a73e4faa401d54e68a818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.MoneyManager
-  onSortingResult: {fileID: 11400000, guid: 29b76efd3af9ee949b81fdb82450454a, type: 2}
-  displayPopup: {fileID: 465843293}
-  headerLabel: 'SALDO: '
-  currentBalance: 0
-  rewardAmount: 10
-  penaltyAmount: 5
-  currencySymbol: $
---- !u!4 &1313388140
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313388138}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.375, y: 1.717, z: -3.342}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1384486235 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7487798986550276642, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
@@ -2301,55 +2250,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6968222811199511598, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
   m_PrefabInstance: {fileID: 8350597197750096491}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2067610741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2067610742}
-  - component: {fileID: 2067610743}
-  m_Layer: 0
-  m_Name: DialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2067610742
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067610741}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2067610743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067610741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a2fe4314f9defa45bdba6e6587e8692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.DialogueManager
-  onDialogueStart: {fileID: 11400000, guid: a1a76229b3047d148bf6c79a3d09276b, type: 2}
-  onDialogueFinished: {fileID: 11400000, guid: 872d7d6e46adcea43b8473dcb94fe4cd, type: 2}
-  bossWorldPopup: {fileID: 77399747}
-  npcWorldPopup: {fileID: 1270699795}
-  onTVStateChanged: {fileID: 11400000, guid: 1b2bb6c69fa1b6b44a3e5ca2667505db, type: 2}
 --- !u!1 &2090644809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2446,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 998884939075356907, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: displayPopup
+      value: 
+      objectReference: {fileID: 465843293}
     - target: {fileID: 2659689690100036528, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: faderAnimator
       value: 
@@ -2603,21 +2507,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2090644811}
     - target: {fileID: 4457475654451511710, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-      propertyPath: onWasteReturned
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c36852bfc53ab848bf97625653f8611, type: 2}
-    - target: {fileID: 4457475654451511710, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: npcVisualManager
       value: 
       objectReference: {fileID: 1090989808}
-    - target: {fileID: 4457475654451511710, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
-      propertyPath: onMoralChoiceMade
-      value: 
-      objectReference: {fileID: 11400000, guid: 1ed8dfda064677f47845ef3839dc3a2f, type: 2}
     - target: {fileID: 5896909703872291306, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: npcWorldPopup
+      value: 
+      objectReference: {fileID: 1270699795}
+    - target: {fileID: 8458455114804215524, guid: d6990c8ff33d1f64aac3318da60f8496, type: 3}
+      propertyPath: bossWorldPopup
+      value: 
+      objectReference: {fileID: 77399747}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2799,10 +2703,8 @@ SceneRoots:
   - {fileID: 1071279868}
   - {fileID: 632190029}
   - {fileID: 2103561223}
-  - {fileID: 2067610742}
   - {fileID: 701890127}
   - {fileID: 440471757}
   - {fileID: 1203655590}
   - {fileID: 465843289}
-  - {fileID: 1313388140}
   - {fileID: 1070829620}

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &101951035396435242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2457805473782440514}
+  - component: {fileID: 4572702894920915767}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2457805473782440514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101951035396435242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4572702894920915767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101951035396435242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bf526c1fb496040beedb9fb8549bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AvenueXR.Core.AudioManager
+  mainMixer: {fileID: 24100000, guid: 01438ae1bd8d1444c8c958ce80fca452, type: 2}
+  bossVoiceSource: {fileID: 0}
+  npcVoiceSource: {fileID: 0}
+  ambientSource: {fileID: 0}
+  sfxSource: {fileID: 0}
+  onDayStart: {fileID: 11400000, guid: ff02b8b0a0486fd4e9011bbd0e9c5147, type: 2}
+  onDayEnd: {fileID: 11400000, guid: 76aecb4829e9f0e498bcfaf44a8cd60d, type: 2}
+  onDialogueStart: {fileID: 11400000, guid: a1a76229b3047d148bf6c79a3d09276b, type: 2}
+  onDialogueFinished: {fileID: 11400000, guid: 872d7d6e46adcea43b8473dcb94fe4cd, type: 2}
+  onBossSpeech: {fileID: 11400000, guid: 1f0474966d91ea842965cc4bd2f513b3, type: 2}
+  onNpcSpeech: {fileID: 11400000, guid: 2e264dabba86a9e4b959cc5dd3627dee, type: 2}
+  onWasteSorted: {fileID: 11400000, guid: 419161700ebeba54b9d1401fc2d84ca7, type: 2}
+  ambientDayClip: {fileID: 0}
+  ambientNightClip: {fileID: 0}
+  wasteDropClip: {fileID: 0}
+  itemPlacedClip: {fileID: 0}
+  errorClip: {fileID: 0}
+  uiClickClip: {fileID: 0}
+  bossPitchMin: 0.9
+  bossPitchMax: 1.1
+  npcPitchMin: 0.85
+  npcPitchMax: 1.15

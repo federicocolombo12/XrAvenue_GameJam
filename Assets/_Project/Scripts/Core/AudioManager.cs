@@ -70,7 +70,15 @@ namespace AvenueXR.Core
         private void HandleDayStart(DayData day)
         {
             Debug.Log($"[AudioManager] Inizio giorno: {day.dayLabel}");
-            PlayAmbientLoop(ambientDayClip);
+            
+            if (day.dayAmbientMusic != null)
+            {
+                PlayAmbientLoop(day.dayAmbientMusic);
+            }
+            else
+            {
+                PlayAmbientLoop(ambientDayClip);
+            }
         }
 
         private void HandleDayEnd()

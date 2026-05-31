@@ -31,3 +31,4 @@ MonoBehaviour:
   nextDayObedient: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   nextDayRebel: {fileID: 11400000, guid: f4b346b43244a354a8c31861738b652b, type: 2}
   worldPollutionLevel: 0
+  dayAmbientMusic: {fileID: 8300000, guid: fa6c2118cffb85c4d9619103f49643d4, type: 3}
