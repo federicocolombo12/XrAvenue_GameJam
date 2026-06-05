@@ -114,17 +114,32 @@ namespace AvenueXR.Core
 
         private void HandleFinaleReached(DayData day)
         {
-            if (day == null || day.endingSoundClip == null) return;
+            if (day == null) return;
             
-            Debug.Log($"[AudioManager] Finale raggiunto: {day.endingTitle}. Preparazione audio finale.");
+            if (day.endingSoundClip == null)
+            {
+                Debug.LogWarning($"[AudioManager] Finale raggiunto ({day.endingTitle}) ma manca endingSoundClip!");
+                return;
+            }
+            
+            Debug.Log($"<color=gold>[AudioManager] Finale raggiunto: {day.endingTitle}. Esecuzione audio finale: {day.endingSoundClip.name}</color>");
             
             // Fermiamo tutto per creare il vuoto
             StopAmbient();
             StopMusic();
             
-            if (finaleSFX.targetSource != null)
+            if (finaleSFX != null && finaleSFX.targetSource != null)
             {
                 finaleSFX.targetSource.PlayOneShot(day.endingSoundClip);
+            }
+            else if (musicSource != null)
+            {
+                Debug.LogWarning("[AudioManager] finaleSFX.targetSource non assegnato! Uso musicSource come fallback per il finale.");
+                musicSource.PlayOneShot(day.endingSoundClip);
+            }
+            else
+            {
+                Debug.LogError("[AudioManager] Impossibile riprodurre audio finale: nessuna sorgente valida assegnata!");
             }
         }
 

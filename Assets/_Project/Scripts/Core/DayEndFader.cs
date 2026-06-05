@@ -36,7 +36,7 @@ namespace AvenueXR.Core
                 onDayStart.RegisterListener(HandleDayStart);
 
             if (onFinaleReached != null)
-                onFinaleReached.RegisterListener(HandleDayStart); // Usiamo lo stesso reset
+                onFinaleReached.RegisterListener(HandleFinaleReached); 
         }
 
         void OnDisable()
@@ -48,7 +48,7 @@ namespace AvenueXR.Core
                 onDayStart.DeregisterListener(HandleDayStart);
             
             if (onFinaleReached != null)
-                onFinaleReached.DeregisterListener(HandleDayStart);
+                onFinaleReached.DeregisterListener(HandleFinaleReached);
         }
 
         // Wrapper per compatibilità con l'evento di Butter
@@ -61,7 +61,7 @@ namespace AvenueXR.Core
         {
             if (faderAnimator != null)
             {
-                Debug.Log("[DayEndFader] Attivazione animazione Fine Giornata.");
+                Debug.Log("[DayEndFader] Attivazione animazione Fine Giornata (Fade to Black).");
                 faderAnimator.SetBool(dayEndBool, true);
             }
             else
@@ -74,8 +74,17 @@ namespace AvenueXR.Core
         {
             if (faderAnimator != null)
             {
-                Debug.Log("[DayEndFader] Reset animazione per Inizio Giornata.");
+                Debug.Log("[DayEndFader] Reset animazione (Fade Out).");
                 faderAnimator.SetBool(dayEndBool, false);
+            }
+        }
+
+        private void HandleFinaleReached(DayData data)
+        {
+            Debug.Log("[DayEndFader] Finale raggiunto. Assicuro che lo schermo resti NERO.");
+            if (faderAnimator != null)
+            {
+                faderAnimator.SetBool(dayEndBool, true);
             }
         }
     }

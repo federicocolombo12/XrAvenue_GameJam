@@ -33,38 +33,34 @@ namespace AvenueXR.Core
 
             // 1. Carichiamo la Main Scene (Additiva)
             AsyncOperation mainLoad = SceneManager.LoadSceneAsync(mainSceneName, LoadSceneMode.Additive);
-            while (!mainLoad.isDone)
-            {
-                yield return null;
-            }
+            while (!mainLoad.isDone) yield return null;
             Debug.Log($"[SceneLoader] Scena '{mainSceneName}' caricata.");
 
             // 2. Carichiamo la Env Scene (Additiva)
             AsyncOperation envLoad = SceneManager.LoadSceneAsync(environmentSceneName, LoadSceneMode.Additive);
-            while (!envLoad.isDone)
-            {
-                yield return null;
-            }
+            while (!envLoad.isDone) yield return null;
             Debug.Log($"[SceneLoader] Scena '{environmentSceneName}' caricata.");
+
+            // Aspettiamo un frame per sicurezza affinché Unity registri correttamente le scene
+            yield return null;
 
             // 3. Impostiamo la scena attiva (Env solitamente contiene lighting e skybox)
             if (setMainAsActive)
             {
-                Scene activeScene = SceneManager.GetSceneByName(environmentSceneName);
-                if (activeScene.IsValid())
+                Scene envScene = SceneManager.GetSceneByName(environmentSceneName);
+                if (envScene.IsValid() && envScene.isLoaded)
                 {
-                    SceneManager.SetActiveScene(activeScene);
+                    SceneManager.SetActiveScene(envScene);
                     Debug.Log($"[SceneLoader] Scena attiva impostata su: {environmentSceneName}");
                 }
             }
 
             // 4. Scarichiamo la scena di Init (questa scena)
-            Scene initScene = SceneManager.GetActiveScene(); // Al momento è Init se lanciato da lì
-            // Per sicurezza cerchiamo per nome se l'active è già cambiata
-            if (initScene.name != mainSceneName && initScene.name != environmentSceneName)
+            Scene currentScene = gameObject.scene; 
+            if (currentScene.IsValid() && currentScene.name != mainSceneName && currentScene.name != environmentSceneName)
             {
-                SceneManager.UnloadSceneAsync(initScene);
-                Debug.Log($"[SceneLoader] Scena di inizializzazione '{initScene.name}' scaricata.");
+                Debug.Log($"[SceneLoader] Scarico la scena di inizializzazione: {currentScene.name}");
+                SceneManager.UnloadSceneAsync(currentScene);
             }
 
             Debug.Log("[SceneLoader] Caricamento completato con successo.");

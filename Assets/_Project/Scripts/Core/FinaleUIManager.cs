@@ -20,7 +20,7 @@ namespace AvenueXR.Core
         
         [Header("Settings")]
         [Tooltip("Delay prima di mostrare il finale (utile per attendere il fade-out del fader).")]
-        public float appearanceDelay = 4.0f; // Aumentato per un fade più lungo e drammatico
+        public float appearanceDelay = 2.0f; // Ridotto da 4.0 per maggiore reattività
 
         private void Awake()
         {
@@ -48,38 +48,38 @@ namespace AvenueXR.Core
 
         private void HandleFinaleReached(DayData day)
         {
-            if (day == null || finaleDialoguePopup == null) return;
+            if (day == null) return;
+            
+            if (finaleDialoguePopup == null)
+            {
+                Debug.LogError("[FinaleUIManager] ERRORE: finaleDialoguePopup non è assegnato! Impossibile mostrare il finale.");
+                return;
+            }
 
-            Debug.Log($"[FinaleUIManager] Ricevuto finale: {day.endingTitle}. Preparazione visualizzazione...");
+            Debug.Log($"<color=gold>[FinaleUIManager] Ricevuto finale: {day.endingTitle}. Avvio routine tra {appearanceDelay} secondi...</color>");
             StartCoroutine(ShowFinaleRoutine(day));
         }
 
         private IEnumerator ShowFinaleRoutine(DayData day)
         {
-            // Sincronizziamo l'inquinamento subito (mentre è ancora buio o il fader sta resettando)
+            // Sincronizziamo l'inquinamento subito
             if (cityPollutionManager != null)
             {
                 cityPollutionManager.UpdateCityVisuals(day.endingPollutionLevel);
             }
 
-            // Attendiamo che il fader di fine giornata abbia completato la sua animazione
+            // Attendiamo il delay impostato
             yield return new WaitForSeconds(appearanceDelay);
 
-            // FIX: Per il finale, forziamo il popup in Screen Space Overlay 
-            // per assicurarci che sia sopra il fader nero (Overlay Canvas).
-            Canvas canvas = finaleDialoguePopup.GetComponent<Canvas>();
-            if (canvas != null)
-            {
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                canvas.sortingOrder = 999;
-            }
+            if (finaleDialoguePopup == null) yield break;
+
+            // Assicuriamoci che l'oggetto sia attivo (il setup del canvas è manuale ora)
+            finaleDialoguePopup.gameObject.SetActive(true);
 
             // Utilizziamo il sistema di dialogo esistente:
-            // - endingTitle viene usato come nome dello speaker (in alto)
-            // - endingDescription viene usato come corpo del testo (con typewriter effect)
             finaleDialoguePopup.ShowDialogue(day.endingDescription, day.endingTitle);
             
-            Debug.Log("[FinaleUIManager] Finale visualizzato tramite DialogueBox (Forced Overlay).");
+            Debug.Log($"[FinaleUIManager] Finale '{day.endingTitle}' attivato. Setup visivo gestito manualmente.");
         }
     }
 }

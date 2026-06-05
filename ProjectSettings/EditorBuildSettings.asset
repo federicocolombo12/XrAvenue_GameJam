@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Init.unity
     guid: e1e83408901313e49a92c8aaaff78117
   - enabled: 1
-    path: Assets/_Project/Scenes/MainScene.unity
-    guid: 7f4136e23005f5640b44009652f834e4
-  - enabled: 1
     path: Assets/_Project/Scenes/Env.unity
     guid: 9b285ede392f45a4a8f944a980099c4d
+  - enabled: 1
+    path: Assets/_Project/Scenes/MainScene.unity
+    guid: 7f4136e23005f5640b44009652f834e4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

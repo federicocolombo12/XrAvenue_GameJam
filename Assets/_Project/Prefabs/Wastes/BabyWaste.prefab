@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 8725666183742919540}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 71.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 71.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 71.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 8d55b9d479b19154aa92e5914f68baed, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -80,11 +96,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Size.x
-      value: 0.7908508
+      value: 0.52256763
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Size.y
-      value: 0.25912175
+      value: 0.14200321
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Size.z
@@ -92,11 +108,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Center.x
-      value: 0.0008328259
+      value: 0.011046648
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Center.y
-      value: 0.009560779
+      value: 0.008198932
       objectReference: {fileID: 0}
     - target: {fileID: 1216653863138815428, guid: 314802cc0639c8846a841551cde3b770, type: 3}
       propertyPath: m_Center.z
