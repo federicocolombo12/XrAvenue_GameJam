@@ -1,0 +1,43 @@
+{
+  "name": "dev.nicklaj.butter",
+  "version": "1.3.1",
+  "displayName": "Butter",
+  "description": "Simple free library that introduces SOAP functionalities.",
+  "unity": "2022.3",
+  "author": {
+    "name": "Nicklaj"
+  },
+  "documentationUrl": "https://github.com/xNicklaj/Butter/wiki",
+  "changelogUrl": "https://github.com/xNicklaj/Butter/blob/main/CHANGELOG.md",
+  "samples": [
+    {
+      "displayName": "Variables",
+      "description": "A sample demonstrating the use of scriptable variables..",
+      "path": "Samples~/1. Variables"
+    },
+    {
+      "displayName": "Events",
+      "description": "A sample demonstrating the use of scriptable events.",
+      "path": "Samples~/2. Events"
+    },
+    {
+      "displayName": "Data Persistency",
+      "description": "A sample demonstrating the use of data persistency.",
+      "path": "Samples~/3. Persistency"
+    },
+    {
+      "displayName": "Runtime Sets",
+      "description": "A sample demonstrating the use of runtime sets.",
+      "path": "Samples~/4. Runtime Sets"
+    },
+    {
+      "displayName": "Object Pools",
+      "description": "A sample demonstrating the use of object pools.",
+      "path": "Samples~/5. Object Pools"
+    }
+  ],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "_fingerprint": "b19981d09da6a6eaf22670156628c4c2923f73a6"
+}
