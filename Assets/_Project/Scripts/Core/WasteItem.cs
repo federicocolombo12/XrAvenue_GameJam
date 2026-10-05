@@ -12,7 +12,7 @@ namespace AvenueXR.Core
         public AudioClip dropSound;
 
         [Header("Respawn Settings")]
-        public float killYThreshold = 0.2f;
+        public float killYThreshold = -1.5f;
         private Vector3 _respawnPosition;
         private Quaternion _respawnRotation;
         private Rigidbody _rb;
@@ -45,6 +45,10 @@ namespace AvenueXR.Core
         private void Start()
         {
             _rb = GetComponent<Rigidbody>();
+            if (_rb != null)
+            {
+                _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
             
             // Registriamo la posizione iniziale come punto di respawn sicuro
             _respawnPosition = transform.position;
@@ -61,8 +65,8 @@ namespace AvenueXR.Core
 
         private void Update()
         {
-            // Se l'oggetto cade sotto la soglia, respawna
-            if (transform.position.y < killYThreshold)
+            // Se l'oggetto cade sotto la soglia e non è tenuto in mano, respawna
+            if (!IsCarried && transform.position.y < killYThreshold)
             {
                 Respawn();
             }

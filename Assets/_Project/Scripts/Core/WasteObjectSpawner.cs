@@ -54,6 +54,14 @@ namespace AvenueXR.Core
                 if (rb != null)
                 {
                     rb.isKinematic = false;
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+
+                WasteItem wasteItem = spawnedObj.GetComponent<WasteItem>();
+                if (wasteItem != null)
+                {
+                    wasteItem.SetRespawnPoint(spawnPoint.position, spawnPoint.rotation);
                 }
 
                 Debug.Log($"[WasteObjectSpawner] Spawn riuscito e Collider ATTIVATI: {prefab.name}");

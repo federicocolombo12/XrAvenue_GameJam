@@ -22,6 +22,7 @@ namespace AvenueXR.Player
         private float _cameraPitch = 0f;
         private Vector3 _velocity;
         private bool _isGrounded;
+        private Vector3 _spawnPosition;
 
         public bool IsMoving { get; private set; }
         public float CurrentSpeed { get; private set; }
@@ -29,6 +30,7 @@ namespace AvenueXR.Player
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
+            _spawnPosition = transform.position;
 
             if (cameraTransform == null)
             {
@@ -80,9 +82,17 @@ namespace AvenueXR.Player
         private void HandleMovement()
         {
             _isGrounded = _characterController.isGrounded;
-            if (_isGrounded && _velocity.y < 0)
+            if (_isGrounded)
             {
-                _velocity.y = -2f; // Mantieni il contatto a terra
+                if (_velocity.y < 0)
+                {
+                    _velocity.y = -2f; // Mantieni il contatto a terra
+                }
+            }
+            else
+            {
+                // Gravità applicata solo quando non si tocca terra
+                _velocity.y += gravity * Time.deltaTime;
             }
 
             var keyboard = Keyboard.current;
@@ -108,9 +118,16 @@ namespace AvenueXR.Player
 
             _characterController.Move(moveDirection * speed * Time.deltaTime);
 
-            // Gravità
-            _velocity.y += gravity * Time.deltaTime;
             _characterController.Move(_velocity * Time.deltaTime);
+
+            // Salvaguardia se si cade nel vuoto (es. durante caricamenti ritardati di scene)
+            if (transform.position.y < -10f)
+            {
+                _characterController.enabled = false;
+                transform.position = _spawnPosition;
+                _velocity = Vector3.zero;
+                _characterController.enabled = true;
+            }
         }
 
         private void HandleCursorToggle()

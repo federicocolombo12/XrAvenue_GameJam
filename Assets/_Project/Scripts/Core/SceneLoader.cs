@@ -31,15 +31,15 @@ namespace AvenueXR.Core
         {
             Debug.Log("[SceneLoader] Inizio caricamento additivo scene...");
 
-            // 1. Carichiamo la Main Scene (Additiva)
-            AsyncOperation mainLoad = SceneManager.LoadSceneAsync(mainSceneName, LoadSceneMode.Additive);
-            while (!mainLoad.isDone) yield return null;
-            Debug.Log($"[SceneLoader] Scena '{mainSceneName}' caricata.");
-
-            // 2. Carichiamo la Env Scene (Additiva)
+            // 1. Carichiamo prima l'ambiente (Env) con pavimenti, geometrie e luci
             AsyncOperation envLoad = SceneManager.LoadSceneAsync(environmentSceneName, LoadSceneMode.Additive);
             while (!envLoad.isDone) yield return null;
             Debug.Log($"[SceneLoader] Scena '{environmentSceneName}' caricata.");
+
+            // 2. Carichiamo la Main Scene (attori, manager, player) con geometrie già presenti
+            AsyncOperation mainLoad = SceneManager.LoadSceneAsync(mainSceneName, LoadSceneMode.Additive);
+            while (!mainLoad.isDone) yield return null;
+            Debug.Log($"[SceneLoader] Scena '{mainSceneName}' caricata.");
 
             // Aspettiamo un frame per sicurezza affinché Unity registri correttamente le scene
             yield return null;
