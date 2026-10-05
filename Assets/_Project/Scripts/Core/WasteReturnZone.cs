@@ -12,7 +12,7 @@ namespace AvenueXR.Core
         [Header("Butter Events")]
         public WasteTypeEvent onWasteReturned;
 
-        private static HashSet<int> _globallyHandledItems = new HashSet<int>();
+        private static HashSet<WasteItem> _globallyHandledItems = new HashSet<WasteItem>();
 
         private void OnTriggerEnter(Collider other)
         {
@@ -33,21 +33,21 @@ namespace AvenueXR.Core
             // Se il giocatore lo sta tenendo
             if (item.IsCarried)
             {
-                if (!_globallyHandledItems.Contains(item.GetInstanceID()))
+                if (!_globallyHandledItems.Contains(item))
                 {
                     Debug.Log($"[ReturnZone] Oggetto {item.name} maneggiato correttamente. Pronto per il reso.");
-                    _globallyHandledItems.Add(item.GetInstanceID());
+                    _globallyHandledItems.Add(item);
                 }
             }
             // Se lo rilascia nella zona ed è stato marcato
-            else if (_globallyHandledItems.Contains(item.GetInstanceID()))
+            else if (_globallyHandledItems.Contains(item))
             {
                 Debug.Log($"[ReturnZone] CONDIZIONI SODDISFATTE. Restituisco l'oggetto {item.type} all'NPC.");
                 
                 if (onWasteReturned != null)
                     onWasteReturned.Raise(item.type);
 
-                _globallyHandledItems.Remove(item.GetInstanceID());
+                _globallyHandledItems.Remove(item);
                 Destroy(item.gameObject);
             }
         }
