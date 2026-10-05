@@ -16,8 +16,31 @@ namespace AvenueXR.Core
         private Vector3 _respawnPosition;
         private Quaternion _respawnRotation;
         private Rigidbody _rb;
-
         private bool _wasGrabbed = false;
+
+        public bool IsCarried { get; private set; } = false;
+
+        public void OnPickedUp()
+        {
+            IsCarried = true;
+            PlayGrabSound();
+        }
+
+        public void OnDropped()
+        {
+            IsCarried = false;
+        }
+
+        public void OnThrown(Vector3 force)
+        {
+            IsCarried = false;
+            if (_rb == null) _rb = GetComponent<Rigidbody>();
+            if (_rb != null)
+            {
+                _rb.isKinematic = false;
+                _rb.linearVelocity = force;
+            }
+        }
 
         private void Start()
         {

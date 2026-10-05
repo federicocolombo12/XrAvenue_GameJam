@@ -1,7 +1,5 @@
 using UnityEngine;
 using Dev.Nicklaj.Butter;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using System.Collections.Generic;
 
 namespace AvenueXR.Core
@@ -18,7 +16,6 @@ namespace AvenueXR.Core
 
         private void OnTriggerEnter(Collider other)
         {
-            // QUESTO LOG DEVE APPARIRE PER FORZA SE C'È CONTATTO FISICO
             Debug.Log($"[ReturnZone DEBUG] QUALCOSA è entrato nel trigger: {other.name} (Layer: {LayerMask.LayerToName(other.gameObject.layer)})");
             
             WasteItem item = other.GetComponentInParent<WasteItem>();
@@ -33,13 +30,8 @@ namespace AvenueXR.Core
             WasteItem item = other.GetComponentInParent<WasteItem>();
             if (item == null) return;
 
-            XRGrabInteractable interactable = item.GetComponent<XRGrabInteractable>();
-            if (interactable == null) interactable = item.GetComponentInChildren<XRGrabInteractable>();
-            
-            if (interactable == null) return;
-
             // Se il giocatore lo sta tenendo
-            if (interactable.isSelected)
+            if (item.IsCarried)
             {
                 if (!_globallyHandledItems.Contains(item.GetInstanceID()))
                 {

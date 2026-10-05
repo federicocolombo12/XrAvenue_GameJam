@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace AvenueXR.Core
 {
@@ -39,11 +38,6 @@ namespace AvenueXR.Core
             // 3. Disabilitiamo fisica e interazione
             Rigidbody rb = _currentObject.GetComponent<Rigidbody>();
             if (rb != null) rb.isKinematic = true;
-
-            XRGrabInteractable grab = _currentObject.GetComponent<XRGrabInteractable>();
-            if (grab != null) grab.enabled = false;
-            
-            // Se ci sono altri script (es. WasteItem), possiamo lasciarli o disabilitarli se danno fastidio
         }
 
         /// <summary>

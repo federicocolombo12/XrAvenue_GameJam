@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using Dev.Nicklaj.Butter;
 
 namespace AvenueXR.Core
 {
     /// <summary>
-    /// Script speciale per oggetti che, se afferrati, scatenano immediatamente la fine della giornata/gioco.
+    /// Script speciale per oggetti che, se afferrati/raccolti, scatenano immediatamente la fine della giornata/gioco.
     /// Usato per il finale della pistola.
     /// </summary>
     public class FinaleGrabTrigger : MonoBehaviour
@@ -13,27 +12,28 @@ namespace AvenueXR.Core
         [Header("Butter Events")]
         public GameEvent onDayEnd; // Scatena il completamento del giorno
 
-        private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable _grabInteractable;
+        private WasteItem _wasteItem;
+        private bool _hasTriggered = false;
 
         private void Awake()
         {
-            _grabInteractable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+            _wasteItem = GetComponent<WasteItem>();
         }
 
-        private void OnEnable()
+        private void Update()
         {
-            if (_grabInteractable != null)
-                _grabInteractable.selectEntered.AddListener(HandleGrab);
+            // Se l'oggetto associato è stato raccolto dal giocatore PC
+            if (!_hasTriggered && _wasteItem != null && _wasteItem.IsCarried)
+            {
+                TriggerFinale();
+            }
         }
 
-        private void OnDisable()
+        public void TriggerFinale()
         {
-            if (_grabInteractable != null)
-                _grabInteractable.selectEntered.RemoveListener(HandleGrab);
-        }
+            if (_hasTriggered) return;
+            _hasTriggered = true;
 
-        private void HandleGrab(SelectEnterEventArgs args)
-        {
             Debug.Log($"[FinaleGrabTrigger] Oggetto {gameObject.name} afferrato! Scateno fine gioco.");
             
             if (onDayEnd != null)
@@ -41,7 +41,6 @@ namespace AvenueXR.Core
                 onDayEnd.Raise();
             }
             
-            // Disabilitiamo per evitare doppie attivazioni
             enabled = false;
         }
     }

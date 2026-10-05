@@ -1,7 +1,5 @@
 using UnityEngine;
 using Dev.Nicklaj.Butter;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace AvenueXR.Core
 {
@@ -25,14 +23,8 @@ namespace AvenueXR.Core
             
             if (item != null)
             {
-                // Verifichiamo se l'oggetto è attualmente afferrato dal giocatore
-                XRGrabInteractable interactable = item.GetComponent<XRGrabInteractable>();
-                if (interactable == null) interactable = item.GetComponentInChildren<XRGrabInteractable>();
-
-                // Se l'interactable esiste ed è ancora selezionato (tenuto in mano), non processiamo.
-                // Questo evita che l'oggetto venga "catturato" mentre il giocatore lo sta ancora muovendo,
-                // prevenendo conflitti fisici che lo farebbero sembrare incastrato o "fantasma".
-                if (interactable != null && interactable.isSelected)
+                // Se l'oggetto è ancora tenuto in mano dal giocatore, non lo processiamo
+                if (item.IsCarried)
                 {
                     return; 
                 }

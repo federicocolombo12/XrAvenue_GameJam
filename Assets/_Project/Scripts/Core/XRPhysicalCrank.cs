@@ -1,22 +1,21 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using Dev.Nicklaj.Butter;
 
 namespace AvenueXR.Core
 {
     /// <summary>
-    /// Simulatore di manovella meccanica reale. 
-    /// Ideale per rotazioni continue (verricelli, meccanismi a manovella).
+    /// Simulatore di manovella meccanica per PC (interagibile tramite mouse/tasti).
+    /// Mantiene la compatibilità con BinCrusher e BeltManager tramite OnRotationDelta.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public class XRPhysicalCrank : UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable
+    public class XRPhysicalCrank : MonoBehaviour
     {
         [Header("Meccanica Manovella")]
         [Tooltip("L'oggetto figlio che deve ruotare visivamente.")]
         public Transform visualTransform;
         [Tooltip("Asse locale di rotazione (solitamente Vector3.forward o Vector3.up).")]
         public Vector3 rotationAxis = Vector3.forward;
-        [Tooltip("Moltiplicatore di forza. 1 = 1:1 con la mano.")]
+        [Tooltip("Moltiplicatore di velocità di rotazione.")]
         public float sensitivity = 1.0f;
         public bool invertRotation = false;
 
@@ -30,32 +29,22 @@ namespace AvenueXR.Core
         [Range(0f, 1f)]
         public float tickVolume = 0.6f;
 
-        // --- Evento locale per il BinCrusher ---
+        // --- Evento locale per il BinCrusher e BeltManager ---
         public event System.Action<float> OnRotationDelta;
 
         private float _accumulatedAngle = 0f;
         private float _audioStepCounter = 0f;
-        private float _lastHandAngle;
         private bool _isRotatingThisFrame = false;
         private float _currentRotationSpeed = 0f;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-            
-            // Setup Rigidbody meccanico
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.isKinematic = true;
                 rb.useGravity = false;
             }
-
-            // Configurazione Grab per rotazione pura
-            trackRotation = false;
-            trackPosition = false;
-            movementType = MovementType.Instantaneous;
-            attachEaseInTime = 0;
 
             if (visualTransform == null) visualTransform = transform;
             
@@ -64,36 +53,10 @@ namespace AvenueXR.Core
                 localAudioSource.clip = tickSound;
                 localAudioSource.loop = true;
                 localAudioSource.playOnAwake = false;
+                localAudioSource.volume = tickVolume;
             }
 
-            _accumulatedAngle = 0f; 
-        }
-
-        protected override void OnSelectEntered(SelectEnterEventArgs args)
-        {
-            base.OnSelectEntered(args);
-            // Per le mani è meglio usare il punto di aggancio (attachTransform)
-            _lastHandAngle = GetAngleFromHand(args.interactorObject.GetAttachTransform(this).position);
-            Debug.Log($"[Crank] Grab iniziato da: {args.interactorObject.transform.name}");
-        }
-
-        protected override void OnSelectExited(SelectExitEventArgs args)
-        {
-            base.OnSelectExited(args);
-            if (localAudioSource != null && localAudioSource.isPlaying)
-            {
-                localAudioSource.Pause();
-            }
-        }
-
-        public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
-        {
-            base.ProcessInteractable(updatePhase);
-
-            if (isSelected && updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
-            {
-                ApplyMechanicalRotation();
-            }
+            _accumulatedAngle = 0f;
         }
 
         private void Update()
@@ -105,15 +68,13 @@ namespace AvenueXR.Core
         {
             if (localAudioSource == null || tickSound == null) return;
 
-            if (isSelected && _isRotatingThisFrame)
+            if (_isRotatingThisFrame)
             {
                 if (!localAudioSource.isPlaying)
                 {
                     localAudioSource.Play();
                 }
 
-                // Moduliamo il pitch in base alla velocità di rotazione per un feeling meccanico
-                // Più giri veloce, più il suono è acuto
                 float targetPitch = Mathf.Clamp(0.8f + (_currentRotationSpeed / 500f), 0.7f, 1.5f);
                 localAudioSource.pitch = Mathf.Lerp(localAudioSource.pitch, targetPitch, Time.deltaTime * 10f);
             }
@@ -125,70 +86,38 @@ namespace AvenueXR.Core
                 }
             }
 
-            // Reset per il prossimo frame
             _isRotatingThisFrame = false;
         }
 
-        private void ApplyMechanicalRotation()
+        /// <summary>
+        /// Ruota la manovella di un delta angolare (es. da input mouse o tasto del giocatore PC).
+        /// </summary>
+        public void RotateManual(float deltaAngle)
         {
-            if (interactorsSelecting.Count == 0) return;
+            if (Mathf.Abs(deltaAngle) <= 0.0001f) return;
 
-            // 1. Troviamo l'angolo attuale della mano
-            var interactor = interactorsSelecting[0];
-            // Usiamo GetAttachTransform per seguire il punto preciso del Pinch/Grip
-            Vector3 handPos = interactor.GetAttachTransform(this).position;
-            float currentHandAngle = GetAngleFromHand(handPos);
+            if (invertRotation) deltaAngle *= -1f;
+            float adjustedDelta = deltaAngle * sensitivity;
 
-            // 2. Calcoliamo lo spostamento angolare (usando DeltaAngle per gestire il wrap 360)
-            float deltaAngle = Mathf.DeltaAngle(_lastHandAngle, currentHandAngle);
+            _isRotatingThisFrame = true;
+            _currentRotationSpeed = Mathf.Abs(adjustedDelta) / Mathf.Max(Time.deltaTime, 0.001f);
 
-            if (Mathf.Abs(deltaAngle) > 0.001f)
+            _accumulatedAngle += adjustedDelta;
+
+            if (visualTransform != null)
             {
-                _lastHandAngle = currentHandAngle; // Aggiorna solo se c'è movimento
-                
-                if (invertRotation) deltaAngle *= -1f;
-                float adjustedDelta = deltaAngle * sensitivity;
-
-                _isRotatingThisFrame = true;
-                _currentRotationSpeed = Mathf.Abs(adjustedDelta) / Time.deltaTime;
-
-                // 3. Sommiamo lo spostamento
-                _accumulatedAngle += adjustedDelta;
-
-                // 4. Applichiamo la rotazione visiva
                 visualTransform.localRotation = Quaternion.AngleAxis(_accumulatedAngle, rotationAxis);
-
-                // 5. Notifichiamo gli altri sistemi
-                if (totalRotationVariable != null) totalRotationVariable.Value += adjustedDelta;
-                OnRotationDelta?.Invoke(adjustedDelta);
-
-                // Feedback Meccanico (Step)
-                _audioStepCounter += Mathf.Abs(adjustedDelta);
-                if (_audioStepCounter >= 15f)
-                {
-                    onRotationStep?.Raise(_audioStepCounter);
-                    _audioStepCounter = 0f;
-                }
             }
-        }
 
-        private float GetAngleFromHand(Vector3 handWorldPos)
-        {
-            // Centro e asse in coordinate world
-            Vector3 worldPivot = transform.position;
-            Vector3 worldAxis = transform.TransformDirection(rotationAxis);
-            
-            // Direzione dal pivot alla mano
-            Vector3 dirToHand = (handWorldPos - worldPivot).normalized;
-            
-            // Proiettiamo sul piano di rotazione della manovella
-            Vector3 projectedDir = Vector3.ProjectOnPlane(dirToHand, worldAxis).normalized;
-            
-            // Usiamo un riferimento "Up" world per calcolare l'angolo assoluto
-            Vector3 referenceUp = Vector3.up;
-            if (Mathf.Abs(Vector3.Dot(referenceUp, worldAxis)) > 0.9f) referenceUp = Vector3.forward;
-            
-            return Vector3.SignedAngle(referenceUp, projectedDir, worldAxis);
+            if (totalRotationVariable != null) totalRotationVariable.Value += adjustedDelta;
+            OnRotationDelta?.Invoke(adjustedDelta);
+
+            _audioStepCounter += Mathf.Abs(adjustedDelta);
+            if (_audioStepCounter >= 15f)
+            {
+                onRotationStep?.Raise(_audioStepCounter);
+                _audioStepCounter = 0f;
+            }
         }
     }
 }
