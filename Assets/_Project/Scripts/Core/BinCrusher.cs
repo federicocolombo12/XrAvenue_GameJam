@@ -106,15 +106,19 @@ namespace AvenueXR.Core
             }
         }
 
+        public float CrushProgress => _isPending ? Mathf.Clamp01(_accumulatedRotation / Mathf.Max(rotationNeeded, 1f)) : 0f;
+        public bool IsPending => _isPending;
+
         private void HandleRotationDelta(float delta)
         {
             if (!_isPending) return;
 
-            _accumulatedRotation += Mathf.Abs(delta);
+            // Se delta > 0 accumuliamo rotazione, se delta < 0 (spring-back) la rotazione decresce
+            _accumulatedRotation = Mathf.Clamp(_accumulatedRotation + delta, 0f, rotationNeeded);
             _lastRotationTime = Time.time;
 
-            // Attiviamo l'emissione delle particelle
-            if (_currentParticles != null)
+            // Attiviamo l'emissione delle particelle solo quando si gira in avanti
+            if (delta > 0 && _currentParticles != null)
             {
                 var emission = _currentParticles.emission;
                 if (!emission.enabled) emission.enabled = true;
@@ -160,6 +164,11 @@ namespace AvenueXR.Core
             _isPending = false;
             _pendingItem = null;
             _accumulatedRotation = 0f;
+
+            if (targetCrank != null)
+            {
+                targetCrank.ResetAccumulatedAngle();
+            }
 
             if (onWasteSorted != null)
                 onWasteSorted.Raise(_pendingType);

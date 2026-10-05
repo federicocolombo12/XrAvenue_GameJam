@@ -29,6 +29,14 @@ namespace AvenueXR.Core
         [Range(0f, 1f)]
         public float tickVolume = 0.6f;
 
+        [Header("Spring-Back (Ritorno all'indietro)")]
+        [Tooltip("Se attivo, la manovella ruota all'indietro se non viene premuto il tasto a sufficienza.")]
+        public bool enableSpringBack = true;
+        [Tooltip("Velocità con cui la manovella torna indietro (gradi/sec).")]
+        public float springBackSpeed = 110f;
+        [Tooltip("Secondi di inattività prima che inizi il riavvolgimento.")]
+        public float springBackDelay = 0.35f;
+
         // --- Evento locale per il BinCrusher e BeltManager ---
         public event System.Action<float> OnRotationDelta;
 
@@ -36,6 +44,9 @@ namespace AvenueXR.Core
         private float _audioStepCounter = 0f;
         private bool _isRotatingThisFrame = false;
         private float _currentRotationSpeed = 0f;
+        private float _lastImpulseTime = -10f;
+
+        public float CurrentAngle => _accumulatedAngle;
 
         private void Awake()
         {
@@ -61,7 +72,25 @@ namespace AvenueXR.Core
 
         private void Update()
         {
+            HandleSpringBack();
             UpdateAudioResponsiveness();
+        }
+
+        private void HandleSpringBack()
+        {
+            if (!enableSpringBack || _accumulatedAngle <= 0.001f) return;
+
+            // Se è trascorso il tempo di delay dall'ultimo smash, riavvolgiamo
+            if (Time.time - _lastImpulseTime > springBackDelay)
+            {
+                float unwindDelta = -springBackSpeed * Time.deltaTime;
+                if (_accumulatedAngle + unwindDelta < 0f)
+                {
+                    unwindDelta = -_accumulatedAngle;
+                }
+
+                RotateInternal(unwindDelta);
+            }
         }
 
         private void UpdateAudioResponsiveness()
@@ -90,9 +119,31 @@ namespace AvenueXR.Core
         }
 
         /// <summary>
-        /// Ruota la manovella di un delta angolare (es. da input mouse o tasto del giocatore PC).
+        /// Applica un impulso discreto alla manovella (es. button mashing da tasto Spazio o click).
+        /// </summary>
+        public void ApplyImpulse(float impulseDegrees)
+        {
+            _lastImpulseTime = Time.time;
+            RotateInternal(impulseDegrees);
+
+            // Trigger one-shot audio tick immediato
+            if (localAudioSource != null && tickSound != null && !localAudioSource.isPlaying)
+            {
+                localAudioSource.pitch = Random.Range(0.95f, 1.15f);
+                localAudioSource.PlayOneShot(tickSound, tickVolume);
+            }
+        }
+
+        /// <summary>
+        /// Ruota la manovella di un delta angolare (es. da input continuo).
         /// </summary>
         public void RotateManual(float deltaAngle)
+        {
+            _lastImpulseTime = Time.time;
+            RotateInternal(deltaAngle);
+        }
+
+        private void RotateInternal(float deltaAngle)
         {
             if (Mathf.Abs(deltaAngle) <= 0.0001f) return;
 
@@ -102,7 +153,7 @@ namespace AvenueXR.Core
             _isRotatingThisFrame = true;
             _currentRotationSpeed = Mathf.Abs(adjustedDelta) / Mathf.Max(Time.deltaTime, 0.001f);
 
-            _accumulatedAngle += adjustedDelta;
+            _accumulatedAngle = Mathf.Max(0f, _accumulatedAngle + adjustedDelta);
 
             if (visualTransform != null)
             {
@@ -117,6 +168,19 @@ namespace AvenueXR.Core
             {
                 onRotationStep?.Raise(_audioStepCounter);
                 _audioStepCounter = 0f;
+            }
+        }
+
+        /// <summary>
+        /// Resetta l'angolo accumulato al completamento del ciclo di smaciullamento.
+        /// </summary>
+        public void ResetAccumulatedAngle()
+        {
+            _accumulatedAngle = 0f;
+            _lastImpulseTime = -10f;
+            if (visualTransform != null)
+            {
+                visualTransform.localRotation = Quaternion.identity;
             }
         }
     }

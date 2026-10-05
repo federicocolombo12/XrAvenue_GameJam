@@ -93,15 +93,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: AvenueXR.Player::PlayerInteraction
   playerCamera: {fileID: 3000000000000003}
-  reachDistance: 2.8
+  reachDistance: 3
   interactionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
   holdPoint: {fileID: 4000000000000002}
-  carrySmoothSpeed: 15
-  throwForce: 7
-  crankHoldSpeed: 220
-  crankMouseSensitivity: 120
+  carrySmoothSpeed: 16
+  softDropForce: 2.5
+  throwForce: 7.5
+  crankImpulsePerSmash: 55
 --- !u!114 &1000000000000006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 4000000000000001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: -0.25, z: 0.75}
+  m_LocalPosition: {x: 0, y: -0.28, z: 0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

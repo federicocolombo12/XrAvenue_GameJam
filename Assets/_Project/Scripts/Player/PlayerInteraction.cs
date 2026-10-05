@@ -8,27 +8,32 @@ namespace AvenueXR.Player
     {
         [Header("Raycast Settings")]
         public Camera playerCamera;
-        public float reachDistance = 2.8f;
+        public float reachDistance = 3.0f;
         public LayerMask interactionLayers = ~0; // Tutti i layer per default
 
         [Header("Carrying Settings")]
         public Transform holdPoint;
-        public float carrySmoothSpeed = 15f;
-        public float throwForce = 7.0f;
+        public float carrySmoothSpeed = 16f;
+        public float softDropForce = 2.5f;
+        public float throwForce = 7.5f;
 
-        [Header("Crank Settings")]
-        [Tooltip("Gradi al secondo quando si tiene premuto il tasto sulla manovella.")]
-        public float crankHoldSpeed = 220f;
-        [Tooltip("Sensibilità alla rotazione tramite movimento mouse.")]
-        public float crankMouseSensitivity = 120f;
+        [Header("Crank Smash Settings")]
+        [Tooltip("Gradi di rotazione impartiti ad ogni pressione (tasto Spazio / Click).")]
+        public float crankImpulsePerSmash = 55f;
 
         private WasteItem _carriedItem;
         private Rigidbody _carriedRb;
-        private XRPhysicalCrank _activeCrank;
+        private XRPhysicalCrank _hoveredCrank;
+        private BinCrusher _hoveredCrusher;
 
         public bool IsCarrying => _carriedItem != null;
         public GameObject CurrentHoverObject { get; private set; }
         public bool IsHoveringInteractable { get; private set; }
+
+        // Dati contestuali per l'HUD (CrosshairUI)
+        public string CurrentActionPrompt { get; private set; } = string.Empty;
+        public float ActiveCrushProgress { get; private set; } = 0f;
+        public bool HasActiveProgress { get; private set; } = false;
 
         private void Awake()
         {
@@ -40,10 +45,10 @@ namespace AvenueXR.Player
 
             if (holdPoint == null && playerCamera != null)
             {
-                // Crea automaticamente un holdPoint di default se non assegnato
+                // Crea holdPoint centrato e ribassato per una visuale pulita sul mirino
                 GameObject hp = new GameObject("DefaultHoldPoint");
                 hp.transform.SetParent(playerCamera.transform);
-                hp.transform.localPosition = new Vector3(0.25f, -0.25f, 0.75f);
+                hp.transform.localPosition = new Vector3(0.0f, -0.28f, 0.65f);
                 hp.transform.localRotation = Quaternion.identity;
                 holdPoint = hp.transform;
             }
@@ -72,18 +77,84 @@ namespace AvenueXR.Player
 
             CurrentHoverObject = null;
             IsHoveringInteractable = false;
+            _hoveredCrank = null;
+            _hoveredCrusher = null;
 
             if (Physics.Raycast(ray, out hit, reachDistance, interactionLayers))
             {
                 CurrentHoverObject = hit.collider.gameObject;
 
                 WasteItem item = hit.collider.GetComponentInParent<WasteItem>();
-                XRPhysicalCrank crank = hit.collider.GetComponentInParent<XRPhysicalCrank>();
+                _hoveredCrank = hit.collider.GetComponentInParent<XRPhysicalCrank>();
+                _hoveredCrusher = hit.collider.GetComponentInParent<BinCrusher>();
 
-                if (item != null || crank != null)
+                // Se stiamo mirando il cestino, prendiamo la sua manovella associata
+                if (_hoveredCrank == null && _hoveredCrusher != null)
+                {
+                    _hoveredCrank = _hoveredCrusher.targetCrank;
+                }
+                else if (_hoveredCrusher == null && _hoveredCrank != null)
+                {
+                    _hoveredCrusher = _hoveredCrank.GetComponentInParent<BinCrusher>();
+                    if (_hoveredCrusher == null)
+                    {
+                        // Cerca tra i BinCrusher di scena quello che usa questa crank
+                        BinCrusher[] allCrushers = Object.FindObjectsByType<BinCrusher>(FindObjectsSortMode.None);
+                        foreach (var c in allCrushers)
+                        {
+                            if (c.targetCrank == _hoveredCrank)
+                            {
+                                _hoveredCrusher = c;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (item != null || _hoveredCrank != null || _hoveredCrusher != null)
                 {
                     IsHoveringInteractable = true;
                 }
+            }
+
+            // Aggiornamento prompt e barre UI
+            UpdateContextualPrompts();
+        }
+
+        private void UpdateContextualPrompts()
+        {
+            if (IsCarrying)
+            {
+                CurrentActionPrompt = "[Click SX / E] Deposita   •   [Click DX] Lancia";
+                HasActiveProgress = false;
+                ActiveCrushProgress = 0f;
+            }
+            else if (_hoveredCrank != null || _hoveredCrusher != null)
+            {
+                if (_hoveredCrusher != null && _hoveredCrusher.IsPending)
+                {
+                    CurrentActionPrompt = "[SPAZIO] Premi a raffica per tritare!";
+                    HasActiveProgress = true;
+                    ActiveCrushProgress = _hoveredCrusher.CrushProgress;
+                }
+                else
+                {
+                    CurrentActionPrompt = "[SPAZIO] Gira manovella";
+                    HasActiveProgress = false;
+                    ActiveCrushProgress = 0f;
+                }
+            }
+            else if (CurrentHoverObject != null && CurrentHoverObject.GetComponentInParent<WasteItem>() != null)
+            {
+                CurrentActionPrompt = "[E / Click SX] Raccogli";
+                HasActiveProgress = false;
+                ActiveCrushProgress = 0f;
+            }
+            else
+            {
+                CurrentActionPrompt = string.Empty;
+                HasActiveProgress = false;
+                ActiveCrushProgress = 0f;
             }
         }
 
@@ -95,36 +166,12 @@ namespace AvenueXR.Player
             bool interactPressed = (keyboard != null && keyboard.eKey.wasPressedThisFrame) ||
                                    (mouse != null && mouse.leftButton.wasPressedThisFrame);
 
-            bool interactHeld = (keyboard != null && keyboard.eKey.isPressed) ||
-                                (mouse != null && mouse.leftButton.isPressed);
+            bool smashPressed = (keyboard != null && keyboard.spaceKey.wasPressedThisFrame) ||
+                                interactPressed;
 
             bool throwPressed = mouse != null && mouse.rightButton.wasPressedThisFrame;
 
-            // 1. GESTIONE MANOVELLA (Se non stiamo portando un oggetto)
-            if (_carriedItem == null)
-            {
-                if (interactHeld && CurrentHoverObject != null)
-                {
-                    XRPhysicalCrank crank = CurrentHoverObject.GetComponentInParent<XRPhysicalCrank>();
-                    if (crank != null)
-                    {
-                        _activeCrank = crank;
-                        Vector2 mouseDelta = mouse != null ? mouse.delta.ReadValue() : Vector2.zero;
-                        float crankDelta = (mouseDelta.x + mouseDelta.y) * 0.5f;
-                        float holdDelta = crankHoldSpeed * Time.deltaTime;
-                        float totalDelta = holdDelta + (Mathf.Abs(crankDelta) > 0.1f ? crankDelta : 0f);
-
-                        _activeCrank.RotateManual(totalDelta);
-                        return; // Non raccogliere oggetti se stiamo girando la manovella
-                    }
-                }
-                else
-                {
-                    _activeCrank = null;
-                }
-            }
-
-            // 2. GESTIONE OGGETTO TRASPORTATO
+            // 1. GESTIONE OGGETTO TRASPORTATO
             if (_carriedItem != null)
             {
                 if (throwPressed)
@@ -135,6 +182,13 @@ namespace AvenueXR.Player
                 {
                     DropCarriedItem();
                 }
+                return;
+            }
+
+            // 2. GESTIONE SMASH MANOVELLA
+            if (_hoveredCrank != null && smashPressed)
+            {
+                _hoveredCrank.ApplyImpulse(crankImpulsePerSmash);
                 return;
             }
 
@@ -167,11 +221,31 @@ namespace AvenueXR.Player
         {
             if (_carriedItem == null) return;
 
+            Vector3 dropVelocity = Vector3.zero;
+            if (playerCamera != null)
+            {
+                // Soft Drop mirato verso il punto esatto del mirino (apertura cestino / ripiano tavolo)
+                Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+                Vector3 targetPoint;
+                if (Physics.Raycast(ray, out RaycastHit hit, 4.0f, interactionLayers))
+                {
+                    targetPoint = hit.point;
+                }
+                else
+                {
+                    targetPoint = ray.GetPoint(2.5f);
+                }
+
+                Vector3 direction = (targetPoint - _carriedItem.transform.position).normalized;
+                dropVelocity = (direction + Vector3.up * 0.15f).normalized * softDropForce;
+            }
+
             if (_carriedRb != null)
             {
                 _carriedRb.isKinematic = false;
                 _carriedRb.useGravity = true;
-                _carriedRb.linearVelocity = Vector3.zero;
+                _carriedRb.linearVelocity = dropVelocity;
+                _carriedRb.angularVelocity = Vector3.zero;
             }
 
             _carriedItem.OnDropped();
