@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace AvenueXR.Player
 {
@@ -12,7 +13,7 @@ namespace AvenueXR.Player
 
         [Header("Mouse Look")]
         public Transform cameraTransform;
-        public float mouseSensitivity = 2.0f;
+        public float mouseSensitivity = 0.1f;
         public float minPitch = -80f;
         public float maxPitch = 80f;
         public bool lockCursorOnStart = true;
@@ -58,14 +59,16 @@ namespace AvenueXR.Player
 
         private void HandleMouseLook()
         {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+            var mouse = Mouse.current;
+            if (mouse == null) return;
+
+            Vector2 mouseDelta = mouse.delta.ReadValue() * mouseSensitivity;
 
             // Rotazione orizzontale del player
-            transform.Rotate(Vector3.up * mouseX);
+            transform.Rotate(Vector3.up * mouseDelta.x);
 
             // Rotazione verticale della telecamera (Pitch con clamp)
-            _cameraPitch -= mouseY;
+            _cameraPitch -= mouseDelta.y;
             _cameraPitch = Mathf.Clamp(_cameraPitch, minPitch, maxPitch);
 
             if (cameraTransform != null)
@@ -82,12 +85,22 @@ namespace AvenueXR.Player
                 _velocity.y = -2f; // Mantieni il contatto a terra
             }
 
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveZ = Input.GetAxisRaw("Vertical");
+            var keyboard = Keyboard.current;
+            float moveX = 0f;
+            float moveZ = 0f;
+            bool isSprinting = false;
+
+            if (keyboard != null)
+            {
+                if (keyboard.dKey.isPressed) moveX += 1f;
+                if (keyboard.aKey.isPressed) moveX -= 1f;
+                if (keyboard.wKey.isPressed) moveZ += 1f;
+                if (keyboard.sKey.isPressed) moveZ -= 1f;
+
+                isSprinting = keyboard.leftShiftKey.isPressed;
+            }
 
             Vector3 moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized;
-
-            bool isSprinting = Input.GetKey(KeyCode.LeftShift);
             float speed = isSprinting ? sprintSpeed : walkSpeed;
 
             CurrentSpeed = moveDirection.magnitude * speed;
@@ -102,11 +115,14 @@ namespace AvenueXR.Player
 
         private void HandleCursorToggle()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            var keyboard = Keyboard.current;
+            var mouse = Mouse.current;
+
+            if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame)
             {
                 SetCursorLocked(Cursor.lockState != CursorLockMode.Locked);
             }
-            else if (Input.GetMouseButtonDown(0) && Cursor.lockState != CursorLockMode.Locked)
+            else if (mouse != null && mouse.leftButton.wasPressedThisFrame && Cursor.lockState != CursorLockMode.Locked)
             {
                 SetCursorLocked(true);
             }

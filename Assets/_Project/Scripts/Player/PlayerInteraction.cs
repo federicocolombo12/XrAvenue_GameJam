@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using AvenueXR.Core;
 
 namespace AvenueXR.Player
@@ -88,9 +89,16 @@ namespace AvenueXR.Player
 
         private void HandleInput()
         {
-            bool interactPressed = Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0);
-            bool interactHeld = Input.GetKey(KeyCode.E) || Input.GetMouseButton(0);
-            bool throwPressed = Input.GetMouseButtonDown(1); // Click destro
+            var keyboard = Keyboard.current;
+            var mouse = Mouse.current;
+
+            bool interactPressed = (keyboard != null && keyboard.eKey.wasPressedThisFrame) ||
+                                   (mouse != null && mouse.leftButton.wasPressedThisFrame);
+
+            bool interactHeld = (keyboard != null && keyboard.eKey.isPressed) ||
+                                (mouse != null && mouse.leftButton.isPressed);
+
+            bool throwPressed = mouse != null && mouse.rightButton.wasPressedThisFrame;
 
             // 1. GESTIONE MANOVELLA (Se non stiamo portando un oggetto)
             if (_carriedItem == null)
@@ -101,9 +109,10 @@ namespace AvenueXR.Player
                     if (crank != null)
                     {
                         _activeCrank = crank;
-                        float mouseDelta = (Input.GetAxis("Mouse X") + Input.GetAxis("Mouse Y")) * crankMouseSensitivity;
+                        Vector2 mouseDelta = mouse != null ? mouse.delta.ReadValue() : Vector2.zero;
+                        float crankDelta = (mouseDelta.x + mouseDelta.y) * 0.5f;
                         float holdDelta = crankHoldSpeed * Time.deltaTime;
-                        float totalDelta = holdDelta + (Mathf.Abs(mouseDelta) > 0.01f ? mouseDelta : 0f);
+                        float totalDelta = holdDelta + (Mathf.Abs(crankDelta) > 0.1f ? crankDelta : 0f);
 
                         _activeCrank.RotateManual(totalDelta);
                         return; // Non raccogliere oggetti se stiamo girando la manovella
