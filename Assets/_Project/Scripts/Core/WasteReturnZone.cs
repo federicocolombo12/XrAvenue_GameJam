@@ -30,17 +30,17 @@ namespace AvenueXR.Core
             WasteItem item = other.GetComponentInParent<WasteItem>();
             if (item == null) return;
 
-            // Se il giocatore lo sta tenendo
+            // Se il giocatore lo sta tenendo nella zona
             if (item.IsCarried)
             {
                 if (!_globallyHandledItems.Contains(item))
                 {
-                    Debug.Log($"[ReturnZone] Oggetto {item.name} maneggiato correttamente. Pronto per il reso.");
+                    Debug.Log($"[ReturnZone] Oggetto {item.name} maneggiato nella zona di reso.");
                     _globallyHandledItems.Add(item);
                 }
             }
-            // Se lo rilascia nella zona ed è stato marcato
-            else if (_globallyHandledItems.Contains(item))
+            // Se l'oggetto è rilasciato nella zona
+            else
             {
                 Debug.Log($"[ReturnZone] CONDIZIONI SODDISFATTE. Restituisco l'oggetto {item.type} all'NPC.");
                 

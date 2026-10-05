@@ -23,6 +23,8 @@ namespace AvenueXR.Player
 
         private WasteItem _carriedItem;
         private Rigidbody _carriedRb;
+        private Collider[] _carriedColliders;
+        private CharacterController _characterController;
         private XRPhysicalCrank _hoveredCrank;
         private BinCrusher _hoveredCrusher;
 
@@ -37,6 +39,8 @@ namespace AvenueXR.Player
 
         private void Awake()
         {
+            _characterController = GetComponentInParent<CharacterController>();
+
             if (playerCamera == null)
             {
                 playerCamera = GetComponentInChildren<Camera>();
@@ -60,7 +64,7 @@ namespace AvenueXR.Player
             HandleInput();
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             if (_carriedItem != null && holdPoint != null)
             {
@@ -207,6 +211,22 @@ namespace AvenueXR.Player
         {
             _carriedItem = item;
             _carriedRb = item.GetComponent<Rigidbody>();
+            _carriedColliders = item.GetComponentsInChildren<Collider>(true);
+
+            if (_carriedColliders != null)
+            {
+                foreach (var col in _carriedColliders)
+                {
+                    if (col != null)
+                    {
+                        if (_characterController != null)
+                        {
+                            Physics.IgnoreCollision(_characterController, col, true);
+                        }
+                        col.isTrigger = true;
+                    }
+                }
+            }
 
             if (_carriedRb != null)
             {
@@ -215,6 +235,25 @@ namespace AvenueXR.Player
             }
 
             item.OnPickedUp();
+        }
+
+        private void RestoreCarriedColliders()
+        {
+            if (_carriedColliders != null)
+            {
+                foreach (var col in _carriedColliders)
+                {
+                    if (col != null)
+                    {
+                        col.isTrigger = false;
+                        if (_characterController != null)
+                        {
+                            Physics.IgnoreCollision(_characterController, col, false);
+                        }
+                    }
+                }
+                _carriedColliders = null;
+            }
         }
 
         private void DropCarriedItem()
@@ -240,6 +279,8 @@ namespace AvenueXR.Player
                 dropVelocity = (direction + Vector3.up * 0.15f).normalized * softDropForce;
             }
 
+            RestoreCarriedColliders();
+
             if (_carriedRb != null)
             {
                 _carriedRb.isKinematic = false;
@@ -261,6 +302,8 @@ namespace AvenueXR.Player
                 ? (playerCamera.transform.forward * throwForce + Vector3.up * 1.5f) 
                 : (transform.forward * throwForce);
 
+            RestoreCarriedColliders();
+
             _carriedItem.OnThrown(force);
             _carriedItem = null;
             _carriedRb = null;
@@ -271,8 +314,8 @@ namespace AvenueXR.Player
             Vector3 targetPos = holdPoint.position;
             Quaternion targetRot = holdPoint.rotation;
 
-            _carriedItem.transform.position = Vector3.Lerp(_carriedItem.transform.position, targetPos, Time.fixedDeltaTime * carrySmoothSpeed);
-            _carriedItem.transform.rotation = Quaternion.Slerp(_carriedItem.transform.rotation, targetRot, Time.fixedDeltaTime * carrySmoothSpeed);
+            _carriedItem.transform.position = Vector3.Lerp(_carriedItem.transform.position, targetPos, Time.deltaTime * carrySmoothSpeed);
+            _carriedItem.transform.rotation = Quaternion.Slerp(_carriedItem.transform.rotation, targetRot, Time.deltaTime * carrySmoothSpeed);
         }
     }
 }

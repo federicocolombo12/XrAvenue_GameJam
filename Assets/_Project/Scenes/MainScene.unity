@@ -468,10 +468,10 @@ Mesh:
     m_Data: 
   m_MeshCompression: 0
   m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
   m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600
+  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600y
   m_VertexData:
     serializedVersion: 3
     m_VertexCount: 56
@@ -589,8 +589,9 @@ Mesh:
   m_LocalAABB:
     m_Center: {x: 0, y: 0.0106497705, z: 0}
     m_Extent: {x: 0.6425078, y: 0.94196546, z: 0.56830263}
-  m_MeshUsageFlags: 0
   m_CookingOptions: 30
+  m_PreBakeConvexCollisionMesh: 0
+  m_PreBakeTriangleCollisionMesh: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   'm_MeshMetrics[0]': 1
@@ -1116,10 +1117,10 @@ Mesh:
     m_Data: 
   m_MeshCompression: 0
   m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
   m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600
+  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600y
   m_VertexData:
     serializedVersion: 3
     m_VertexCount: 56
@@ -1237,8 +1238,9 @@ Mesh:
   m_LocalAABB:
     m_Center: {x: 0, y: 0.0106497705, z: 0}
     m_Extent: {x: 0.6425078, y: 0.94196546, z: 0.56830263}
-  m_MeshUsageFlags: 0
   m_CookingOptions: 30
+  m_PreBakeConvexCollisionMesh: 0
+  m_PreBakeTriangleCollisionMesh: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   'm_MeshMetrics[0]': 1
@@ -1675,10 +1677,10 @@ Mesh:
     m_Data: 
   m_MeshCompression: 0
   m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
+  m_KeepVertices: 0
+  m_KeepIndices: 0
   m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600
+  m_IndexBuffer: 000001000200010003000200040005000600050007000600080009000a0009000b000a000c000d000e000d000f000e00100011001200110013001200140015001600150017001600180019001a0019001b001a001c001d001e001d001f001e00200021002200210023002200240025002600250027002600280029002a0029002b002a002c002d002e002d002f002e00300031003200310033003200340035003600350037003600y
   m_VertexData:
     serializedVersion: 3
     m_VertexCount: 56
@@ -1796,8 +1798,9 @@ Mesh:
   m_LocalAABB:
     m_Center: {x: 0, y: 0.0106497705, z: 0}
     m_Extent: {x: 0.6425078, y: 0.94196546, z: 0.56830263}
-  m_MeshUsageFlags: 0
   m_CookingOptions: 30
+  m_PreBakeConvexCollisionMesh: 0
+  m_PreBakeTriangleCollisionMesh: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   'm_MeshMetrics[0]': 1
@@ -2052,6 +2055,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1000000000000001, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: m_Name
+      value: PC_Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1000000000000002, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.72
@@ -2080,9 +2087,29 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1000000000000001, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
-      propertyPath: m_Name
-      value: PC_Player
+    - target: {fileID: 1000000000000004, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: mouseSensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000000000000005, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: throwForce
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000000000000005, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: crankImpulsePerSmash
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000000000003, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: bobAmount
+      value: 0.1427
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000000000000002, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000000000000002, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.719
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2090,7 +2117,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1000000000000002, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1221679172}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3000000000000001, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1250702896}
   m_SourcePrefab: {fileID: 100100000, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
 --- !u!20 &1106935169 stripped
 Camera:
@@ -2514,6 +2544,55 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &1250702893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3000000000000001, guid: 2e9aa9bf07fd45fcabd2de99f00e5d53, type: 3}
+  m_PrefabInstance: {fileID: 1106935167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1250702896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250702893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!114 &1270699795 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 50047689641898740, guid: 3e232078b9f44bc409daad091b889a65, type: 3}
