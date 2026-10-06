@@ -26,9 +26,7 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 0}
   m_RendererFeatures:
   - {fileID: 6943358141239987919}
-  m_RendererFeatureMap: cf0eed2471c35b60
-  m_UseNativeRenderPass: 0
-  xrSystemData: {fileID: 0}
+  m_RendererFeatureMap: cf0eed2471c35b60l
   postProcessData: {fileID: 0}
   m_AssetVersion: 3
   m_PrepassLayerMask:
@@ -55,9 +53,10 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+  m_TileOnlyMode: 0
 --- !u!114 &6943358141239987919
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -70,6 +69,6 @@ MonoBehaviour:
   m_Active: 1
   settings:
     shader: {fileID: 4800000, guid: 703b245f98d111d418d988ba74eefbce, type: 3}
-    pixelSizeX: 3
-    pixelSizeY: 3
+    pixelSizeX: 5
+    pixelSizeY: 5
     lockXY: 1

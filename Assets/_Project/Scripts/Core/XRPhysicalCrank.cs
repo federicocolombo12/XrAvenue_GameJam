@@ -224,6 +224,7 @@ namespace AvenueXR.Core
         /// </summary>
         public void ResetAccumulatedAngle()
         {
+            /*
             _targetAngle = 0f;
             _currentAngle = 0f;
             _lastImpulseTime = -10f;
@@ -232,6 +233,7 @@ namespace AvenueXR.Core
                 visualTransform.localRotation = Quaternion.identity;
                 visualTransform.localScale = _baseScale;
             }
+            */
         }
     }
 }
