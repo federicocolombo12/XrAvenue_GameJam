@@ -261,9 +261,11 @@ namespace AvenueXR.Player
                     if (col != null)
                     {
                         col.isTrigger = false;
+                        // Manteniamo ignorata la collisione col CharacterController
+                        // così il player non viene bloccato né subisce contraccolpi dai rifiuti
                         if (_characterController != null)
                         {
-                            Physics.IgnoreCollision(_characterController, col, false);
+                            Physics.IgnoreCollision(_characterController, col, true);
                         }
                     }
                 }
@@ -316,6 +318,12 @@ namespace AvenueXR.Player
             Vector3 force = playerCamera != null 
                 ? (playerCamera.transform.forward * throwForce + Vector3.up * 1.5f) 
                 : (transform.forward * throwForce);
+
+            // Spostiamo leggermente l'oggetto in avanti prima del lancio
+            if (playerCamera != null)
+            {
+                _carriedItem.transform.position = holdPoint.position + playerCamera.transform.forward * 0.2f;
+            }
 
             RestoreCarriedColliders();
 

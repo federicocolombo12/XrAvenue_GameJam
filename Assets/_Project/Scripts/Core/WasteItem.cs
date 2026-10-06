@@ -23,12 +23,19 @@ namespace AvenueXR.Core
         public void OnPickedUp()
         {
             IsCarried = true;
+            _wasGrabbed = true;
             PlayGrabSound();
         }
 
         public void OnDropped()
         {
             IsCarried = false;
+            if (_rb == null) _rb = GetComponent<Rigidbody>();
+            if (_rb != null)
+            {
+                _rb.isKinematic = false;
+                _rb.useGravity = true;
+            }
         }
 
         public void OnThrown(Vector3 force)
@@ -38,7 +45,9 @@ namespace AvenueXR.Core
             if (_rb != null)
             {
                 _rb.isKinematic = false;
+                _rb.useGravity = true;
                 _rb.linearVelocity = force;
+                _rb.angularVelocity = Random.insideUnitSphere * 4f;
             }
         }
 
@@ -49,6 +58,8 @@ namespace AvenueXR.Core
             {
                 _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             }
+
+            IgnorePlayerCharacterController();
             
             // Registriamo la posizione iniziale come punto di respawn sicuro
             _respawnPosition = transform.position;
@@ -61,6 +72,22 @@ namespace AvenueXR.Core
             // Impostazioni base per audio 3D
             audioSource.spatialBlend = 1.0f; // 3D
             audioSource.playOnAwake = false;
+        }
+
+        public void IgnorePlayerCharacterController()
+        {
+            CharacterController playerCc = Object.FindFirstObjectByType<CharacterController>();
+            if (playerCc != null)
+            {
+                Collider[] colliders = GetComponentsInChildren<Collider>(true);
+                foreach (var col in colliders)
+                {
+                    if (col != null)
+                    {
+                        Physics.IgnoreCollision(playerCc, col, true);
+                    }
+                }
+            }
         }
 
         private void Update()
