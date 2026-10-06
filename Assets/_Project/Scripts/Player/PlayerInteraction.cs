@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AvenueXR.Core;
@@ -21,12 +22,20 @@ namespace AvenueXR.Player
         [Tooltip("Gradi di rotazione impartiti ad ogni pressione (tasto Spazio / Click).")]
         public float crankImpulsePerSmash = 55f;
 
+        [Header("Camera Smash Recoil")]
+        [Tooltip("Intensità del contraccolpo verticale della telecamera.")]
+        public float cameraRecoilAmount = 0.02f;
+        [Tooltip("Durata totale del contraccolpo (secondi).")]
+        public float cameraRecoilDuration = 0.08f;
+
         private WasteItem _carriedItem;
         private Rigidbody _carriedRb;
         private Collider[] _carriedColliders;
         private CharacterController _characterController;
         private XRPhysicalCrank _hoveredCrank;
         private BinCrusher _hoveredCrusher;
+        private Coroutine _cameraRecoilCoroutine;
+        private Vector3 _originalCameraLocalPos = Vector3.zero;
 
         public bool IsCarrying => _carriedItem != null;
         public GameObject CurrentHoverObject { get; private set; }
@@ -45,6 +54,11 @@ namespace AvenueXR.Player
             {
                 playerCamera = GetComponentInChildren<Camera>();
                 if (playerCamera == null) playerCamera = Camera.main;
+            }
+
+            if (playerCamera != null)
+            {
+                _originalCameraLocalPos = playerCamera.transform.localPosition;
             }
 
             if (holdPoint == null && playerCamera != null)
@@ -193,6 +207,7 @@ namespace AvenueXR.Player
             if (_hoveredCrank != null && smashPressed)
             {
                 _hoveredCrank.ApplyImpulse(crankImpulsePerSmash);
+                TriggerCameraRecoil();
                 return;
             }
 
@@ -316,6 +331,43 @@ namespace AvenueXR.Player
 
             _carriedItem.transform.position = Vector3.Lerp(_carriedItem.transform.position, targetPos, Time.deltaTime * carrySmoothSpeed);
             _carriedItem.transform.rotation = Quaternion.Slerp(_carriedItem.transform.rotation, targetRot, Time.deltaTime * carrySmoothSpeed);
+        }
+
+        private void TriggerCameraRecoil()
+        {
+            if (playerCamera == null) return;
+            if (_cameraRecoilCoroutine != null)
+            {
+                StopCoroutine(_cameraRecoilCoroutine);
+            }
+            _cameraRecoilCoroutine = StartCoroutine(CameraRecoilRoutine());
+        }
+
+        private IEnumerator CameraRecoilRoutine()
+        {
+            Vector3 recoilOffset = new Vector3(Random.Range(-0.003f, 0.003f), -cameraRecoilAmount, 0.008f);
+            Vector3 targetPos = _originalCameraLocalPos + recoilOffset;
+            float kickDuration = cameraRecoilDuration * 0.35f;
+            float returnDuration = cameraRecoilDuration * 0.65f;
+
+            float elapsed = 0f;
+            while (elapsed < kickDuration)
+            {
+                elapsed += Time.deltaTime;
+                playerCamera.transform.localPosition = Vector3.Lerp(_originalCameraLocalPos, targetPos, elapsed / kickDuration);
+                yield return null;
+            }
+
+            elapsed = 0f;
+            while (elapsed < returnDuration)
+            {
+                elapsed += Time.deltaTime;
+                playerCamera.transform.localPosition = Vector3.Lerp(targetPos, _originalCameraLocalPos, elapsed / returnDuration);
+                yield return null;
+            }
+
+            playerCamera.transform.localPosition = _originalCameraLocalPos;
+            _cameraRecoilCoroutine = null;
         }
     }
 }
