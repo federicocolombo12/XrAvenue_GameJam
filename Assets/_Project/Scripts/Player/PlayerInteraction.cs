@@ -31,6 +31,7 @@ namespace AvenueXR.Player
         private WasteItem _carriedItem;
         private Rigidbody _carriedRb;
         private Collider[] _carriedColliders;
+        private readonly System.Collections.Generic.List<(GameObject go, int layer)> _carriedOriginalLayers = new();
         private CharacterController _characterController;
         private XRPhysicalCrank _hoveredCrank;
         private BinCrusher _hoveredCrusher;
@@ -69,6 +70,23 @@ namespace AvenueXR.Player
                 hp.transform.localPosition = new Vector3(0.0f, -0.28f, 0.65f);
                 hp.transform.localRotation = Quaternion.identity;
                 holdPoint = hp.transform;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_carriedItem != null)
+            {
+                RestoreCarriedLayers();
+                RestoreCarriedColliders();
+                if (_carriedRb != null)
+                {
+                    _carriedRb.isKinematic = false;
+                    _carriedRb.useGravity = true;
+                }
+                _carriedItem.OnDropped();
+                _carriedItem = null;
+                _carriedRb = null;
             }
         }
 
@@ -228,6 +246,16 @@ namespace AvenueXR.Player
             _carriedRb = item.GetComponent<Rigidbody>();
             _carriedColliders = item.GetComponentsInChildren<Collider>(true);
 
+            // 1. Sposta l'oggetto e i suoi figli sul layer "Ignore Raycast" così il raycast della telecamera mira oltre
+            _carriedOriginalLayers.Clear();
+            int ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
+            foreach (Transform t in item.GetComponentsInChildren<Transform>(true))
+            {
+                _carriedOriginalLayers.Add((t.gameObject, t.gameObject.layer));
+                t.gameObject.layer = ignoreRaycastLayer;
+            }
+
+            // 2. Disabilita collisione col player e imposta isTrigger per evitare spinte e blocchi
             if (_carriedColliders != null)
             {
                 foreach (var col in _carriedColliders)
@@ -250,6 +278,18 @@ namespace AvenueXR.Player
             }
 
             item.OnPickedUp();
+        }
+
+        private void RestoreCarriedLayers()
+        {
+            foreach (var (go, layer) in _carriedOriginalLayers)
+            {
+                if (go != null)
+                {
+                    go.layer = layer;
+                }
+            }
+            _carriedOriginalLayers.Clear();
         }
 
         private void RestoreCarriedColliders()
@@ -280,7 +320,7 @@ namespace AvenueXR.Player
             Vector3 dropVelocity = Vector3.zero;
             if (playerCamera != null)
             {
-                // Soft Drop mirato verso il punto esatto del mirino (apertura cestino / ripiano tavolo)
+                // Soft Drop mirato: il carried item è su Ignore Raycast, quindi il raycast mira oltre verso il cestino o ripiano
                 Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
                 Vector3 targetPoint;
                 if (Physics.Raycast(ray, out RaycastHit hit, 4.0f, interactionLayers))
@@ -289,13 +329,22 @@ namespace AvenueXR.Player
                 }
                 else
                 {
-                    targetPoint = ray.GetPoint(2.5f);
+                    targetPoint = ray.GetPoint(1.5f);
                 }
 
-                Vector3 direction = (targetPoint - _carriedItem.transform.position).normalized;
-                dropVelocity = (direction + Vector3.up * 0.15f).normalized * softDropForce;
+                // Direzione orizzontale morbida verso il bersaglio (evita SEMPRE lanci verso l'alto!)
+                Vector3 toTarget = targetPoint - _carriedItem.transform.position;
+                Vector3 horizontal = new Vector3(toTarget.x, 0f, toTarget.z);
+                if (horizontal.sqrMagnitude > 0.001f)
+                {
+                    horizontal.Normalize();
+                }
+
+                // Nudge in avanti morbido + leggera componente verso il basso per accompagnare la gravità
+                dropVelocity = horizontal * 0.8f + Vector3.down * 0.5f;
             }
 
+            RestoreCarriedLayers();
             RestoreCarriedColliders();
 
             if (_carriedRb != null)
@@ -303,7 +352,7 @@ namespace AvenueXR.Player
                 _carriedRb.isKinematic = false;
                 _carriedRb.useGravity = true;
                 _carriedRb.linearVelocity = dropVelocity;
-                _carriedRb.angularVelocity = Vector3.zero;
+                _carriedRb.angularVelocity = Random.insideUnitSphere * 0.5f;
             }
 
             _carriedItem.OnDropped();
@@ -316,15 +365,16 @@ namespace AvenueXR.Player
             if (_carriedItem == null) return;
 
             Vector3 force = playerCamera != null 
-                ? (playerCamera.transform.forward * throwForce + Vector3.up * 1.5f) 
+                ? (playerCamera.transform.forward * throwForce + Vector3.up * 1.0f) 
                 : (transform.forward * throwForce);
 
             // Spostiamo leggermente l'oggetto in avanti prima del lancio
             if (playerCamera != null)
             {
-                _carriedItem.transform.position = holdPoint.position + playerCamera.transform.forward * 0.2f;
+                _carriedItem.transform.position = holdPoint.position + playerCamera.transform.forward * 0.25f;
             }
 
+            RestoreCarriedLayers();
             RestoreCarriedColliders();
 
             _carriedItem.OnThrown(force);

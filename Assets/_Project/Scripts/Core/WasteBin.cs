@@ -17,16 +17,36 @@ namespace AvenueXR.Core
         // --- Local Events ---
         public event System.Action<WasteItem> OnItemReceived;
 
+        private WasteItem _currentPendingItem;
+
+        public bool HasPendingItem => _currentPendingItem != null;
+
+        public void ClearPendingItem()
+        {
+            _currentPendingItem = null;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            TryProcessWaste(other);
+        }
+
         private void OnTriggerStay(Collider other)
         {
+            TryProcessWaste(other);
+        }
+
+        private void TryProcessWaste(Collider other)
+        {
+            if (_currentPendingItem != null) return;
+
             WasteItem item = other.GetComponentInParent<WasteItem>();
-            
             if (item != null)
             {
                 // Se l'oggetto è ancora tenuto in mano dal giocatore, non lo processiamo
                 if (item.IsCarried)
                 {
-                    return; 
+                    return;
                 }
 
                 ProcessWaste(item);
@@ -35,6 +55,9 @@ namespace AvenueXR.Core
 
         private void ProcessWaste(WasteItem item)
         {
+            if (_currentPendingItem != null) return;
+            _currentPendingItem = item;
+
             Debug.Log($"Oggetto {item.type} inserito nel cestino {acceptedType} (Reject: {isRejectBin})");
 
             if (isRejectBin)

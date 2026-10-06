@@ -54,6 +54,7 @@ namespace AvenueXR.Core
                 if (rb != null)
                 {
                     rb.isKinematic = false;
+                    rb.useGravity = true;
                     rb.linearVelocity = Vector3.zero;
                     rb.angularVelocity = Vector3.zero;
                 }

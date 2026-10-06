@@ -46,7 +46,10 @@ namespace AvenueXR.Core
         private void OnDisable()
         {
             if (targetBin != null)
+            {
                 targetBin.OnItemReceived -= HandleItemReceived;
+                targetBin.ClearPendingItem();
+            }
 
             if (targetCrank != null)
                 targetCrank.OnRotationDelta -= HandleRotationDelta;
@@ -159,6 +162,11 @@ namespace AvenueXR.Core
             if (_pendingItem != null)
             {
                 Destroy(_pendingItem.gameObject);
+            }
+
+            if (targetBin != null)
+            {
+                targetBin.ClearPendingItem();
             }
 
             _isPending = false;

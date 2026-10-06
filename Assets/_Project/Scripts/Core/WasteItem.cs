@@ -12,7 +12,7 @@ namespace AvenueXR.Core
         public AudioClip dropSound;
 
         [Header("Respawn Settings")]
-        public float killYThreshold = -1.5f;
+        public float killYThreshold = -8.0f;
         private Vector3 _respawnPosition;
         private Quaternion _respawnRotation;
         private Rigidbody _rb;
@@ -57,6 +57,10 @@ namespace AvenueXR.Core
             if (_rb != null)
             {
                 _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                if (!IsCarried)
+                {
+                    _rb.useGravity = true;
+                }
             }
 
             IgnorePlayerCharacterController();
